@@ -86,6 +86,10 @@ module.exports = (socket, app, firstTime) => {
     socket.on('appShow', () => {
         app.show();
     });
+    socket.on('appIsHidden', () => {
+        const isHidden = app.isHidden();
+        electronSocket.emit('appIsHiddenCompleted', isHidden);
+    });
     socket.on('appGetAppPath', () => {
         const path = app.getAppPath();
         electronSocket.emit('appGetAppPathCompleted', path);

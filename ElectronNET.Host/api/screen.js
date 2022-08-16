@@ -41,7 +41,8 @@ module.exports = (socket) => {
         let display;
         try {
             display = electron_1.screen.getDisplayNearestPoint(point);
-        } catch {
+        }
+        catch {
             display = electron_1.screen.getPrimaryDisplay();
         }
         electronSocket.emit('screen-getDisplayNearestPointCompleted', display);
@@ -50,7 +51,8 @@ module.exports = (socket) => {
         let display;
         try {
             display = electron_1.screen.getDisplayMatching(rectangle);
-        } catch {
+        }
+        catch {
             display = electron_1.screen.getPrimaryDisplay();
         }
         electronSocket.emit('screen-getDisplayMatchingCompleted', display);

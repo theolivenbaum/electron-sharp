@@ -719,6 +719,13 @@ namespace ElectronNET.API
         }
 
         /// <summary>
+        /// Check if the app is hidden on macOS.
+        /// </summary>
+        /// <returns>The current application locale.</returns>
+        public Task<bool> IsHidden(CancellationToken cancellationToken = default) => BridgeConnector.OnResult<bool>("appIsHidden", "appIsHiddenCompleted", cancellationToken);
+
+
+        /// <summary>
         /// The current application directory.
         /// </summary>
         public Task<string> GetAppPathAsync(CancellationToken cancellationToken = default) => BridgeConnector.OnResult<string>("appGetAppPath", "appGetAppPathCompleted", cancellationToken);

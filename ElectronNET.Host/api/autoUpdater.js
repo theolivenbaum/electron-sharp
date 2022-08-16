@@ -102,9 +102,7 @@ module.exports = (socket, app) => {
     });
     socket.on('autoUpdaterQuitAndInstall', async (isSilent, isForceRunAfter) => {
         console.log('running autoUpdaterQuitAndInstall');
-
         app.removeAllListeners("window-all-closed");
-
         const windows = electron_1.BrowserWindow.getAllWindows();
         if (windows && windows.length) {
             windows.forEach(w => {
