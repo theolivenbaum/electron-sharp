@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using SixLabors.ImageSharp.Formats;
 
 namespace ElectronNET.API.Entities
 {
@@ -354,7 +355,7 @@ namespace ElectronNET.API.Entities
             {
                 foreach (var (scale, image) in _images)
                 {
-                    dict.Add(scale, image.ToBase64String(PngFormat.Instance));
+                    dict.Add(scale, ToBase64Image(image));
                 }
             }
             catch (Exception ex)
@@ -363,6 +364,16 @@ namespace ElectronNET.API.Entities
             }
             
             return dict;
+        }
+
+        private string ToBase64Image(Image source)
+        {
+            using var stream = new MemoryStream();
+            source.Save(stream, PngFormat.Instance);
+
+            // Always available.
+            stream.TryGetBuffer(out ArraySegment<byte> buffer);
+            return Convert.ToBase64String(buffer.Array, 0, (int)stream.Length);
         }
 
         internal Image GetScale(float scaleFactor)
