@@ -968,13 +968,13 @@ namespace ElectronNET.API
         /// Whether the window is focused.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsFocusedAsync() => BridgeConnector.OnResult<bool>("browserWindowIsFocused", "browserWindow-isFocused-completed" + Id, Id);
+        public Task<bool?> IsFocusedAsync() => BridgeConnector.OnResult<bool?>("browserWindowIsFocused", "browserWindow-isFocused-completed" + Id, Id);
 
         /// <summary>
         /// Whether the window is destroyed.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsDestroyedAsync() => BridgeConnector.OnResult<bool>("browserWindowIsDestroyed", "browserWindow-isDestroyed-completed" + Id, Id);
+        public Task<bool?> IsDestroyedAsync() => BridgeConnector.OnResult<bool?>("browserWindowIsDestroyed", "browserWindow-isDestroyed-completed" + Id, Id);
 
         /// <summary>
         /// Shows and gives focus to the window.
@@ -1004,18 +1004,18 @@ namespace ElectronNET.API
         /// Whether the window is visible to the user.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsVisibleAsync()
+        public Task<bool?> IsVisibleAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsVisible", "browserWindow-isVisible-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsVisible", "browserWindow-isVisible-completed" + Id, Id);
         }
 
         /// <summary>
         /// Whether current window is a modal window.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsModalAsync()
+        public Task<bool?> IsModalAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsModal", "browserWindow-isModal-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsModal", "browserWindow-isModal-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1038,9 +1038,9 @@ namespace ElectronNET.API
         /// Whether the window is maximized.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsMaximizedAsync()
+        public Task<bool?> IsMaximizedAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsMaximized", "browserWindow-isMaximized-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsMaximized", "browserWindow-isMaximized-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1063,9 +1063,9 @@ namespace ElectronNET.API
         /// Whether the window is minimized.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsMinimizedAsync()
+        public Task<bool?> IsMinimizedAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsMinimized", "browserWindow-isMinimized-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsMinimized", "browserWindow-isMinimized-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1088,9 +1088,9 @@ namespace ElectronNET.API
         /// Whether the window is in fullscreen mode.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsFullScreenAsync()
+        public Task<bool?> IsFullScreenAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsFullScreen", "browserWindow-isFullScreen-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsFullScreen", "browserWindow-isFullScreen-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1340,9 +1340,9 @@ namespace ElectronNET.API
         /// Whether the window can be manually resized by user.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsResizableAsync()
+        public Task<bool?> IsResizableAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsResizable", "browserWindow-isResizable-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsResizable", "browserWindow-isResizable-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1362,9 +1362,9 @@ namespace ElectronNET.API
         /// <returns>On Linux always returns true.</returns>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
-        public Task<bool> IsMovableAsync()
+        public Task<bool?> IsMovableAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsMovable", "browserWindow-isMovable-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsMovable", "browserWindow-isMovable-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1384,9 +1384,9 @@ namespace ElectronNET.API
         /// <returns>On Linux always returns true.</returns>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
-        public Task<bool> IsMinimizableAsync()
+        public Task<bool?> IsMinimizableAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsMinimizable", "browserWindow-isMinimizable-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsMinimizable", "browserWindow-isMinimizable-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1406,9 +1406,9 @@ namespace ElectronNET.API
         /// <returns>On Linux always returns true.</returns>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
-        public Task<bool> IsMaximizableAsync()
+        public Task<bool?> IsMaximizableAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsMaximizable", "browserWindow-isMaximizable-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsMaximizable", "browserWindow-isMaximizable-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1424,9 +1424,9 @@ namespace ElectronNET.API
         /// Whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsFullScreenableAsync()
+        public Task<bool?> IsFullScreenableAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsFullScreenable", "browserWindow-isFullScreenable-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsFullScreenable", "browserWindow-isFullScreenable-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1446,9 +1446,9 @@ namespace ElectronNET.API
         /// <returns>On Linux always returns true.</returns>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
-        public Task<bool> IsClosableAsync()
+        public Task<bool?> IsClosableAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsClosable", "browserWindow-isClosable-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsClosable", "browserWindow-isClosable-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1499,9 +1499,9 @@ namespace ElectronNET.API
         /// Whether the window is always on top of other windows.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsAlwaysOnTopAsync()
+        public Task<bool?> IsAlwaysOnTopAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsAlwaysOnTop", "browserWindow-isAlwaysOnTop-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsAlwaysOnTop", "browserWindow-isAlwaysOnTop-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1638,9 +1638,9 @@ namespace ElectronNET.API
         /// Whether the window is in kiosk mode.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsKioskAsync()
+        public Task<bool?> IsKioskAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsKiosk", "browserWindow-isKiosk-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsKiosk", "browserWindow-isKiosk-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1689,9 +1689,9 @@ namespace ElectronNET.API
         /// </summary>
         /// <returns></returns>
         [SupportedOSPlatform("macos")]
-        public Task<bool> IsDocumentEditedAsync()
+        public Task<bool?> IsDocumentEditedAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsDocumentEdited", "browserWindow-isDocumentEdited-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsDocumentEdited", "browserWindow-isDocumentEdited-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1830,9 +1830,9 @@ namespace ElectronNET.API
         /// On Windows and Linux always returns true.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> HasShadowAsync()
+        public Task<bool?> HasShadowAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowHasShadow", "browserWindow-hasShadow-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowHasShadow", "browserWindow-hasShadow-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1858,11 +1858,11 @@ namespace ElectronNET.API
         /// <param name="thumbarButtons"></param>
         /// <returns>Whether the buttons were added successfully.</returns>
         [SupportedOSPlatform("windows")]
-        public Task<bool> SetThumbarButtonsAsync(ThumbarButton[] thumbarButtons)
+        public Task<bool?> SetThumbarButtonsAsync(ThumbarButton[] thumbarButtons)
         {
-            var taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var taskCompletionSource = new TaskCompletionSource<bool?>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            BridgeConnector.On<bool>("browserWindowSetThumbarButtons-completed" + Id, (success) => 
+            BridgeConnector.On<bool?>("browserWindowSetThumbarButtons-completed" + Id, (success) => 
             {
                 BridgeConnector.Off("browserWindowSetThumbarButtons-completed" + Id);
 
@@ -1957,9 +1957,9 @@ namespace ElectronNET.API
         /// Whether menu bar automatically hides itself.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsMenuBarAutoHideAsync()
+        public Task<bool?> IsMenuBarAutoHideAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsMenuBarAutoHide", "browserWindow-isMenuBarAutoHide-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsMenuBarAutoHide", "browserWindow-isMenuBarAutoHide-completed" + Id, Id);
         }
 
         /// <summary>
@@ -1980,9 +1980,9 @@ namespace ElectronNET.API
         /// <returns></returns>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
-        public Task<bool> IsMenuBarVisibleAsync()
+        public Task<bool?> IsMenuBarVisibleAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsMenuBarVisible", "browserWindow-isMenuBarVisible-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsMenuBarVisible", "browserWindow-isMenuBarVisible-completed" + Id, Id);
         }
 
         /// <summary>
@@ -2002,9 +2002,9 @@ namespace ElectronNET.API
         /// Note: This API always returns false on Windows.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsVisibleOnAllWorkspacesAsync()
+        public Task<bool?> IsVisibleOnAllWorkspacesAsync()
         {
-            return BridgeConnector.OnResult<bool>("browserWindowIsVisibleOnAllWorkspaces", "browserWindow-isVisibleOnAllWorkspaces-completed" + Id, Id);
+            return BridgeConnector.OnResult<bool?>("browserWindowIsVisibleOnAllWorkspaces", "browserWindow-isVisibleOnAllWorkspaces-completed" + Id, Id);
         }
 
         /// <summary>
