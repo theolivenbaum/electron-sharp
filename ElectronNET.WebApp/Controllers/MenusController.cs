@@ -52,7 +52,7 @@ namespace ElectronNET.WebApp.Controllers
                         Accelerator = "CmdOrCtrl+F",
                         Click = async () =>
                         {
-                            bool isFullScreen = await Electron.WindowManager.BrowserWindows.First().IsFullScreenAsync();
+                            bool isFullScreen = (await Electron.WindowManager.BrowserWindows.First().IsFullScreenAsync()) ?? false;
                             Electron.WindowManager.BrowserWindows.First().SetFullScreen(!isFullScreen);
                         }
                     },

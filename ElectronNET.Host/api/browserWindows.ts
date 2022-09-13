@@ -360,7 +360,7 @@ export = (socket: Socket, app: Electron.App, firstTime: boolean) => {
         const w = getWindowById(id);
         if (w) {
             const img = await w.capturePage();
-            electronSocket.emit('browserWindow-capturePage-completed' + id, img);
+            electronSocket.emit('browserWindow-capturePage-completed' + id, { 1: img.toPNG().toString('base64') });
         }
         else {
             electronSocket.emit('browserWindow-capturePage-completed' + id, null);
