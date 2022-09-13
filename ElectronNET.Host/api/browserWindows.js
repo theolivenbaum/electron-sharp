@@ -306,6 +306,16 @@ module.exports = (socket, app, firstTime) => {
             electronSocket.emit('browserWindow-isDestroyed-completed' + id, true);
         }
     });
+    socket.on('browserWindowCapturePage', (id) => {
+        const w = getWindowById(id);
+        if (w) {
+            const img = w.capturePage();
+            electronSocket.emit('browserWindow-capturePage-completed' + id, img);
+        }
+        else {
+            electronSocket.emit('browserWindow-capturePage-completed' + id, null);
+        }
+    });
     socket.on('browserWindowShow', (id) => {
         getWindowById(id)?.show();
     });

@@ -21,6 +21,8 @@ namespace ElectronNET.API.Entities
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            if (reader.TokenType == JsonToken.Null) return null;
+
             var dict = serializer.Deserialize<Dictionary<string, string>>(reader);
             var newDictionary = new Dictionary<float, Image>();
             foreach (var item in dict)

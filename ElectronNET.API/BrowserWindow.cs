@@ -974,7 +974,7 @@ namespace ElectronNET.API
         /// Whether the window is destroyed.
         /// </summary>
         /// <returns></returns>
-        public Task<bool?> IsDestroyedAsync() => BridgeConnector.OnResult<bool?>("browserWindowIsDestroyed", "browserWindow-isDestroyed-completed" + Id, Id);
+        public Task<bool> IsDestroyedAsync() => BridgeConnector.OnResult<bool>("browserWindowIsDestroyed", "browserWindow-isDestroyed-completed" + Id, Id);
 
         /// <summary>
         /// Shows and gives focus to the window.
@@ -2125,6 +2125,13 @@ namespace ElectronNET.API
         {
             BridgeConnector.Emit("browserWindow-setBrowserView", Id, browserView.Id);
         }
+
+        /// <summary>
+        /// Whether the window is destroyed.
+        /// </summary>
+        /// <returns></returns>
+        public Task<NativeImage> CapturePageAsync() => BridgeConnector.OnResult<NativeImage>("browserWindowCapturePage", "browserWindow-capturePage-completed" + Id, Id);
+
 
         private static readonly JsonSerializer _jsonSerializer = new()
         {
