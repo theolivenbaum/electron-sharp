@@ -356,10 +356,10 @@ export = (socket: Socket, app: Electron.App, firstTime: boolean) => {
         }
     });
 
-    socket.on('browserWindowCapturePage', (id) => {
+    socket.on('browserWindowCapturePage', async (id) => {
         const w = getWindowById(id);
         if (w) {
-            const img = w.capturePage();
+            const img = await w.capturePage();
             electronSocket.emit('browserWindow-capturePage-completed' + id, img);
         }
         else {
