@@ -226,7 +226,7 @@ export = (socket: Socket, app: Electron.App, firstTime: boolean) => {
             options.parent = BrowserWindow.fromId(options.parent.id);
         }
 
-        if (options.x && options.y && options.x == 0 && options.y == 0) {
+        if (options.x === 0 && options.y === 0) {
             delete options.x;
             delete options.y;
         }

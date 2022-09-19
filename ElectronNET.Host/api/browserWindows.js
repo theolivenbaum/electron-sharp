@@ -190,7 +190,7 @@ module.exports = (socket, app, firstTime) => {
         if (options.parent) {
             options.parent = electron_1.BrowserWindow.fromId(options.parent.id);
         }
-        if (options.x && options.y && options.x == 0 && options.y == 0) {
+        if (options.x === 0 && options.y === 0) {
             delete options.x;
             delete options.y;
         }
