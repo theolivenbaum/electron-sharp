@@ -9,7 +9,7 @@ AppVeyor (Win/Linux): [![Build status](https://ci.appveyor.com/api/projects/stat
 
 Travis-CI (Win/macOS/Linux): [![Build Status](https://travis-ci.org/ElectronNET/Electron.NET.svg?branch=master)](https://travis-ci.org/ElectronNET/Electron.NET)
 
-Build cross platform desktop apps with .NET 5 and ASP.NET NET Core (Razor Pages, MVC), Blazor. 
+Build cross platform desktop apps with .NET 7 and ASP.NET NET Core (Razor Pages, MVC), Blazor. 
 
 Electron.NET is a __wrapper__ around a "normal" Electron application with an embedded ASP.NET Core application. Via our Electron.NET IPC bridge we can invoke Electron APIs from .NET.
 
@@ -26,7 +26,7 @@ Well... there are lots of different approaches how to get a X-plat desktop app r
 
 ## 🛠 Requirements to run:
 
-The current Electron.NET CLI builds Windows/macOS/Linux binaries. Our API uses .NET 5, so our minimum base OS is the same as [.NET 5](https://github.com/dotnet/core/blob/master/release-notes/5.0/5.0-supported-os.md).
+The current Electron.NET CLI builds Windows/macOS/Linux binaries. Our API uses .NET 7, so our minimum base OS is the same as [.NET 7](https://github.com/dotnet/core/blob/main/release-notes/7.0/supported-os.md).
 
 Also you should have installed:
 
