@@ -47,7 +47,7 @@ We do this open source work in our free time. If you'd like us to invest more ti
 To activate and communicate with the "native" (sort of native...) Electron API include the [ElectronNET.API NuGet package](https://www.nuget.org/packages/ElectronNET.API/) in your ASP.NET Core app.
 
 ````
-PM> Install-Package ElectronNET.API
+PM> Install-Package h5.ElectronNET.API
 ````
 ### Program.cs
 
@@ -82,21 +82,24 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 To start the application make sure you have installed the "[ElectronNET.CLI](https://www.nuget.org/packages/ElectronNET.CLI/)" packages as global tool:
 
 ```
-dotnet tool install ElectronNET.CLI -g
+dotnet tool install h5.ElectronNET.CLI -g
 ```
 
 At the first time, you need an Electron.NET project initialization. Type the following command in your ASP.NET Core folder:
 
 ```
-electronize init
+electronize-h5 init
 ```
 
 * Now a electronnet.manifest.json should appear in your ASP.NET Core project
 * Now run the following:
 
 ```
-electronize start
+electronize-h5 start
 ```
+### Hint
+
+> If invoking any of those commands gives you strange errors (like .NET 5 not installed, but your project is .NET 6), it means you've typed electronize instead of electronize-h5.
 
 ### Note
 > Only the first electronize start is slow. The next will go on faster.
@@ -106,7 +109,7 @@ electronize start
 The file watcher is included with version 8.31.1 of Electron.NET. For example, a file change can trigger compilation, test execution, or deployment. The Electron.NET window will automatically refresh and new code changes will be visible more quickly. The following Electron.NET CLI command is required:
 
 ```
-electronize start /watch
+electronize-h5 start /watch
 ```
 
 ### Note
@@ -135,10 +138,10 @@ electronize build /target win
 There are additional platforms available:
 
 ```
-electronize build /target win
-electronize build /target osx
-electronize build /target osx-arm64
-electronize build /target linux
+electronize-h5 build /target win
+electronize-h5 build /target osx
+electronize-h5 build /target osx-arm64
+electronize-h5 build /target linux
 ```
 
 Those four "default" targets will produce packages for those platforms. Note that the `osx-arm64` is for Apple Silicon Macs.
@@ -146,7 +149,7 @@ Those four "default" targets will produce packages for those platforms. Note tha
 For certain NuGet packages or certain scenarios you may want to build a pure x86 application. To support those things you can define the desired [.NET Core runtime](https://docs.microsoft.com/en-us/dotnet/core/rid-catalog), the [electron platform](https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#platform) and [electron architecture](https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#arch) like this:
 
 ```
-electronize build /target custom "win7-x86;win32" /electron-arch ia32 
+electronize-h5 build /target custom "win7-x86;win32" /electron-arch ia32 
 ```
 
 The end result should be an electron app under your __/bin/desktop__ folder.
