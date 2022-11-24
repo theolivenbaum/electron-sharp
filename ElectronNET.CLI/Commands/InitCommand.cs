@@ -124,7 +124,7 @@ namespace ElectronNET.CLI.Commands
                     debugProfileBuilder.AppendLine("profiles\": {");
                     debugProfileBuilder.AppendLine("    \"Electron.NET App - " + manifestName + "\": {");
                     debugProfileBuilder.AppendLine("      \"commandName\": \"Executable\",");
-                    debugProfileBuilder.AppendLine("      \"executablePath\": \"electronize\",");
+                    debugProfileBuilder.AppendLine("      \"executablePath\": \"electronize-h5\",");
                     debugProfileBuilder.AppendLine("      \"commandLineArgs\": \"start /manifest " + ConfigName + "\",");
                     debugProfileBuilder.AppendLine("      \"workingDirectory\": \".\"");
                     debugProfileBuilder.AppendLine("    },");
@@ -139,13 +139,13 @@ namespace ElectronNET.CLI.Commands
                     Console.WriteLine($"Debug profile already existing");
                 }
             } 
-            else if (launchSettingText.Contains("\"executablePath\": \"electronize\"") == false)
+            else if (launchSettingText.Contains("\"executablePath\": \"electronize-h5\"") == false)
             {
                 StringBuilder debugProfileBuilder = new StringBuilder();
                 debugProfileBuilder.AppendLine("profiles\": {");
                 debugProfileBuilder.AppendLine("    \"Electron.NET App\": {");
                 debugProfileBuilder.AppendLine("      \"commandName\": \"Executable\",");
-                debugProfileBuilder.AppendLine("      \"executablePath\": \"electronize\",");
+                debugProfileBuilder.AppendLine("      \"executablePath\": \"electronize-h5\",");
                 debugProfileBuilder.AppendLine("      \"commandLineArgs\": \"start\",");
                 debugProfileBuilder.AppendLine("      \"workingDirectory\": \".\"");
                 debugProfileBuilder.AppendLine("    },");
