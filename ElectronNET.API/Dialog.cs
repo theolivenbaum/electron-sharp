@@ -60,7 +60,7 @@ namespace ElectronNET.API
 
                 foreach (var item in filePaths)
                 {
-                    list.Add(HttpUtility.UrlDecode(item));
+                    list.Add(item);
                 }
                 taskCompletionSource.SetResult(list.ToArray());
             });
