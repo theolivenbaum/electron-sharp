@@ -376,7 +376,7 @@ namespace ElectronNET.API.Entities
             return Convert.ToBase64String(buffer.Array, 0, (int)stream.Length);
         }
 
-        internal Image GetScale(float scaleFactor)
+        public Image GetScale(float scaleFactor)
         {
             if (_images.TryGetValue(scaleFactor, out var image))
             {
@@ -385,5 +385,7 @@ namespace ElectronNET.API.Entities
 
             return null;
         }
+
+        public IEnumerable<float> AvailableScales => _images.Keys;
     }
 }
