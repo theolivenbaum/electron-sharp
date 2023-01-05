@@ -115,7 +115,7 @@ namespace ElectronSharp.CLI
             Console.WriteLine("\t");
             Console.WriteLine("\t");
             Console.WriteLine("To get help on individual commands execute:");
-            Console.WriteLine("\tdotnet electronize help <command>");
+            Console.WriteLine("\telectron-sharp help <command>");
         }
 
         private static void PrintUsage(string command)
@@ -155,13 +155,13 @@ namespace ElectronSharp.CLI
 
             if (!string.IsNullOrEmpty(arguments))
             {
-                Console.WriteLine($"{new string(' ', INDENT)}dotnet electronize {command} [arguments] [options]");
+                Console.WriteLine($"{new string(' ', INDENT)}electron-sharp {command} [arguments] [options]");
                 Console.WriteLine($"{new string(' ', INDENT)}Arguments:");
                 Console.WriteLine($"{new string(' ', INDENT * 2)}{arguments}");
             }
             else
             {
-                Console.WriteLine($"{new string(' ', INDENT)}dotnet electronize {command} [options]");
+                Console.WriteLine($"{new string(' ', INDENT)}electron-sharp {command} [options]");
             }
 
             const int SWITCH_COLUMN_WIDTH = 40;
