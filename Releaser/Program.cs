@@ -20,9 +20,9 @@ if (!response.IsSuccessStatusCode)
 
 
 var yamlFile    = Path.GetFullPath("../.devops/build-nuget.yaml");
-var csFile      = Path.GetFullPath("../ElectronNET.CLI/Commands/BuildCommand.cs");
-var packageFile = Path.GetFullPath("../ElectronNET.Host/package.json");
-var packagePath = Path.GetFullPath("../ElectronNET.Host");
+var csFile      = Path.GetFullPath("../ElectronSharp.CLI/Commands/BuildCommand.cs");
+var packageFile = Path.GetFullPath("../ElectronSharp.Host/package.json");
+var packagePath = Path.GetFullPath("../ElectronSharp.Host");
 
 if(!File.Exists(yamlFile) || !File.Exists(csFile) || !(File.Exists(packageFile)))
 {

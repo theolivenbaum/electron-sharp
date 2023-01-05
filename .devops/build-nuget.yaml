@@ -1,7 +1,7 @@
 variables:
   PackageVersion: 22.0.0.$(Build.BuildId)
-  projectAPI:  './ElectronNET.API/ElectronNET.API.csproj'
-  projectCLI:  './ElectronNET.CLI/ElectronNET.CLI.csproj'
+  projectAPI:  './ElectronSharp.API/ElectronSharp.API.csproj'
+  projectCLI:  './ElectronSharp.CLI/ElectronSharp.CLI.csproj'
 
 trigger:
 - master
@@ -71,7 +71,7 @@ steps:
   displayName: 'push API to nuget'
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/h5.ElectronNET.API.$(PackageVersion).nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/ElectronSharp.API.$(PackageVersion).nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: 'nuget-curiosity'
 
@@ -79,6 +79,6 @@ steps:
   displayName: 'push CLI to nuget'
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/h5.ElectronNET.CLI.$(PackageVersion).nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/ElectronSharp.CLI.$(PackageVersion).nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: 'nuget-curiosity'

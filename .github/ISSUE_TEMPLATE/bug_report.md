@@ -9,17 +9,16 @@ assignees: ''
 
 <!-- Please search existing issues to avoid creating duplicates. -->
 
-<!-- Which version of Electron.NET CLI and API are you using? -->
+<!-- Which version of ElectronSharp CLI and API are you using? -->
 <!-- Please always try to use latest version before report. -->
 * **Version**: 
 
-<!-- Which version of .NET Core and Node.js are you using (if applicable)? -->
+<!-- Which version of .NET and Node.js are you using (if applicable)? -->
 
 <!-- What target are you building for? -->
 * **Target**: 
 
 <!-- Enter your issue details below this comment. -->
-<!-- If you want, you can donate to increase issue priority (https://donorbox.org/electron-net) -->
 
 Steps to Reproduce:
 
