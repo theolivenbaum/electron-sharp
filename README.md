@@ -1,4 +1,4 @@
-<img src="https://github.com/theolivenbaum/electron-sharp/blob/master/assets/electron-sharp-logo.svg" width="100" height="100"/>
+<img src="https://github.com/theolivenbaum/electron-sharp/blob/main/assets/electron-sharp-logo.svg" width="100" height="100"/>
 
 # ElectronSharp
 
@@ -105,7 +105,7 @@ Start your ElectronSharp application with the ElectronSharp CLI command. In Visu
 ## 📔 Usage of the Electron-API
 
 A complete documentation will follow. Until then take a look in the source code of the sample application:  
-[ElectronSharp Sample App](https://github.com/theolivenbaum/electron-sharp/tree/master/ElectronSharp.SampleApp)  
+[ElectronSharp Sample App](https://github.com/theolivenbaum/electron-sharp/tree/main/ElectronSharp.SampleApp)  
 
   
 ## ⛏ Build
