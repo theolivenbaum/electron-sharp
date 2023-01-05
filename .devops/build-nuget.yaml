@@ -4,7 +4,7 @@ variables:
   projectCLI:  './ElectronSharp.CLI/ElectronSharp.CLI.csproj'
 
 trigger:
-- master
+- main
 
 pool:
   vmImage: windows-latest
