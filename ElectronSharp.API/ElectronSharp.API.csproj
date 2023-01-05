@@ -19,7 +19,7 @@ This package contains the API to access the "native" electron API.</Description>
     <PackageIcon>PackageIcon.png</PackageIcon>
     <Version>99.0.0.0</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
