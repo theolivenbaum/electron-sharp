@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 [![ElectronSharp Logo](https://github.com/theolivenbaum/electron-sharp/blob/master/assets/electron-sharp-logo.svg | width=128)](https://github.com/theolivenbaum/electron-sharp)
+=======
+[![ElectronSharp Logo](https://github.com/theolivenbaum/electron-sharp/blob/master/assets/electron-sharp-logo.svg  =128x128)](https://github.com/theolivenbaum/electron-sharp)
+>>>>>>> Stashed changes
 
 Build cross platform desktop apps with .NET 7 and ASP.NET Core (Razor Pages, MVC), Blazor, [h5](https://h5.rocks). 
 
