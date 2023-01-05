@@ -1,12 +1,14 @@
-[![ElectronSharp Logo](https://github.com/theolivenbaum/electron-sharp/blob/master/assets/electron-sharp-logo.svg  =128x128)](https://github.com/theolivenbaum/electron-sharp)
+<img src="https://github.com/theolivenbaum/electron-sharp/blob/master/assets/electron-sharp-logo.svg" width="100" height="100"/>
 
-Build cross platform desktop apps with .NET 7 and ASP.NET Core (Razor Pages, MVC), Blazor, [h5](https://h5.rocks). 
+# ElectronSharp
 
-ElectronSharp is a __wrapper__ around a "normal" Electron application with an embedded ASP.NET Core application. It uses an socket-based IPC bridge we can invoke Electron APIs from .NET.
+Build cross platform desktop apps with .NET 7 and ASP.NET Core (Razor Pages, MVC), Blazor or [h5](https://h5.rocks). 
+
+ElectronSharp is a __wrapper__ around a "normal" Electron application with an embedded ASP.NET Core application. It uses a socket-based IPC bridge we can invoke Electron APIs from .NET.
 
 The CLI extensions hosts the toolset to build and start ElectronSharp-based applications.
 
-ElectronSharp is a hard fork from the original [Electron.NET](https://github.com/ElectronNET/Electron.NET) project, mantained by [me](https://github.com/theolivenbaum) and used to build the [Curiosity app](https://curiosity.ai).
+ElectronSharp is a hard fork from the original [Electron.NET](https://github.com/ElectronNET/Electron.NET) project, mantained by [me](https://github.com/theolivenbaum) and used to build the [Curiosity](https://curiosity.ai) app.
 
 
 ## 📦 NuGet:
