@@ -18,7 +18,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ElectronNET.API\ElectronNET.API.csproj" />
+    <ProjectReference Include="..\ElectronSharp.API\ElectronSharp.API.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Assets\electron.ico">

@@ -3,11 +3,11 @@
     "Build Test App": {
       "commandName": "Project",
       "commandLineArgs": "build /target win /PublishSingleFile false /PublishReadyToRun false",
-      "workingDirectory": "$(SolutionDir)ElectronNET.WebApp"
+      "workingDirectory": "$(SolutionDir)ElectronSharp.WebApp"
     },
     "Start Test App": {
       "commandName": "Project",
-      "commandLineArgs": "start /project-path \"$(SolutionDir)ElectronNET.WebApp\""
+      "commandLineArgs": "start /project-path \"$(SolutionDir)ElectronSharp.WebApp\""
     }
   }
 }

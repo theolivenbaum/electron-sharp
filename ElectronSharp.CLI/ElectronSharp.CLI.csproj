@@ -34,44 +34,39 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ElectronHost\package-lock.json" />
-    <None Remove="ElectronHost\package.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="PackageIcon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="..\ElectronNET.Host\electron.manifest.json" Link="ElectronHost\electron.manifest.json" />
-    <EmbeddedResource Include="..\ElectronNET.Host\package.json" Link="ElectronHost\package.json" />
-    <EmbeddedResource Include="..\ElectronNET.Host\main.js" Link="ElectronHost\main.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\build-helper.js" Link="ElectronHost\build-helper.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\ipc.js" Link="ElectronHost\api\ipc.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\ElectronHostHook\index.ts" Link="ElectronHost\ElectronHostHook\index.ts" />
-    <EmbeddedResource Include="..\ElectronNET.Host\ElectronHostHook\connector.ts" Link="ElectronHost\ElectronHostHook\connector.ts" />
-    <EmbeddedResource Include="..\ElectronNET.Host\ElectronHostHook\tsconfig.json" Link="ElectronHost\ElectronHostHook\tsconfig.json" />
-    <EmbeddedResource Include="..\ElectronNET.Host\ElectronHostHook\package.json" Link="ElectronHost\ElectronHostHook\package.json" />
-    <EmbeddedResource Include="..\ElectronNET.Host\ElectronHostHook\.gitignore" Link="ElectronHost\ElectronHostHook\.gitignore" />
-    <EmbeddedResource Include="..\ElectronNET.Host\splashscreen\index.html" Link="ElectronHost\splashscreen\index.html" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\app.js" Link="ElectronHost\api\app.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\browserWindows.js" Link="ElectronHost\api\browserWindows.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\commandLine.js" Link="ElectronHost\api\commandLine.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\dialog.js" Link="ElectronHost\api\dialog.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\dock.js" Link="ElectronHost\api\dock.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\menu.js" Link="ElectronHost\api\menu.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\notification.js" Link="ElectronHost\api\notification.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\tray.js" Link="ElectronHost\api\tray.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\globalShortcut.js" Link="ElectronHost\api\globalShortcut.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\desktopCapturer.js" Link="ElectronHost\api\desktopCapturer.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\screen.js" Link="ElectronHost\api\screen.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\shell.js" Link="ElectronHost\api\shell.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\webContents.js" Link="ElectronHost\api\webContents.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\clipboard.js" Link="ElectronHost\api\clipboard.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\autoUpdater.js" Link="ElectronHost\api\autoUpdater.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\browserView.js" Link="ElectronHost\api\browserView.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\powerMonitor.js" Link="ElectronHost\api\powerMonitor.js" />
-    <EmbeddedResource Include="..\ElectronNET.Host\api\nativeTheme.js" Link="ElectronHost\api\nativeTheme.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\electron.manifest.json" Link="ElectronHost\electron.manifest.json" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\package.json" Link="ElectronHost\package.json" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\main.js" Link="ElectronHost\main.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\build-helper.js" Link="ElectronHost\build-helper.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\ipc.js" Link="ElectronHost\api\ipc.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\ElectronHostHook\index.ts" Link="ElectronHost\ElectronHostHook\index.ts" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\ElectronHostHook\connector.ts" Link="ElectronHost\ElectronHostHook\connector.ts" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\ElectronHostHook\tsconfig.json" Link="ElectronHost\ElectronHostHook\tsconfig.json" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\ElectronHostHook\package.json" Link="ElectronHost\ElectronHostHook\package.json" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\ElectronHostHook\.gitignore" Link="ElectronHost\ElectronHostHook\.gitignore" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\splashscreen\index.html" Link="ElectronHost\splashscreen\index.html" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\app.js" Link="ElectronHost\api\app.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\browserWindows.js" Link="ElectronHost\api\browserWindows.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\commandLine.js" Link="ElectronHost\api\commandLine.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\dialog.js" Link="ElectronHost\api\dialog.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\dock.js" Link="ElectronHost\api\dock.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\menu.js" Link="ElectronHost\api\menu.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\notification.js" Link="ElectronHost\api\notification.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\tray.js" Link="ElectronHost\api\tray.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\globalShortcut.js" Link="ElectronHost\api\globalShortcut.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\desktopCapturer.js" Link="ElectronHost\api\desktopCapturer.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\screen.js" Link="ElectronHost\api\screen.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\shell.js" Link="ElectronHost\api\shell.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\webContents.js" Link="ElectronHost\api\webContents.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\clipboard.js" Link="ElectronHost\api\clipboard.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\autoUpdater.js" Link="ElectronHost\api\autoUpdater.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\browserView.js" Link="ElectronHost\api\browserView.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\powerMonitor.js" Link="ElectronHost\api\powerMonitor.js" />
+    <EmbeddedResource Include="..\ElectronSharp.Host\api\nativeTheme.js" Link="ElectronHost\api\nativeTheme.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -81,10 +76,4 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' == 'Windows_NT'">
-    <Exec Command="$(ProjectDir)devCleanup.cmd" IgnoreExitCode="true" />
-  </Target>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' != 'Windows_NT'">
-    <Exec Command="$(ProjectDir)devCleanup.sh" IgnoreExitCode="true" />
-  </Target>
 </Project>
