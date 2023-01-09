@@ -37,7 +37,7 @@ namespace SocketIOClient.Messages
 
         private static readonly Dictionary<string, MessageType> _messageTypes = Enum.GetValues<MessageType>().ToDictionary(v => ((int)v).ToString(), v => v);
 
-        public static IMessage CreateMessage(int eio, string msg)
+        public static IMessage CreateMessage(EngineIO eio, string msg)
         {
             foreach (var (prefix,item) in _messageTypes)
             {
@@ -46,7 +46,7 @@ namespace SocketIOClient.Messages
                     IMessage result = CreateMessage(item);
                     if (result != null)
                     {
-                        result.Eio = eio;
+                        result.EIO = eio;
                         result.Read(msg.Substring(prefix.Length));
                         return result;
                     }
@@ -60,12 +60,12 @@ namespace SocketIOClient.Messages
             var openedMessage = new OpenedMessage();
             if (msg[0] == '0')
             {
-                openedMessage.Eio = 4;
+                openedMessage.EIO = EngineIO.V4;
                 openedMessage.Read(msg.Substring(1));
             }
             else
             {
-                openedMessage.Eio = 3;
+                openedMessage.EIO = EngineIO.V3;
                 int index = msg.IndexOf(':');
                 openedMessage.Read(msg.Substring(index + 2));
             }

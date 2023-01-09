@@ -4,12 +4,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Net.Http.Headers;
+using SocketIOClient.Extensions;
 
-namespace SocketIOClient.Transport
+namespace SocketIOClient.Transport.Http
 {
     public class Eio3HttpPollingHandler : HttpPollingHandler
     {
-        public Eio3HttpPollingHandler(HttpClient httpClient) : base(httpClient) { }
+        public Eio3HttpPollingHandler(IHttpClient adapter) : base(adapter)
+        {
+        }
 
         public override async Task PostAsync(string uri, IEnumerable<byte[]> bytes, CancellationToken cancellationToken)
         {
@@ -28,7 +31,7 @@ namespace SocketIOClient.Transport
             await HttpClient.PostAsync(AppendRandom(uri), content, cancellationToken).ConfigureAwait(false);
         }
 
-        private List<int> SplitInt(int number)
+        private static List<int> SplitInt(int number)
         {
             List<int> list = new List<int>();
             while (number > 0)
@@ -40,7 +43,7 @@ namespace SocketIOClient.Transport
             return list;
         }
 
-        protected override void ProduceText(string text)
+        protected override async Task ProduceText(string text)
         {
             int p = 0;
             while (true)
@@ -53,7 +56,7 @@ namespace SocketIOClient.Transport
                 if (int.TryParse(text.Substring(p, index - p), out int length))
                 {
                     string msg = text.Substring(index + 1, length);
-                    TextSubject.OnNext(msg);
+                    await OnTextReceived.TryInvokeAsync(msg);
                 }
                 else
                 {
@@ -67,10 +70,14 @@ namespace SocketIOClient.Transport
             }
         }
 
-        public override Task PostAsync(string uri, string content, CancellationToken cancellationToken)
+        public override async Task PostAsync(string uri, string content, CancellationToken cancellationToken)
         {
+            if (string.IsNullOrEmpty(content))
+            {
+                return;
+            }
             content = content.Length + ":" + content;
-            return base.PostAsync(uri, content, cancellationToken);
+            await base.PostAsync(uri, content, cancellationToken);
         }
     }
 }
