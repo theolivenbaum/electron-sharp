@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -48,6 +49,11 @@ namespace SocketIOClient.Transport.Http
         public Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content, CancellationToken cancellationToken)
         {
             return _httpClient.PostAsync(requestUri, content, cancellationToken);
+        }
+        
+        public Task<string> GetStringAsync(Uri requestUri)
+        {
+            return _httpClient.GetStringAsync(requestUri);
         }
 
         public void Dispose()

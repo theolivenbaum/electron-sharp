@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Net.WebSockets;
 using System.Threading;
@@ -94,24 +92,15 @@ namespace SocketIOClient
 
         int _attempts;
 
-        [Obsolete]
-        /// <summary>
-        /// Whether or not the socket is disconnected from the server.
-        /// </summary>
-        public bool Disconnected => !Connected;
-
         public SocketIOOptions Options { get; }
 
         public IJsonSerializer JsonSerializer { get; set; }
-
-        public HttpClient HttpClient { get; set; }
+        public ITransport Transport { get; set; }
+        public Func<IHttpClient> HttpClientProvider { get; set; }
 
         public Func<IClientWebSocket> ClientWebSocketProvider { get; set; }
-        public Func<IHttpClient> HttpClientAdapterProvider { get; set; }
 
         List<IDisposable> _resources = new List<IDisposable>();
-
-        BaseTransport _transport;
 
         List<Type> _expectedExceptions;
 
@@ -172,17 +161,28 @@ namespace SocketIOClient
 
             JsonSerializer = new SystemTextJsonSerializer();
 
-            HttpClient = new HttpClient();
+            HttpClientProvider = () => new DefaultHttpClient();
             ClientWebSocketProvider = () => new DefaultClientWebSocket();
-            HttpClientAdapterProvider = () => new DefaultHttpClient();
             _expectedExceptions = new List<Type>
             {
                 typeof(TimeoutException),
                 typeof(WebSocketException),
                 typeof(HttpRequestException),
                 typeof(OperationCanceledException),
-                typeof(TaskCanceledException)
+                typeof(TaskCanceledException),
+                typeof(TransportException),
             };
+        }
+
+        private IHttpClient GetHttpClient()
+        {
+            var http = HttpClientProvider();
+            if (http is null)
+            {
+                throw new ArgumentNullException(nameof(HttpClientProvider), $"{HttpClientProvider} returns a null");
+            }
+
+            return http;
         }
 
         private async Task InitTransportAsync()
@@ -197,14 +197,8 @@ namespace SocketIOClient
             };
             if (Options.Transport == TransportProtocol.Polling)
             {
-                var adapter = HttpClientAdapterProvider();
-                if (adapter is null)
-                {
-                    throw new ArgumentNullException(nameof(HttpClientAdapterProvider), $"{HttpClientAdapterProvider} returns a null");
-                }
-                _resources.Add(adapter);
-                var handler = HttpPollingHandler.CreateHandler(transportOptions.EIO, adapter);
-                _transport = new HttpTransport(transportOptions, handler);
+                var handler = HttpPollingHandler.CreateHandler(transportOptions.EIO, GetHttpClient());
+                Transport = new HttpTransport(transportOptions, handler);
             }
             else
             {
@@ -214,14 +208,14 @@ namespace SocketIOClient
                     throw new ArgumentNullException(nameof(ClientWebSocketProvider), $"{ClientWebSocketProvider} returns a null");
                 }
                 _resources.Add(ws);
-                _transport = new WebSocketTransport(transportOptions, ws);
+                Transport = new WebSocketTransport(transportOptions, ws);
             }
-            _resources.Add(_transport);
-            _transport.Namespace = _namespace;
+            _resources.Add(Transport);
+            Transport.Namespace = _namespace;
             SetHeaders();
-            _transport.SetProxy(Options.Proxy);
-            _transport.OnReceived = OnMessageReceived;
-            _transport.OnError = OnErrorReceived;
+            Transport.SetProxy(Options.Proxy);
+            Transport.OnReceived = OnMessageReceived;
+            Transport.OnError = OnErrorReceived;
         }
 
         private string GetAuth(object auth)
@@ -240,7 +234,7 @@ namespace SocketIOClient
                 {
                     try
                     {
-                        _transport.AddHeader(item.Key, item.Value);
+                        Transport.AddHeader(item.Key, item.Value);
                     }
                     catch (Exception e)
                     {
@@ -276,7 +270,7 @@ namespace SocketIOClient
                     {
                         using (var cts = new CancellationTokenSource(Options.ConnectionTimeout))
                         {
-                            await _transport.ConnectAsync(serverUri, cts.Token).ConfigureAwait(false);
+                            await Transport.ConnectAsync(serverUri, cts.Token).ConfigureAwait(false);
                             break;
                         }
                     }
@@ -344,10 +338,13 @@ namespace SocketIOClient
                 Uri uri = UriConverter.GetServerUri(false, ServerUri, Options.EIO, Options.Path, Options.Query);
                 try
                 {
-                    string text = await HttpClient.GetStringAsync(uri);
-                    if (text.Contains("websocket"))
+                    using (var http = GetHttpClient())
                     {
-                        return TransportProtocol.WebSocket;
+                        string text = await http.GetStringAsync(uri);
+                        if (text.Contains("websocket"))
+                        {
+                            return TransportProtocol.WebSocket;
+                        }
                     }
                 }
                 catch (Exception e)
@@ -498,7 +495,9 @@ namespace SocketIOClient
 
         private void OnErrorReceived(Exception ex)
         {
-            //Logger.LogError(ex, ex.Message);
+#if DEBUG
+            Debug.WriteLine(ex);
+#endif
             _ = InvokeDisconnect(DisconnectReason.TransportClose);
         }
 
@@ -547,24 +546,23 @@ namespace SocketIOClient
 
         public async Task DisconnectAsync()
         {
-            if (Connected)
+            _connCts.TryCancel();
+            _connCts.TryDispose();
+            var msg = new DisconnectedMessage
             {
-                var msg = new DisconnectedMessage
-                {
-                    Namespace = _namespace
-                };
-                try
-                {
-                    await _transport.SendAsync(msg, CancellationToken.None).ConfigureAwait(false);
-                }
-                catch (Exception e)
-                {
-#if DEBUG
-                    Debug.WriteLine(e);
-#endif
-                }
-                await InvokeDisconnect(DisconnectReason.IOClientDisconnect);
+                Namespace = _namespace
+            };
+            try
+            {
+                await Transport.SendAsync(msg, CancellationToken.None).ConfigureAwait(false);
             }
+            catch (Exception e)
+            {
+#if DEBUG
+                Debug.WriteLine(e);
+#endif
+            }
+            await InvokeDisconnect(DisconnectReason.IOClientDisconnect);
         }
 
         /// <summary>
@@ -654,7 +652,7 @@ namespace SocketIOClient
                     Id = packetId
                 };
             }
-            await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
+            await Transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -682,7 +680,7 @@ namespace SocketIOClient
                         Event = eventName,
                         Json = result.Json
                     };
-                    await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
+                    await Transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
@@ -692,7 +690,7 @@ namespace SocketIOClient
                         Event = eventName,
                         Json = result.Json
                     };
-                    await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
+                    await Transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
                 }
             }
             else
@@ -702,7 +700,7 @@ namespace SocketIOClient
                     Namespace = _namespace,
                     Event = eventName
                 };
-                await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
+                await Transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -734,7 +732,7 @@ namespace SocketIOClient
                         Id = _packetId,
                         OutgoingBytes = new List<byte[]>(result.Bytes)
                     };
-                    await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
+                    await Transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
@@ -745,7 +743,7 @@ namespace SocketIOClient
                         Id = _packetId,
                         Json = result.Json
                     };
-                    await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
+                    await Transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
                 }
             }
             else
@@ -756,7 +754,7 @@ namespace SocketIOClient
                     Namespace = _namespace,
                     Id = _packetId
                 };
-                await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
+                await Transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -769,7 +767,7 @@ namespace SocketIOClient
                 OnDisconnected.TryInvoke(this, reason);
                 try
                 {
-                    await _transport.DisconnectAsync(CancellationToken.None).ConfigureAwait(false);
+                    await Transport.DisconnectAsync(CancellationToken.None).ConfigureAwait(false);
                 }
                 catch (Exception e)
                 {
@@ -798,8 +796,9 @@ namespace SocketIOClient
 
         public void Dispose()
         {
-            HttpClient.Dispose();
-            _transport.TryDispose();
+            _connCts.TryCancel();
+            _connCts.TryDispose();
+            Transport.TryDispose();
             _ackHandlers.Clear();
             _onAnyHandlers.Clear();
             _eventHandlers.Clear();

@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace SocketIOClient.Transport
 {
-    public abstract class BaseTransport : IDisposable
+    public abstract class BaseTransport : ITransport
     {
         protected BaseTransport(TransportOptions options)
         {
@@ -143,6 +143,7 @@ namespace SocketIOClient.Transport
 
         protected async Task OnTextReceived(string text)
         {
+            // TODO: refactor
 #if DEBUG
             Debug.WriteLine($"[{Protocol}⬇] {text}");
 #endif
@@ -167,6 +168,18 @@ namespace SocketIOClient.Transport
             {
                 if (msg.Type == MessageType.Connected)
                 {
+                    int ms = 0;
+                    while (OpenedMessage is null)
+                    {
+                        await Task.Delay(10);
+                        ms += 10;
+                        if (ms > Options.ConnectionTimeout.TotalMilliseconds)
+                        {
+                            OnError.TryInvoke(new TimeoutException());
+                            return;
+                        }
+                    }
+                    
                     var connectMsg = msg as ConnectedMessage;
                     connectMsg.Sid = OpenedMessage.Sid;
                     if ((string.IsNullOrEmpty(Namespace) && string.IsNullOrEmpty(connectMsg.Namespace)) || connectMsg.Namespace == Namespace)
