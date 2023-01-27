@@ -3,6 +3,7 @@ using SocketIOClient.Transport;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.ObjectPool;
 
 namespace SocketIOClient.Messages
 {
@@ -63,15 +64,23 @@ namespace SocketIOClient.Messages
             Sid = JsonDocument.Parse(msg).RootElement.GetProperty("sid").GetString();
         }
 
+        private static ObjectPool<StringBuilder> _sbPool = new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
+
         private string Eio4Write()
         {
-            var builder = new StringBuilder("40");
+            var builder = _sbPool.Get();
+            builder.Append("40");
+
             if (!string.IsNullOrEmpty(Namespace))
             {
                 builder.Append(Namespace).Append(',');
             }
+
             builder.Append(AuthJsonStr);
-            return builder.ToString();
+
+            var final = builder.ToString();
+            _sbPool.Return(builder);
+            return final;
         }
 
         private void Eio3Read(string msg)
@@ -102,8 +111,12 @@ namespace SocketIOClient.Messages
             {
                 return string.Empty;
             }
-            var builder = new StringBuilder("40");
+
+            var builder = _sbPool.Get();
+            builder.Append("40");
+            
             builder.Append(Namespace);
+
             if (Query != null)
             {
                 int i = -1;
@@ -122,7 +135,9 @@ namespace SocketIOClient.Messages
                 }
             }
             builder.Append(',');
-            return builder.ToString();
+            var final = builder.ToString();
+            _sbPool.Return(builder);
+            return final;
         }
     }
 }

@@ -26,7 +26,13 @@ namespace SocketIOClient.Extensions
             {
                 return;
             }
-            await func(arg1);
+            
+            var task = func(arg1);
+
+            if(task is not null)
+            {
+                await task;
+            }
         }
     }
 }

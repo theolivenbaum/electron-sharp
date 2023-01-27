@@ -11,9 +11,9 @@
     },
     "run with electronize": {
       "commandName": "Executable",
-      "executablePath": "$(SolutionDir)ElectronNET.CLI\\bin\\Debug\\net6.0\\dotnet-electron-sharp.exe",
-      "commandLineArgs": "start /from-build-output $(SolutionDir)ElectronNET.WebApp\\bin\\$(Configuration)\\net6.0",
-      "workingDirectory": "$(SolutionDir)ElectronNET.WebApp"
+      "executablePath": "$(SolutionDir)ElectronSharp.CLI\\bin\\Debug\\net7.0\\dotnet-electron-sharp.exe",
+      "commandLineArgs": "start /from-build-output $(SolutionDir)ElectronSharp.SampleApp\\bin\\$(Configuration)\\net6.0",
+      "workingDirectory": "$(SolutionDir)ElectronSharp.SampleApp"
     },
     "run from csharp": {
       "commandName": "Project",

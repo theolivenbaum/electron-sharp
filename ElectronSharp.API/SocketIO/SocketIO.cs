@@ -796,12 +796,12 @@ namespace SocketIOClient
 
         public void Dispose()
         {
-            _connCts.TryCancel();
-            _connCts.TryDispose();
-            Transport.TryDispose();
-            _ackHandlers.Clear();
-            _onAnyHandlers.Clear();
-            _eventHandlers.Clear();
+            _connCts?.TryCancel();
+            _connCts?.TryDispose();
+            Transport?.TryDispose();
+            _ackHandlers?.Clear();
+            _onAnyHandlers?.Clear();
+            _eventHandlers?.Clear();
         }
     }
 }
