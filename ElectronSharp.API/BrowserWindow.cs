@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
-//TODO: Add setTrafficLightPosition and getTrafficLightPosition: https://www.electronjs.org/docs/api/browser-window#winsettrafficlightpositionposition-macos
+//TODO: Add setTrafficLightPosition and getTrafficLightPosition: https://www.electronjs.org/docs/api/browser-wi ndow#winsettrafficlightpositionposition-macos
 
 namespace ElectronSharp.API
 {
@@ -1925,7 +1925,7 @@ namespace ElectronSharp.API
         /// when creating the window.
         /// </summary>
         /// <param name="options"></param>
-        [SupportedOSPlatform("win")]
+        [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
         public void SetTitleBarOverlay(TitleBarOverlayConfig options)
         {
@@ -1991,9 +1991,23 @@ namespace ElectronSharp.API
         /// Note: This API does nothing on Windows.
         /// </summary>
         /// <param name="visible"></param>
+        [SupportedOSPlatform("macos")]
         public void SetVisibleOnAllWorkspaces(bool visible)
         {
             BridgeConnector.Emit("browserWindowSetVisibleOnAllWorkspaces", Id, visible);
+        }
+
+        /// <summary>
+        /// Sets whether the window should be visible on all workspaces.
+        /// 
+        /// Note: This API does nothing on Windows.
+        /// </summary>
+        /// <param name="visible"></param>
+        /// <param name="options"></param>
+        [SupportedOSPlatform("macos")]
+        public void SetVisibleOnAllWorkspaces(bool visible, VisibleOnAllWorkspacesOptions options)
+        {
+            BridgeConnector.Emit("browserWindowSetVisibleOnAllWorkspaces2", Id, visible, options);
         }
 
         /// <summary>
@@ -2002,6 +2016,7 @@ namespace ElectronSharp.API
         /// Note: This API always returns false on Windows.
         /// </summary>
         /// <returns></returns>
+        [SupportedOSPlatform("macos")]
         public Task<bool?> IsVisibleOnAllWorkspacesAsync()
         {
             return BridgeConnector.OnResult<bool?>("browserWindowIsVisibleOnAllWorkspaces", "browserWindow-isVisibleOnAllWorkspaces-completed" + Id, Id);
