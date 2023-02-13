@@ -160,9 +160,4 @@ export = (socket: Socket, app: Electron.App) => {
         const downloadedPath = await autoUpdater.downloadUpdate();
         electronSocket.emit('autoUpdaterDownloadUpdateComplete' + guid, downloadedPath);
     });
-
-    socket.on('autoUpdaterGetFeedURL', async (guid) => {
-        const feedUrl = await autoUpdater.getFeedURL();
-        electronSocket.emit('autoUpdaterGetFeedURLComplete' + guid, feedUrl || '');
-    });
 };
