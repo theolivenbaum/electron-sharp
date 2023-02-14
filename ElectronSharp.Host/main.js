@@ -6,6 +6,7 @@ const portscanner = require('portscanner');
 const { imageSize } = require('image-size');
 const { connect } = require('http2');
 const crypto = require('crypto');
+const fs = require('fs');
 
 fixPath(); //For macOS and Linux packaged-apps, the path variable might be missing
 
@@ -39,7 +40,18 @@ if (app.commandLine.hasSwitch('development')) {
     development = true;
 };
 
-let currentBinPath = path.join(__dirname.replace('app.asar', ''), 'bin');
+let currentBinPath1 = path.join(__dirname.replace('app.asar', ''), 'bin');
+
+let currentBinPath2 = path.join(__dirname.replace('app.asar', ''), '..', 'Helpers', 'bin');
+
+let currentBinPath = null;
+
+if (fs.accessSync(currentBinPath1)) {
+    currentBinPath = currentBinPath1;
+} else if (fs.accessSync(currentBinPath2)) {
+    currentBinPath = currentBinPath2;
+}
+
 let manifestJsonFilePath = path.join(currentBinPath, manifestJsonFileName);
 
 // if watch is enabled lets change the path

@@ -11,7 +11,7 @@ if(process.argv.length > 3) {
 if(builderConfiguration.hasOwnProperty('buildVersion')) {
     // @ts-ignore
     const packageJson = require('./package');
-    packageJson.name = dasherize(manifestFile.name || 'electron-net');
+    packageJson.name = dasherize(manifestFile.name || 'electron-sharp');
     packageJson.author = manifestFile.author || '';
     packageJson.version = builderConfiguration.buildVersion;
     packageJson.description = manifestFile.description || '';
@@ -25,7 +25,7 @@ if(builderConfiguration.hasOwnProperty('buildVersion')) {
     try {
         // @ts-ignore
         const packageLockJson = require('./package-lock');
-        packageLockJson.name = dasherize(manifestFile.name || 'electron-net');
+        packageLockJson.name = dasherize(manifestFile.name || 'electron-sharp');
         packageLockJson.author = manifestFile.author || '';
         packageLockJson.version = builderConfiguration.buildVersion;
         fs.writeFile('./package-lock.json', JSON.stringify(packageLockJson), (error) => {
