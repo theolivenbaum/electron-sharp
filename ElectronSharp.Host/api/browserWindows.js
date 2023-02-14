@@ -615,6 +615,9 @@ module.exports = (socket, app, firstTime) => {
     socket.on('browserWindowSetVisibleOnAllWorkspaces', (id, visible) => {
         getWindowById(id)?.setVisibleOnAllWorkspaces(visible);
     });
+    socket.on('browserWindowSetVisibleOnAllWorkspaces2', (id, visible, options) => {
+        getWindowById(id)?.setVisibleOnAllWorkspaces(visible, options);
+    });
     socket.on('browserWindowIsVisibleOnAllWorkspaces', (id) => {
         const isVisibleOnAllWorkspaces = getWindowById(id)?.isVisibleOnAllWorkspaces() ?? null;
         electronSocket.emit('browserWindow-isVisibleOnAllWorkspaces-completed' + id, isVisibleOnAllWorkspaces);

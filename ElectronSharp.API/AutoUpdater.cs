@@ -148,7 +148,7 @@ namespace ElectronSharp.API
                 {
                     BridgeConnector.On<string>("autoUpdater-error" + GetHashCode(), (message) =>
                     {
-                        _error(message.ToString());
+                        _error(message);
                     });
 
                     BridgeConnector.Emit("register-autoUpdater-error-event", GetHashCode());
@@ -363,7 +363,7 @@ namespace ElectronSharp.API
                 BridgeConnector.Off("autoUpdaterCheckForUpdatesComplete" + guid);
                 BridgeConnector.Off("autoUpdaterCheckForUpdatesError" + guid);
                 string message = "An error occurred in CheckForUpdatesAsync";
-                if (error != null && !string.IsNullOrEmpty(error.ToString()))
+                if (!string.IsNullOrEmpty(error))
                     message = JsonConvert.SerializeObject(error);
                 taskCompletionSource.SetException(new Exception(message));
             });
@@ -433,39 +433,19 @@ namespace ElectronSharp.API
         /// <summary>
         /// Start downloading update manually. You can use this method if "AutoDownload" option is set to "false".
         /// </summary>
-        /// <returns>Path to downloaded file.</returns>
-        public Task<string> DownloadUpdateAsync()
+        /// <returns>Paths to downloaded files.</returns>
+        public Task<string[]> DownloadUpdateAsync()
         {
-            var taskCompletionSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var taskCompletionSource = new TaskCompletionSource<string[]>(TaskCreationOptions.RunContinuationsAsynchronously);
             string guid = Guid.NewGuid().ToString();
 
-            BridgeConnector.On<string>("autoUpdaterDownloadUpdateComplete" + guid, (downloadedPath) =>
+            BridgeConnector.On<string[]>("autoUpdaterDownloadUpdateComplete" + guid, (downloadedPaths) =>
             {
                 BridgeConnector.Off("autoUpdaterDownloadUpdateComplete" + guid);
-                taskCompletionSource.SetResult(downloadedPath.ToString());
+                taskCompletionSource.SetResult(downloadedPaths);
             });
 
             BridgeConnector.Emit("autoUpdaterDownloadUpdate", guid);
-
-            return taskCompletionSource.Task;
-        }
-
-        /// <summary>
-        /// Feed URL.
-        /// </summary>
-        /// <returns>Feed URL.</returns>
-        public Task<string> GetFeedURLAsync()
-        {
-            var taskCompletionSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
-
-            BridgeConnector.On<string>("autoUpdaterGetFeedURLComplete" + guid, (downloadedPath) =>
-            {
-                BridgeConnector.Off("autoUpdaterGetFeedURLComplete" + guid);
-                taskCompletionSource.SetResult(downloadedPath.ToString());
-            });
-
-            BridgeConnector.Emit("autoUpdaterGetFeedURL", guid);
 
             return taskCompletionSource.Task;
         }
