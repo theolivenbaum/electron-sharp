@@ -16,10 +16,10 @@
     "directories": {
       "output": "../../../bin/Desktop"
     },
-    "extraFiles": [
+    "extraResources": [
       {
         "from": "./bin",
-        "to": "Helpers/bin",
+        "to": "bin",
         "filter": [ "**/*" ]
       }
     ],
