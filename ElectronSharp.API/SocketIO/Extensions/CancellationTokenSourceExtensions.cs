@@ -7,12 +7,22 @@ namespace SocketIOClient.Extensions
     {
         public static void TryDispose(this CancellationTokenSource cts)
         {
-            cts?.Dispose();
+            try
+            {
+                cts?.Dispose();
+            }
+            catch
+            {
+                //Ignore
+            }
         }
 
         public static void TryCancel(this CancellationTokenSource cts)
         {
-            cts?.Cancel();
+            if (cts != null && !cts.IsCancellationRequested)
+            {
+                cts.TryCancel();
+            }
         }
     }
 }
