@@ -78,13 +78,8 @@ namespace ElectronSharp.API.Tests
 	}
 
 	/// <summary>
-	/// Relase notes for one version.
-	/// Defines future format for ReleaseNotes.json to avoid markdown parsing.
+	/// Relase notes for one version. One version - multiple notes.
 	/// </summary>
-	/// <remarks>
-	/// In future, when we'll switch to UpdateInfo.Release notes to string,
-	/// this class with be moved to some Configurator project.
-	/// </remarks>
 	internal class VersionReleaseNotes
 	{
 		public string Version { get; set; } = string.Empty;
