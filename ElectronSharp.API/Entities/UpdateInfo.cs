@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElectronSharp.API.Entities.Serialization;
+using System;
 
 namespace ElectronSharp.API.Entities
 {
@@ -22,10 +23,11 @@ namespace ElectronSharp.API.Entities
         /// </summary>
         public string ReleaseName { get; set; }
 
-        /// <summary>
-        /// The release notes.
-        /// </summary>
-        public string ReleaseNotes { get; set; }
+		/// <summary>
+		/// The release notes.
+		/// </summary>
+		[Newtonsoft.Json.JsonConverter(typeof(ReleaseNotesConverter))]
+		public string ReleaseNotes { get; set; }
 
         /// <summary>
         /// 
