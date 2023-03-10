@@ -22,6 +22,9 @@ namespace ElectronSharp.API.Tests
 			updateInfo.ReleaseNotes.Should().BeNull();
 		}
 
+		/// <summary>
+		/// Older version of release notes as array [{ version: string, notes: string }, ...].
+		/// </summary>
 		[Fact]
 		public void NewtonsoftJsonSerializer_WhenReleaseNotesIsArray_DeserializesUpdateInfo()
 		{
@@ -29,7 +32,7 @@ namespace ElectronSharp.API.Tests
 			var updateInfo = _serializer.Deserialize<UpdateInfo>(json);
 			updateInfo.Should().NotBeNull();
 
-			var notes = updateInfo.DeserializeReleaseNotes();
+			var notes = updateInfo.DeserializeOldReleaseNotes();
 			notes.Should().NotBeNull();
 
 			var notesArray = notes.ToArray();
@@ -87,11 +90,36 @@ namespace ElectronSharp.API.Tests
 		public List<string> Notes { get; set; } = new();
 	}
 
+	/// <summary>
+	/// Internal stuff: notes are int the string, separated by new lines.
+	/// </summary>
+	internal class VersionReleaseNotesIntermediate
+	{
+		public string Version { get; set; } = string.Empty;
+
+		public string Note { get; set; } = string.Empty;
+	}
+
 	internal static class UpdateInfoExtensions
 	{
 		private static readonly CamelCaseNewtonsoftJsonSerializer Serializer = new();
 
 		public static IEnumerable<VersionReleaseNotes> DeserializeReleaseNotes(this UpdateInfo updateInfo) =>
 			Serializer.Deserialize<List<VersionReleaseNotes>>(updateInfo.ReleaseNotes);
+
+		public static IEnumerable<VersionReleaseNotes> DeserializeOldReleaseNotes(this UpdateInfo updateInfo)
+		{
+			var intermediate = Serializer.Deserialize<List<VersionReleaseNotesIntermediate>>(updateInfo.ReleaseNotes);
+
+			foreach (var versionNote in intermediate)
+			{
+				yield return new VersionReleaseNotes
+				{
+					Version = versionNote.Version,
+					Notes = versionNote.Note.Split("\n",
+						StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).ToList()
+				};
+			}
+		}
 	}
 }
