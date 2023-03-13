@@ -1,0 +1,55 @@
+{
+  "version": "1.0.68",
+  "files": [
+    {
+      "url": "MyCoolProgram.Setup.1.0.68.exe",
+      "sha512": "kmWSqPrTessAw3ETjU0jx+Qnb16lLaIDD6mdownUcin00YIcfX9oNo4mz353uKSDfkdGa3ULh8JLksU1NJywpw==",
+      "size": 144159184
+    }
+  ],
+  "path": "MyCoolProgram.Setup.1.0.68.exe",
+  "sha512": "kmWSqPrTessAw3ETjU0jx+Qnb16lLaIDD6mdownUcin00YIcfX9oNo4mz353uKSDfkdGa3ULh8JLksU1NJywpw==",
+  "releaseDate": "2022-12-05T09:02:50.475Z",
+  "releaseNotes": [
+    {
+      "version": "1.0.68",
+      "note": "Fixed caching issues."
+    },
+    {
+      "version": "1.0.67",
+      "note": "Implemented the first part of Bluetooth sensor/beacon configuration functionality.\nImplemented Bluetooth settings in the Accessories menu item.\nImplemented the first part of the Professional series devices layout.\nImplemented TLS certificate upload.\nFixed configuration file loading when symbols are used in the name."
+    },
+    {
+      "version": "1.0.66",
+      "note": "Implemented improvements when opening a configuration file.\nFixed “Load configuration” functionality in MyCoolProgram settings.\nFixed issues with the modified parameters list.\nFixed issues with authorized numbers and SMS event lists.\nFixed internal hub page navigation.\nFixed translation issues."
+    },
+    {
+      "version": "1.0.65",
+      "note": "Implemented tooltip drawer."
+    },
+    {
+      "version": "1.0.64",
+      "note": "Implemented privacy policy in the application.\nAdded \"Assisted GPS\" functionality.\nAdded \"SECO\" feature.\nAdded \"Low power mode settings\".\nAdded message on firmware/hardware mismatch.\nImprovements to version history.\nImprovements to threshold calculation for \"Eco driving\" feature.\nFixed issues with firmware update.\nFixed issues with threshold values and advanced eco driving for \"Eco driving\" feature.\nFixed issues with I/O parameters.\nFixed visibility issues with multiple connected devices.\nFixed \"GNSS jamming\" output control group box."
+    },
+    {
+      "version": "1.0.63",
+      "note": "Fixed issues with I/O filters.\nFixed issues with loading configuration from file."
+    },
+    {
+      "version": "1.0.62",
+      "note": "Fixed issues with configuration loading from a file in settings and configuration name.\nFixed issues with device recognition after disconnecting from the device.\nFixed issues with the \"Reset configuration\" functionality."
+    },
+    {
+      "version": "1.0.61",
+      "note": "Fixed issues with white screen on startup."
+    },
+    {
+      "version": "1.0.60",
+      "note": "Updated translations."
+    },
+    {
+      "version": "1.0.59",
+      "note": "Implemented change log in the application.\nImplemented 1-Wire and serial LLS arrange lists.\nImplemented “Accessories” hub.\nImplemented privacy policy in the MyCoolProgram installer.\nImprovements and bug fixes to auto-update.\nAdded a status message and indications after disconnecting a device.\nUpdated translations method and fixed issues related to it.\nAdded missing parameters.\nFixed issues with the firmware update.\nFixed issues with modified parameter list.\nFixed issues with “Reset configuration”.\nFixed issues with “From file” in MyCoolProgram settings.\nFixed issues with parameter validations.\nFixed issues with parameters mismatching hardware."
+    }
+  ]
+}

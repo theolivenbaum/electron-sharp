@@ -24,7 +24,7 @@ This package contains the API to access the "native" electron API.</Description>
 
   <ItemGroup>
     <None Include="PackageIcon.png" Pack="true" PackagePath="\" />
-    <None Include="..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' == 'Windows_NT'">
@@ -48,5 +48,11 @@ This package contains the API to access the "native" electron API.</Description>
     <PackageReference Include="System.Reactive" Version="5.0.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
   </ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>ElectronSharp.API.Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
 
 </Project>

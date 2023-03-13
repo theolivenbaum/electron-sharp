@@ -539,7 +539,7 @@ namespace ElectronSharp.API
         internal static ILogger<App> Logger { private get; set; }
         internal static string AuthKey { get; set; } = null;
 
-        private class CamelCaseNewtonsoftJsonSerializer : NewtonsoftJsonSerializer
+        internal class CamelCaseNewtonsoftJsonSerializer : NewtonsoftJsonSerializer
         {
             public CamelCaseNewtonsoftJsonSerializer() : base()
             {
