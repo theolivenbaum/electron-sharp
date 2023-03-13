@@ -41,7 +41,7 @@ namespace ElectronSharp.API.Tests
 			notesArray[2].Notes.Should().NotBeNull();
 			notesArray[2].Notes.Count.Should().Be(6);
 			notesArray[2].Notes[0].Should().Be("Implemented improvements when opening a configuration file.");
-			notesArray[2].Notes[1].Should().Be("Fixed “Load configuration” functionality in TCT settings.");
+			notesArray[2].Notes[1].Should().Be("Fixed “Load configuration” functionality in MyCoolProgram settings.");
 			notesArray[2].Notes[2].Should().Be("Fixed issues with the modified parameters list.");
 			notesArray[2].Notes[3].Should().Be("Fixed issues with authorized numbers and SMS event lists.");
 			notesArray[2].Notes[4].Should().Be("Fixed internal hub page navigation.");

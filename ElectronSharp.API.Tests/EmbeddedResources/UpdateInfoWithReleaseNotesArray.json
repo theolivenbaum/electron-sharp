@@ -21,7 +21,7 @@
     },
     {
       "version": "1.0.66",
-      "note": "Implemented improvements when opening a configuration file.\nFixed “Load configuration” functionality in TCT settings.\nFixed issues with the modified parameters list.\nFixed issues with authorized numbers and SMS event lists.\nFixed internal hub page navigation.\nFixed translation issues."
+      "note": "Implemented improvements when opening a configuration file.\nFixed “Load configuration” functionality in MyCoolProgram settings.\nFixed issues with the modified parameters list.\nFixed issues with authorized numbers and SMS event lists.\nFixed internal hub page navigation.\nFixed translation issues."
     },
     {
       "version": "1.0.65",
@@ -49,7 +49,7 @@
     },
     {
       "version": "1.0.59",
-      "note": "Implemented change log in the application.\nImplemented 1-Wire and serial LLS arrange lists.\nImplemented “Accessories” hub.\nImplemented privacy policy in the TCT installer.\nImprovements and bug fixes to auto-update.\nAdded a status message and indications after disconnecting a device.\nUpdated translations method and fixed issues related to it.\nAdded missing parameters.\nFixed issues with the firmware update.\nFixed issues with modified parameter list.\nFixed issues with “Reset configuration”.\nFixed issues with “From file” in TCT settings.\nFixed issues with parameter validations.\nFixed issues with parameters mismatching hardware."
+      "note": "Implemented change log in the application.\nImplemented 1-Wire and serial LLS arrange lists.\nImplemented “Accessories” hub.\nImplemented privacy policy in the MyCoolProgram installer.\nImprovements and bug fixes to auto-update.\nAdded a status message and indications after disconnecting a device.\nUpdated translations method and fixed issues related to it.\nAdded missing parameters.\nFixed issues with the firmware update.\nFixed issues with modified parameter list.\nFixed issues with “Reset configuration”.\nFixed issues with “From file” in MyCoolProgram settings.\nFixed issues with parameter validations.\nFixed issues with parameters mismatching hardware."
     }
   ]
 }
