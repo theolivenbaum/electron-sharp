@@ -44,7 +44,7 @@ let currentBinPath1 = path.join(__dirname.replace('app.asar', ''), 'bin');
 
 let currentBinPath2 = path.join(__dirname.replace('app.asar', ''), '..', 'Helpers', 'bin');
 
-let currentBinPath = null;
+let currentBinPath = currentBinPath1;
 
 if (fs.existsSync(currentBinPath1)) {
     currentBinPath = currentBinPath1;
