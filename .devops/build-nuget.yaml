@@ -73,7 +73,7 @@ steps:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/ElectronSharp.API.$(PackageVersion).nupkg'
     nuGetFeedType: 'external'
-    publishFeedCredentials: 'nuget-curiosity'
+    publishFeedCredentials: 'nuget-curiosity-org'
 
 - task: NuGetCommand@2
   displayName: 'push CLI to nuget'
@@ -81,4 +81,4 @@ steps:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/ElectronSharp.CLI.$(PackageVersion).nupkg'
     nuGetFeedType: 'external'
-    publishFeedCredentials: 'nuget-curiosity'
+    publishFeedCredentials: 'nuget-curiosity-org'
