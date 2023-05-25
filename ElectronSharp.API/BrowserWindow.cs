@@ -2113,6 +2113,25 @@ namespace ElectronSharp.API
         }
 
         /// <summary>
+        /// This method sets the browser window's system-drawn background material, including behind the non-client area.
+        /// See the [Windows documentation](https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/ne-dwmapi-dwm_systembackdrop_type) for more details.
+        /// This method is only supported on Windows 11 22H2 and up.
+        /// </summary>
+        /// <param name="type">
+        ///   * auto - Let the Desktop Window Manager (DWM) automatically decide the system-drawn backdrop material for this window. This is the default.
+        ///   * none - Don't draw any system backdrop.
+        ///   * mica - Draw the backdrop material effect corresponding to a long-lived window.
+        ///   * acrylic - Draw the backdrop material effect corresponding to a transient window.
+        ///   * tabbed - Draw the backdrop material effect corresponding to a window with a tabbed title bar.</param>
+        [SupportedOSPlatform("windows")]
+        public void SetBackgroundMaterial(BackgroundMaterial type)
+        {
+            BridgeConnector.Emit("browserWindowSetBackgroundMaterial", Id, type.GetDescription());
+        }
+
+
+
+        /// <summary>
         /// Adds a vibrancy effect to the browser window. 
         /// Passing null or an empty string will remove the vibrancy effect on the window.
         /// </summary>

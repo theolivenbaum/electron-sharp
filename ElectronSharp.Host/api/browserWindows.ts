@@ -831,6 +831,10 @@ export = (socket: Socket, app: Electron.App, firstTime: boolean) => {
         getWindowById(id)?.setVibrancy(type);
     });
 
+    socket.on('browserWindowSetBackgroundMaterial', (id, type) => {
+        getWindowById(id)?.setBackgroundMaterial(type);
+    });
+
     socket.on('browserWindowSetExcludedFromShownWindowsMenu', (id) => {
         const w = getWindowById(id);
         if (w) {

@@ -65,29 +65,26 @@ namespace ElectronSharp.API.Entities
         [EnumMember(Value = "ultra-dark")]
         [Obsolete("Removed in macOS Catalina (10.15).")]
         ultraDark,
-        
-        header, 
-        
-        sheet, 
-        
-        window, 
-        
-        hud, 
-        
+
+        header,
+
+        sheet,
+
+        window,
+
+        hud,
+
         [EnumMember(Value = "fullscreen-ui")]
-        fullscreenUI, 
-        
-        tooltip, 
-        
-        content, 
-        
+        fullscreenUI,
+
+        tooltip,
+
+        content,
+
         [EnumMember(Value = "under-window")]
         underWindow,
-        
+
         [EnumMember(Value = "under-page")]
         underPage
-        
-        
-        
     }
 }
