@@ -669,7 +669,7 @@ module.exports = (socket, app, firstTime) => {
         for (let index = 0; index < windows.length; index++) {
             const element = windows[index];
             try {
-                if (element.id === id) {
+                if (element.id === id && !element.isDestroyed()) {
                     return element;
                 }
             }

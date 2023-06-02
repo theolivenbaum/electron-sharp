@@ -850,7 +850,7 @@ export = (socket: Socket, app: Electron.App, firstTime: boolean) => {
         for (let index = 0; index < windows.length; index++) {
             const element = windows[index];
             try {
-                if (element.id === id) {
+                if (element.id === id && !element.isDestroyed()) {
                     return element;
                 }
             } catch {
