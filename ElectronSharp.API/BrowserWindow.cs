@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
-//TODO: Add setTrafficLightPosition and getTrafficLightPosition: https://www.electronjs.org/docs/api/browser-wi ndow#winsettrafficlightpositionposition-macos
-
 namespace ElectronSharp.API
 {
     /// <summary>
@@ -2110,6 +2108,25 @@ namespace ElectronSharp.API
         public void SetVibrancy(Vibrancy type)
         {
             BridgeConnector.Emit("browserWindowSetVibrancy", Id, type.GetDescription());
+        }
+
+        /// <summary>
+        /// Set a custom position for the traffic light buttons in frameless window. Passing null will reset the position to default.
+        /// </summary>
+        /// <param name="position">position to set, null to reset</param>
+        [SupportedOSPlatform("macos")]
+        public void SetWindowButtonPosition(WindowButtonPosition position = null)
+        {
+            BridgeConnector.Emit("browserWindowSetWindowButtonPosition", Id, position);
+        }
+
+        /// <summary>
+        /// Get a custom position for the traffic light buttons in frameless window. Returns null if no custom position is set
+        /// </summary>
+        [SupportedOSPlatform("macos")]
+        public Task<WindowButtonPosition> GetWindowButtonPosition()
+        {
+            return BridgeConnector.OnResult<WindowButtonPosition>("browserWindowGetWindowButtonPosition", "browserWindow-getWindowButtonPosition-completed" + Id, Id);
         }
 
         /// <summary>

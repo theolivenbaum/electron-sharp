@@ -393,6 +393,13 @@ module.exports = (socket, app, firstTime) => {
         const size = getWindowById(id)?.getSize() ?? null;
         electronSocket.emit('browserWindow-getSize-completed' + id, size);
     });
+    socket.on('browserWindowSetWindowButtonPosition', (id, position) => {
+        getWindowById(id)?.setWindowButtonPosition(position);
+    });
+    socket.on('browserWindowGetWindowButtonPosition', (id) => {
+        const position = getWindowById(id)?.getWindowButtonPosition() ?? null;
+        electronSocket.emit('browserWindow-getWindowButtonPosition-completed' + id, position);
+    });
     socket.on('browserWindowSetContentSize', (id, width, height, animate) => {
         getWindowById(id)?.setContentSize(width, height, animate);
     });
