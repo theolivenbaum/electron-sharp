@@ -42,8 +42,12 @@ module.exports = (socket) => {
         electron_1.clipboard.clear(type);
     });
     socket.on('clipboard-availableFormats', (type) => {
-        const formats = electron_1.clipboard.availableFormats(type);
-        electronSocket.emit('clipboard-availableFormats-Completed', formats);
+        try {
+            const formats = electron_1.clipboard.availableFormats(type);
+            electronSocket.emit('clipboard-availableFormats-Completed', formats);
+        } catch (e) {
+            electronSocket.emit('clipboard-availableFormats-Completed', []);
+        }
     });
     socket.on('clipboard-write', (data, type) => {
         if (data.hasOwnProperty("image")) {
@@ -52,14 +56,25 @@ module.exports = (socket) => {
         electron_1.clipboard.write(data, type);
     });
     socket.on('clipboard-readImage', (type) => {
-        const image = electron_1.clipboard.readImage(type);
-        electronSocket.emit('clipboard-readImage-Completed', { 1: image.toPNG().toString('base64') });
+        try {
+            const image = electron_1.clipboard.readImage(type);
+
+            const imgBase64 = image.toPNG().toString('base64');
+            if (imgBase64.length > 0) {
+                electronSocket.emit('clipboard-readImage-Completed', {1: imgBase64});
+            } else {
+                electronSocket.emit('clipboard-readImage-Completed', {});
+            }
+        } catch (e) {
+            electronSocket.emit('clipboard-readImage-Completed', {});
+        }
     });
     socket.on('clipboard-writeImage', (data, type) => {
         const dataContent = JSON.parse(data);
         const image = deserializeImage(dataContent);
         electron_1.clipboard.writeImage(image, type);
     });
+
     function deserializeImage(data) {
         const image = electron_1.nativeImage.createEmpty();
         // tslint:disable-next-line: forin
@@ -67,7 +82,7 @@ module.exports = (socket) => {
             const scaleFactor = key;
             const bytes = data[key];
             const buffer = Buffer.from(bytes, 'base64');
-            image.addRepresentation({ scaleFactor: +scaleFactor, buffer: buffer });
+            image.addRepresentation({scaleFactor: +scaleFactor, buffer: buffer});
         }
         return image;
     }
