@@ -103,7 +103,7 @@ app.on('before-quit-for-update', () => { prepareForUpdate(); });
 
 const manifestJsonFile = require(manifestJsonFilePath);
 
-if (manifestJsonFile.singleInstance || manifestJsonFile.aspCoreBackendPort) {
+if (manifestJsonFile.singleInstance || manifestJsonFile.aspCoreBackendPort != 'random') {
     const mainInstance = app.requestSingleInstanceLock();
     app.on('second-instance', (events, args = []) => {
 
@@ -444,7 +444,7 @@ function isModuleAvailable(name) {
 }
 
 function startAspCoreBackend(electronPort) {
-    if (manifestJsonFile.aspCoreBackendPort) {
+    if (manifestJsonFile.aspCoreBackendPort != 'random') {
         startBackend(manifestJsonFile.aspCoreBackendPort)
     } else {
         // hostname needs to be localhost, otherwise Windows Firewall will be triggered.
@@ -524,7 +524,7 @@ function startAspCoreBackend(electronPort) {
 }
 
 function startAspCoreBackendWithWatch(electronPort) {
-    if (manifestJsonFile.aspCoreBackendPort) {
+    if (manifestJsonFile.aspCoreBackendPort != 'random') {
         startBackend(manifestJsonFile.aspCoreBackendPort)
     } else {
         // hostname needs to be localhost, otherwise Windows Firewall will be triggered.
