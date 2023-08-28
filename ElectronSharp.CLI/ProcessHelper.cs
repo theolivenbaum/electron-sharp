@@ -36,6 +36,8 @@ namespace ElectronSharp.CLI
         }
         public static int CmdExecute(string command, string workingDirectoryPath, bool output = true, bool waitForExit = true)
         {
+            Console.WriteLine($"Running command: '{command}' on folder '{(workingDirectoryPath ?? ".")}'");
+
             using (Process cmd = new Process())
             {
                 bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
