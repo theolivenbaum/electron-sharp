@@ -200,7 +200,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                     foreach(var project in Directory.GetFiles(Directory.GetCurrentDirectory(), "*.csproj"))
                     {
                         var projectXML = File.ReadAllText(project);
-                        var match = Regex.Match(projectXML, @"<PackageReference\s+Include=""h5\.ElectronSharp\.API""\s+Version=""([0-9\.]+)""\s+\/>");
+                        var match = Regex.Match(projectXML, @"<PackageReference\s+Include=""ElectronSharp\.API""\s+Version=""([0-9\.]+)""\s+\/>");
                         if (match.Success)
                         {
                             var candidate = match.Groups[1].Value;
