@@ -45,6 +45,14 @@ namespace ElectronSharp.CLI.Commands.Actions
                     electronPackerPlatform = splittedSpecified[1];
                     break;
                 default:
+
+                    if (desiredPlatform.StartsWith("osx.")) //Versioned osx target platform
+                    {
+                        netCorePublishRid = desiredPlatform;
+                        electronPackerPlatform = "mac";
+                        break;
+                    }
+
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     {
                         netCorePublishRid = $"win-x{(Environment.Is64BitOperatingSystem ? "64" : "86")}";

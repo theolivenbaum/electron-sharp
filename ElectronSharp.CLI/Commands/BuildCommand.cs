@@ -82,6 +82,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                 }
 
                 string configuration = "Release";
+
                 if (parser.Arguments.ContainsKey(_paramDotNetConfig))
                 {
                     configuration = parser.Arguments[_paramDotNetConfig][0];
@@ -179,7 +180,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
 
                 string electronArch = "x64";
 
-                if (platformInfo.NetCorePublishRid == "osx-arm64") //Apple Silicon Mac
+                if (platformInfo.NetCorePublishRid.StartsWith("osx") && platformInfo.NetCorePublishRid.EndsWith("arm64")) //Apple Silicon Mac
                 {
                     electronArch = "arm64"; 
                 }
