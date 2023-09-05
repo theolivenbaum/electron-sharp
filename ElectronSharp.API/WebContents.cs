@@ -147,10 +147,9 @@ namespace ElectronSharp.API
         }
 
         /// <summary>
-        /// Is used to get the Url of the loaded page.
-        /// It's usefull if a web-server redirects you and you need to know where it redirects. For instance, It's useful in case of Implicit Authorization.
+        /// Check if the webcontents is null (seems to happen when the Electron render process crashes) 
         /// </summary>
-        /// <returns>URL of the loaded page</returns>
+        /// <returns>True if the webcontent is null</returns>
         public Task<bool> IsNull()
         {
             return BridgeConnector.OnResult<bool>("webContents-isNull", "webContents-isNull" + Id, Id);
