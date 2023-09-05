@@ -60,6 +60,11 @@ export = (socket: Socket) => {
         electronSocket.emit('webContents-getUrl' + id, browserWindow.webContents.getURL());
     });
 
+    socket.on('webContents-isNull', function (id) {
+        const browserWindow = getWindowById(id);
+        electronSocket.emit('webContents-isNull' + id, !(browserWindow.webContents));
+    });
+
     socket.on('webContents-session-allowNTLMCredentialsForDomains', (id, domains) => {
         const browserWindow = getWindowById(id);
         browserWindow.webContents.session.allowNTLMCredentialsForDomains(domains);

@@ -147,6 +147,16 @@ namespace ElectronSharp.API
         }
 
         /// <summary>
+        /// Is used to get the Url of the loaded page.
+        /// It's usefull if a web-server redirects you and you need to know where it redirects. For instance, It's useful in case of Implicit Authorization.
+        /// </summary>
+        /// <returns>URL of the loaded page</returns>
+        public Task<bool> IsNull()
+        {
+            return BridgeConnector.OnResult<bool>("webContents-isNull", "webContents-isNull" + Id, Id);
+        }
+
+        /// <summary>
         /// The async method will resolve when the page has finished loading, 
         /// and rejects if the page fails to load.
         /// 
