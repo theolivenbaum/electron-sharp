@@ -248,6 +248,14 @@ namespace ElectronSharp.API
             return destroyed;
         }
 
+        internal void RemoveDestroyedWindow(BrowserWindow browserWindow)
+        {
+            if (!_browserWindows.TryGetValue(browserWindow.Id, out var bw) && bw == browserWindow)
+            {
+                _browserWindows.Remove(browserWindow.Id, out _);
+            }
+        }
+
         private static readonly JsonSerializer _keepDefaultValuesSerializer = new()
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),

@@ -968,11 +968,26 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task<bool?> IsFocusedAsync() => BridgeConnector.OnResult<bool?>("browserWindowIsFocused", "browserWindow-isFocused-completed" + Id, Id);
 
+
+        private bool _isDestroyed;
         /// <summary>
         /// Whether the window is destroyed.
         /// </summary>
         /// <returns></returns>
-        public Task<bool> IsDestroyedAsync() => BridgeConnector.OnResult<bool>("browserWindowIsDestroyed", "browserWindow-isDestroyed-completed" + Id, Id);
+        public async Task<bool> IsDestroyedAsync()
+        {
+            if (_isDestroyed) return true;
+
+            var isDestroyed = await BridgeConnector.OnResult<bool>("browserWindowIsDestroyed", "browserWindow-isDestroyed-completed" + Id, Id);
+
+            if (isDestroyed)
+            {
+                _isDestroyed = true;
+                Electron.WindowManager.RemoveDestroyedWindow(this);
+            }
+
+            return isDestroyed;
+        }
 
         /// <summary>
         /// Shows and gives focus to the window.
