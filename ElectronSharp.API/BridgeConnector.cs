@@ -96,6 +96,8 @@ namespace ElectronSharp.API
 
         private static Dictionary<string, Action<SocketIOResponse>> _eventHandlers = new ();
 
+        private static long _messagesSent = 0; 
+        private static long _messagesReceived = 0;
         private static Task<SocketIO> _waitForConnection
         {
             get
@@ -112,6 +114,8 @@ namespace ElectronSharp.API
         }
 
         public static bool IsConnected => _waitForConnection is Task task && task.IsCompletedSuccessfully;
+        public static long MessagesSent => Interlocked.Read(ref _messagesSent);
+        public static long MessagesReceived => Interlocked.Read(ref _messagesReceived);
 
         public static void Emit(string eventString, params object[] args)
         {
@@ -139,6 +143,8 @@ namespace ElectronSharp.API
             {
                 _socketSemaphoreEmit.Release();
             }
+
+            Interlocked.Increment(ref _messagesSent);
 
             if (App.SocketDebug)
             {
@@ -172,6 +178,7 @@ namespace ElectronSharp.API
                 }
             }).Wait();
 
+            Interlocked.Increment(ref _messagesSent);
 
             if (App.SocketDebug)
             {
@@ -213,6 +220,8 @@ namespace ElectronSharp.API
 
                 _eventHandlers.Add(eventString, _ =>
                 {
+                    Interlocked.Increment(ref _messagesReceived); 
+
                     try
                     {
                         fn();
@@ -245,6 +254,7 @@ namespace ElectronSharp.API
 
                 _eventHandlers.Add(eventString, o =>
                 {
+                    Interlocked.Increment(ref _messagesReceived);
                     try
                     {
                         fn(o.GetValue<T>(0));

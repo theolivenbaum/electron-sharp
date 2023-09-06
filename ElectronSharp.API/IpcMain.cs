@@ -38,7 +38,8 @@ namespace ElectronSharp.API
         }
 
         public static bool IsConnected => BridgeConnector.IsConnected;
-
+        public static long SocketMessagesSent => BridgeConnector.MessagesSent;
+        public static long SocketMessagesReceived => BridgeConnector.MessagesReceived;
         /// <summary>
         ///  Listens to channel, when a new message arrives listener would be called with 
         ///  listener(event, args...).
