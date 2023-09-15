@@ -10,7 +10,7 @@ namespace ElectronSharp.CLI.Commands
 {
     public class BuildCommand : ICommand
     {
-        private const string _defaultElectronVersion = "26.2.0";
+        private const string _defaultElectronVersion = "26.2.1";
 
         public const string COMMAND_NAME = "build";
         public const string COMMAND_DESCRIPTION = "Build your Electron Application.";
