@@ -28,6 +28,9 @@ let manifestJsonFileName = 'electron.manifest.json';
 let watchable = false;
 let development = false;
 
+// Disable these 2 features as they're causing crashes on the latest Electron release
+app.commandLine.appendSwitch('disable-features', 'HardwareMediaKeyHandling,PartitionAllocBackupRefPtr');
+
 if (app.commandLine.hasSwitch('manifest')) {
     manifestJsonFileName = app.commandLine.getSwitchValue('manifest');
 };
