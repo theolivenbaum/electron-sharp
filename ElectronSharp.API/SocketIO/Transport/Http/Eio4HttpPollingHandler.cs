@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using SocketIOClient.Extensions;
 
-namespace SocketIOClient.Transport
+namespace SocketIOClient.Transport.Http
 {
     public class Eio4HttpPollingHandler : HttpPollingHandler
     {
-        public Eio4HttpPollingHandler(HttpClient httpClient) : base(httpClient) { }
+        public Eio4HttpPollingHandler(IHttpClient adapter) : base(adapter)
+        {
+        }
 
-        const char Separator = '\u001E'; //1E 
+        const char Separator = '\u001E';
 
         public override async Task PostAsync(string uri, IEnumerable<byte[]> bytes, CancellationToken cancellationToken)
         {
@@ -28,7 +30,7 @@ namespace SocketIOClient.Transport
             await PostAsync(uri, text, cancellationToken);
         }
 
-        protected override void ProduceText(string text)
+        protected override async Task ProduceText(string text)
         {
             string[] items = text.Split(new[] { Separator }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var item in items)
@@ -36,11 +38,11 @@ namespace SocketIOClient.Transport
                 if (item[0] == 'b')
                 {
                     byte[] bytes = Convert.FromBase64String(item.Substring(1));
-                    BytesSubject.OnNext(bytes);
+                    OnBytes(bytes);
                 }
                 else
                 {
-                    TextSubject.OnNext(item);
+                    await OnTextReceived.TryInvokeAsync(item);
                 }
             }
         }

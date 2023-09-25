@@ -450,7 +450,7 @@ namespace ElectronSharp.API
                             {
                                 var socket = new SocketIO($"http://localhost:{BridgeSettings.SocketPort}", new SocketIOOptions()
                                 {
-                                    EIO = 4,
+                                    EIO = EngineIO.V4,
                                     Reconnection = true,
                                     ReconnectionAttempts = int.MaxValue,
                                     ReconnectionDelay = 500,
