@@ -17,6 +17,13 @@ namespace ElectronSharp.SampleApp
             IWebHostBuilder builder;
 
 #if DEBUG
+            var previousProcesses = Process.GetProcessesByName("electron");
+
+            foreach (var p in previousProcesses)
+            {
+                p.Kill();
+            }
+
             var webPort = Electron.Experimental.FreeTcpPort();
             
             await Electron.Experimental.StartElectronForDevelopment(webPort);

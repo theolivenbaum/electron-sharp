@@ -1212,6 +1212,14 @@ namespace ElectronSharp.API
         public Task<GPUFeatureStatus> GetGpuFeatureStatusAsync(CancellationToken cancellationToken = default) => BridgeConnector.OnResult<GPUFeatureStatus>("appGetGpuFeatureStatus", "appGetGpuFeatureStatusCompleted", cancellationToken);
 
         /// <summary>
+        /// The Graphics Feature Status from chrome://gpu/.
+        /// <para/>
+        /// Note: This information is only usable after the gpu-info-update event is emitted.
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// </summary>
+        public Task<GPUInfo> GetGpuInfoAsync(GpuInfoType infoType = GpuInfoType.basic, CancellationToken cancellationToken = default) => BridgeConnector.OnResult<GPUInfo>("appGetGpuInfo", "appGetGpuInfoCompleted", cancellationToken, infoType.ToString());
+
+        /// <summary>
         /// Sets the counter badge for current app. Setting the count to 0 will hide the badge.
         /// On macOS it shows on the dock icon. On Linux it only works for Unity launcher.
         /// <para/>

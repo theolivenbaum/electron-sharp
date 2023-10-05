@@ -201,6 +201,10 @@ module.exports = (socket, app, firstTime) => {
         const gpuFeatureStatus = app.getGPUFeatureStatus();
         electronSocket.emit('appGetGpuFeatureStatusCompleted', gpuFeatureStatus);
     });
+    socket.on('appGetGpuInfo', async (infoType) => {
+        const gpuInfo = await app.getGPUInfo(infoType);
+        electronSocket.emit('appGetGpuInfoCompleted', gpuInfo);
+    });
     socket.on('appSetBadgeCount', (count) => {
         const success = app.setBadgeCount(count);
         electronSocket.emit('appSetBadgeCountCompleted', success);
