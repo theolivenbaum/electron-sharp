@@ -108,15 +108,6 @@ namespace ElectronSharp.API
         }
 
         /// <summary>
-        /// Get system printers.
-        /// </summary>
-        /// <returns>printers</returns>
-        public Task<PrinterInfo[]> GetPrintersAsync()
-        {
-            return BridgeConnector.OnResult<PrinterInfo[]>("webContents-getPrinters", "webContents-getPrinters-completed" + Id, Id);
-        }
-
-        /// <summary>
         /// Prints window's web page.
         /// </summary>
         /// <param name="options"></param>

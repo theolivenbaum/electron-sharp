@@ -1,5 +1,5 @@
 variables:
-  PackageVersion: 26.3.0.$(Build.BuildId)
+  PackageVersion: 27.0.0.$(Build.BuildId)
   projectAPI:  './ElectronSharp.API/ElectronSharp.API.csproj'
   projectCLI:  './ElectronSharp.CLI/ElectronSharp.CLI.csproj'
 

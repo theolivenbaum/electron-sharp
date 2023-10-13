@@ -33,11 +33,6 @@ export = (socket: Socket) => {
         }
     });
 
-    socket.on('webContents-getPrinters', async (id) => {
-        const printers = await getWindowById(id).webContents.getPrinters();
-        electronSocket.emit('webContents-getPrinters-completed' + id, printers);
-    });
-
     socket.on('webContents-print', async (id, options = {}) => {
         await getWindowById(id).webContents.print(options);
         electronSocket.emit('webContents-print-completed' + id, true);

@@ -15,5 +15,7 @@ namespace ElectronSharp.API.Entities
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public DevToolsMode Mode { get; set; }
+
+        public string Title { get; set; }
     }
 }
