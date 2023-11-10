@@ -7,6 +7,7 @@ const {imageSize} = require('image-size');
 const {connect} = require('http2');
 const crypto = require('crypto');
 const fs = require('fs');
+const os = require("os");
 
 fixPath(); //For macOS and Linux packaged-apps, the path variable might be missing
 
@@ -39,23 +40,23 @@ if (app.commandLine.hasSwitch('manifest')) {
 if (app.commandLine.hasSwitch('watch')) {
     watchable = true;
 }
-;
 
 if (app.commandLine.hasSwitch('development')) {
     development = true;
 }
-;
 
-let currentBinPath1 = path.join(__dirname.replace('app.asar', ''), 'bin');
+const arch =  os.arch();
 
-let currentBinPath2 = path.join(__dirname.replace('app.asar', ''), '..', 'Helpers', 'bin');
+let currentBinPath = path.join(__dirname.replace('app.asar', ''), 'bin');
 
-let currentBinPath = currentBinPath1;
-
-if (fs.existsSync(currentBinPath1)) {
-    currentBinPath = currentBinPath1;
-} else if (fs.existsSync(currentBinPath2)) {
-    currentBinPath = currentBinPath2;
+if (fs.existsSync(path.join(__dirname.replace('app.asar', ''), 'bin'))) {
+    currentBinPath = path.join(__dirname.replace('app.asar', ''), 'bin');
+} else if (fs.existsSync(path.join(__dirname.replace('app.asar', ''), '..', 'Helpers', 'bin'))) {
+    currentBinPath = path.join(__dirname.replace('app.asar', ''), '..', 'Helpers', 'bin');
+} else if (fs.existsSync(path.join(__dirname.replace('app.asar', ''), 'bin-' + arch))) {
+    currentBinPath = path.join(__dirname.replace('app.asar', ''), 'bin-' + arch);
+} else {
+    throw new Error("bin path not found");
 }
 
 let manifestJsonFilePath = path.join(currentBinPath, manifestJsonFileName);

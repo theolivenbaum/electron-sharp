@@ -17,10 +17,10 @@
     },
     "run from csharp": {
       "commandName": "Project",
+      "workingDirectory": ".",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:50395/",
       "hotReloadEnabled": false
     }
   },

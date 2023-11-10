@@ -16,7 +16,11 @@ namespace ElectronSharp.SampleApp
         {
             IWebHostBuilder builder;
 
+            Console.WriteLine("args: " + string.Join(" ", args));
+
+
 #if DEBUG
+            Console.WriteLine("Running as DEBUG");
             var previousProcesses = Process.GetProcessesByName("electron");
 
             foreach (var p in previousProcesses)
@@ -40,10 +44,21 @@ namespace ElectronSharp.SampleApp
 
             builder.UseUrls("http://localhost:" + webPort);
 #else
+            Console.WriteLine("Running as RELEASE1");
+
             builder = CreateWebHostBuilder(args);
-            Debugger.Launch();
+
+            Console.WriteLine("Running as RELEASE2");
+
+//            Debugger.Launch();
+            Console.WriteLine("Running as RELEASE3");
+
             Electron.ReadAuth();
+            Console.WriteLine("Running as RELEASE4");
+
             builder.UseElectron(args);
+            Console.WriteLine("Running as RELEASE5");
+
 #endif
 
             await builder.Build().RunAsync();

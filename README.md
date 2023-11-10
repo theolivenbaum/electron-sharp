@@ -8,7 +8,7 @@ ElectronSharp is a __wrapper__ around a "normal" Electron application with an em
 
 The CLI extensions hosts the toolset to build and start ElectronSharp-based applications.
 
-ElectronSharp is a hard fork from the original [Electron.NET](https://github.com/ElectronNET/Electron.NET) project, mantained by [me](https://github.com/theolivenbaum) and used to build the [Curiosity](https://curiosity.ai) app.
+ElectronSharp is a hard fork from the original [Electron.NET](https://github.com/ElectronSharp/Electron.NET) project, mantained by [me](https://github.com/theolivenbaum) and used to build the [Curiosity](https://curiosity.ai) app.
 
 
 ## 📦 NuGet:
@@ -26,7 +26,7 @@ Also you should have installed:
 
 ## 👩‍🏫 Usage
 
-To activate and communicate with the Electron API, include the [ElectronNET.API NuGet package](https://www.nuget.org/packages/ElectronNET.API/) in your ASP.NET Core app. Check out the Electron.SampleApp for an example of how to use ElectronSharp.
+To activate and communicate with the Electron API, include the [ElectronSharp.API NuGet package](https://www.nuget.org/packages/ElectronSharp.API/) in your ASP.NET Core app. Check out the Electron.SampleApp for an example of how to use ElectronSharp.
 
 ````
 PM> Install-Package ElectronSharp.API
@@ -138,12 +138,12 @@ The end result should be an electron app under your __/bin/desktop__ folder.
 ### Note
 > macOS builds can't be created on Windows machines because they require symlinks that aren't supported on Windows (per [this Electron issue](https://github.com/electron-userland/electron-packager/issues/71)). macOS builds can be produced on either Linux or macOS machines.
 
-## 👨‍💻 Original ([Electron.NET](https://github.com/ElectronNET/Electron.NET)) Authors 
+## 👨‍💻 Original ([Electron.NET](https://github.com/ElectronSharp/Electron.NET)) Authors 
 
 * **Gregor Biswanger** - (Microsoft MVP, Intel Black Belt and Intel Software Innovator) is a freelance lecturer, consultant, trainer, author and speaker. He is a consultant for large and medium-sized companies, organizations and agencies for software architecture, web- and cross-platform development. You can find Gregor often on the road attending or speaking at international conferences. - [Cross-Platform-Blog](http://www.cross-platform-blog.com) - Twitter [@BFreakout](https://www.twitter.com/BFreakout)  
 * **Robert Muehsig** - Software Developer - from Dresden, Germany, now living & working in Switzerland. Microsoft MVP & Web Geek. - [codeinside Blog](https://blog.codeinside.eu) - Twitter [@robert0muehsig](https://twitter.com/robert0muehsig)  
   
-See also the list of [contributors](https://github.com/ElectronNET/Electron.NET/graphs/contributors) who participated in the original project.
+See also the list of [contributors](https://github.com/ElectronSharp/Electron.NET/graphs/contributors) who participated in the original project.
   
   
 ## 🙋‍♀️🙋‍♂ Contributing

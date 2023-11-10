@@ -29,6 +29,7 @@ namespace ElectronSharp.CLI.Commands
         private const string _paramDotNetConfig     = "dotnet-configuration";
         private const string _paramTarget           = "target";
         private const string _buildInsteadOfPublish = "simple-build";
+        private const string _paramBinFolderName    = "binFolderName";
 
         public Task<bool> ExecuteAsync()
         {
@@ -70,7 +71,15 @@ namespace ElectronSharp.CLI.Commands
                     Directory.CreateDirectory(tempPath);
                 }
 
-                string tempBinPath = Path.GetFullPath(Path.Combine(tempPath, "bin"));
+
+                string binFolderName = "bin";
+
+                if (parser.Arguments.ContainsKey(_paramBinFolderName) && parser.Arguments[_paramBinFolderName].Length > 0)
+                {
+                    binFolderName = parser.Arguments[_paramBinFolderName].First();
+                }
+
+                string tempBinPath = Path.GetFullPath(Path.Combine(tempPath, binFolderName));
 
                 var dotNetPublishFlags = BuildCommand.GetDotNetPublishFlags(parser, "false", "false");
 

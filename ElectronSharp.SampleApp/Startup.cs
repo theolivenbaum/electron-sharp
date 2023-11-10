@@ -63,8 +63,6 @@ namespace ElectronSharp.SampleApp
 
             browserWindow.OnReadyToShow += () => browserWindow.Show();
             browserWindow.SetTitle(Configuration["DemoTitleInSettings"]);
-
-            System.Console.WriteLine("\n\n\n" + System.Text.Json.JsonSerializer.Serialize(await Electron.App.GetGpuInfoAsync(GpuInfoType.complete), new System.Text.Json.JsonSerializerOptions() { WriteIndented = true }) + "\n\n\n");
         }
 
         private static void AddDevelopmentTests()

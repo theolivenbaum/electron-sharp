@@ -1,5 +1,8 @@
 {
-  "executable": "ElectronNET.WebApp",
+  "executable": "ElectronSharp.SampleApp",
+  "detachedProcess": true,
+  "electronPort": "random",
+  "aspCoreBackendPort": "random",
   "splashscreen2": {
     "imageFile": "/wwwroot/assets/img/about@2x.png"
   },
@@ -7,7 +10,7 @@
   "singleInstance": false,
   "build": {
     "appId": "com.electronnetapidemos.app",
-    "productName": "ElectronNET API Demos",
+    "productName": "ElectronSharp API Demos",
     "copyright": "Copyright � 2019-2021",
     "buildVersion": "13.5.1",
     "compression": "maximum",
@@ -16,7 +19,7 @@
       "publish": [
         {
           "provider": "github",
-          "owner": "ElectronNET",
+          "owner": "ElectronSharp",
           "repo": "electron.net-api-demos",
           "token": ">> Insert GH_TOKEN here! <<"
         }
@@ -30,6 +33,20 @@
       {
         "from": "./bin",
         "to": "bin",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "./bin-arm64",
+        "to": "bin-arm64",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "./bin-x64",
+        "to": "bin-x64",
         "filter": [
           "**/*"
         ]

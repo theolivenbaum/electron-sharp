@@ -2,12 +2,23 @@
   "profiles": {
     "Build Test App": {
       "commandName": "Project",
-      "commandLineArgs": "build /target win /PublishSingleFile false /PublishReadyToRun false",
+      "commandLineArgs": "start /target osx-arm64 /simple-build true /electron-arch arm64 /PublishSingleFile false /PublishReadyToRun false /p:TargetFramework=net7.0 /p:RuntimeIdentifier=osx-arm64 /p:RuntimeIdentifierForExtractor=osx-arm64 /electron-params --publish=never",
+      "workingDirectory": "$(SolutionDir)ElectronSharp.SampleApp"
+    },
+    "Build Test App arm64": {
+      "commandName": "Project",
+      "commandLineArgs": "build /electron-arch arm64 /binFolderName bin-arm64 /target osx.10.14-arm64 /PublishSingleFile false /PublishReadyToRun false /p:WarningLevel=0 /p:TargetFramework=net7.0  /p:UseHardenedRuntime=true /p:RuntimeIdentifier=osx.10.14-arm64 /p:RuntimeIdentifierForExtractor=osx.10.14-arm64 /p:Version=1.0.95  /p:DebugType=None /p:DebugSymbols=false  /p:WarningLevel=2  /electron-params --publish=never",
+      "workingDirectory": "$(SolutionDir)ElectronSharp.SampleApp"
+    },
+    "Build Test App x64": {
+      "commandName": "Project",
+      "commandLineArgs": "build                      /binFolderName bin-x64 /target osx             /PublishSingleFile false /PublishReadyToRun false /p:WarningLevel=0 /p:TargetFramework=net7.0  /p:UseHardenedRuntime=true /p:RuntimeIdentifier=osx-x64         /p:RuntimeIdentifierForExtractor=osx-x64         /p:Version=1.0.988 /p:DebugType=None /p:DebugSymbols=false  /p:WarningLevel=2 /electron-params --publish=never\n",
       "workingDirectory": "$(SolutionDir)ElectronSharp.SampleApp"
     },
     "Start Test App": {
       "commandName": "Project",
-      "commandLineArgs": "start /project-path \"$(SolutionDir)ElectronSharp.SampleApp\""
+      "commandLineArgs": "start /target      osx-arm64      /simple-build      true      /electron-arch      arm64      /PublishSingleFile      false      /PublishReadyToRun      false      /p:TargetFramework=net7.0      /p:RuntimeIdentifier=osx-arm64      /p:RuntimeIdentifierForExtractor=osx-arm64      /electron-params      --publish=never",
+      "workingDirectory": "$(SolutionDir)ElectronSharp.SampleApp"
     }
   }
 }

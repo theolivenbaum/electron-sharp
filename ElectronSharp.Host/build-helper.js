@@ -1,13 +1,30 @@
 const manifestFileName = process.argv[2];
+
+let binFolderName = "bin"
+let argBuildVersion = null
+
+if (process.argv.length > 3) {
+    for (const val of process.argv.slice(3)) {
+        if (val.startsWith("binFolderName")) {
+            binFolderName = val.substring("binFolderName=".length)
+        } else {
+            argBuildVersion = val;
+        }
+    }
+}
+
+
 // @ts-ignore
-const manifestFile = require('./bin/' + manifestFileName);
+const manifestFile = require('./' + binFolderName + '/' + manifestFileName);
 const dasherize = require('dasherize');
 const fs = require('fs');
 
 const builderConfiguration = {...manifestFile.build};
-if (process.argv.length > 3) {
-    builderConfiguration.buildVersion = process.argv[3];
+
+if (argBuildVersion !== null) {
+    builderConfiguration.buildVersion = argBuildVersion;
 }
+
 if (builderConfiguration.hasOwnProperty('buildVersion')) {
     // @ts-ignore
     const packageJson = require('./package');
@@ -39,14 +56,14 @@ if (builderConfiguration.hasOwnProperty('buildVersion')) {
 }
 
 const builderConfigurationString = JSON.stringify(builderConfiguration);
-fs.writeFile('./bin/electron-builder.json', builderConfigurationString, (error) => {
+fs.writeFile('./' + binFolderName + '/electron-builder.json', builderConfigurationString, (error) => {
     if (error) {
         console.log(error.message);
     }
 });
 
 const manifestContent = JSON.stringify(manifestFile);
-fs.writeFile('./bin/electron.manifest.json', manifestContent, (error) => {
+fs.writeFile('./' + binFolderName + '/electron.manifest.json', manifestContent, (error) => {
     if (error) {
         console.log(error.message);
     }

@@ -52,6 +52,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
         private const string _paramPublishReadyToRun = "PublishReadyToRun";
         private const string _paramPublishSingleFile = "PublishSingleFile";
         private const string _paramVersion           = "Version";
+        private const string _paramBinFolderName     = "binFolderName";
 
         public Task<bool> ExecuteAsync()
         {
@@ -107,9 +108,17 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                 }
 
 
+                string binFolderName = "bin";
+
+                if (parser.Arguments[_paramBinFolderName].Length > 0)
+                {
+                    binFolderName = parser.Arguments[_paramBinFolderName][0];
+                }
+
+
                 Console.WriteLine("Executing dotnet publish in this directory: " + tempPath);
 
-                string tempBinPath = Path.Combine(tempPath, "bin");
+                string tempBinPath = Path.Combine(tempPath, binFolderName);
 
                 Console.WriteLine($"Build ASP.NET Core App for {platformInfo.NetCorePublishRid} under {configuration}-Configuration...");
 
@@ -168,7 +177,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                 Console.WriteLine("Build Electron Desktop Application...");
 
                 // Specifying an absolute path supercedes a relative path
-                string buildPath = Path.Combine(Directory.GetCurrentDirectory(), "bin", "desktop");
+                string buildPath = Path.Combine(Directory.GetCurrentDirectory(), binFolderName, "desktop");
 
                 if (parser.Arguments.ContainsKey(_paramAbsoluteOutput))
                 {
@@ -243,13 +252,13 @@ Full example for a 32bit debug build with electron prune: build /target custom w
 
                 ProcessHelper.CmdExecute(
                     string.IsNullOrWhiteSpace(version)
-                        ? $"node build-helper.js {manifestFileName}"
-                        : $"node build-helper.js {manifestFileName} {version}", tempPath);
+                        ? $"node build-helper.js {manifestFileName} binFolderName={binFolderName}"
+                        : $"node build-helper.js {manifestFileName} {version} binFolderName={binFolderName}", tempPath);
 
                 Console.WriteLine($"Package Electron App for Platform {platformInfo.ElectronPackerPlatform}...");
 
 
-                ProcessHelper.CmdExecute($"npx electron-builder --config=./bin/electron-builder.json --{platformInfo.ElectronPackerPlatform} --{electronArch} -c.electronVersion={electronVersion} {electronParams}", tempPath);
+                ProcessHelper.CmdExecute($"npx electron-builder --config=./{binFolderName}/electron-builder.json --{platformInfo.ElectronPackerPlatform} --{electronArch} -c.electronVersion={electronVersion} {electronParams}", tempPath);
 
                 Console.WriteLine("... done");
 
