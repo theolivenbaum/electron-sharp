@@ -9,16 +9,19 @@ namespace ElectronSharp.SampleApp.Controllers
     {
         public IActionResult Index()
         {
-            if(HybridSupport.IsElectronActive)
+            if (HybridSupport.IsElectronActive)
             {
-                Electron.IpcMain.On("select-directory", async (args) => {
+                Electron.IpcMain.On("select-directory", async (args) =>
+                {
                     var mainWindow = Electron.WindowManager.BrowserWindows.First();
+
                     var options = new OpenDialogOptions
                     {
-                        Properties = new OpenDialogProperty[] {
-                        OpenDialogProperty.openFile,
-                        OpenDialogProperty.openDirectory
-                    }
+                        Properties = new OpenDialogProperty[]
+                        {
+                            OpenDialogProperty.openFile,
+                            OpenDialogProperty.openDirectory
+                        }
                     };
 
                     string[] files = await Electron.Dialog.ShowOpenDialogAsync(mainWindow, options);
@@ -34,8 +37,8 @@ namespace ElectronSharp.SampleApp.Controllers
                 {
                     var options = new MessageBoxOptions("This is an information dialog. Isn't it nice?")
                     {
-                        Type = MessageBoxType.info,
-                        Title = "Information",
+                        Type    = MessageBoxType.info,
+                        Title   = "Information",
                         Buttons = new string[] { "Yes", "No" }
                     };
 
@@ -48,12 +51,13 @@ namespace ElectronSharp.SampleApp.Controllers
                 Electron.IpcMain.On("save-dialog", async (args) =>
                 {
                     var mainWindow = Electron.WindowManager.BrowserWindows.First();
+
                     var options = new SaveDialogOptions
                     {
                         Title = "Save an Image",
                         Filters = new FileFilter[]
                         {
-                        new FileFilter { Name = "Images", Extensions = new string[] {"jpg", "png", "gif" } }
+                            new FileFilter { Name = "Images", Extensions = new string[] { "jpg", "png", "gif" } }
                         }
                     };
 

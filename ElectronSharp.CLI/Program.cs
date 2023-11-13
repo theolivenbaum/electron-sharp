@@ -19,7 +19,7 @@ namespace ElectronSharp.CLI
                 Environment.Exit(-1);
             }
 
-            Console.CancelKeyPress += (s,e) =>
+            Console.CancelKeyPress += (s, e) =>
             {
                 ProcessHelper.KillActive();
                 Environment.Exit(-1);
@@ -64,6 +64,7 @@ namespace ElectronSharp.CLI
             if (command != null)
             {
                 var success = await command.ExecuteAsync();
+
                 if (!success)
                 {
                     Environment.Exit(-1);
@@ -73,8 +74,9 @@ namespace ElectronSharp.CLI
 
         private static void PrintUsageHeader()
         {
-            var sb = new StringBuilder("ElectronSharp Tools");
+            var sb      = new StringBuilder("ElectronSharp Tools");
             var version = Version;
+
             if (!string.IsNullOrEmpty(version))
             {
                 sb.Append($" ({version})");
@@ -167,15 +169,18 @@ namespace ElectronSharp.CLI
             const int SWITCH_COLUMN_WIDTH = 40;
 
             Console.WriteLine($"{new string(' ', INDENT)}Options:");
+
             foreach (var option in options)
             {
                 StringBuilder stringBuilder = new StringBuilder();
+
                 if (option.ShortSwitch != null)
                 {
                     stringBuilder.Append($"{option.ShortSwitch,-6} | ");
                 }
 
                 stringBuilder.Append($"{option.Switch}");
+
                 if (stringBuilder.Length < SWITCH_COLUMN_WIDTH)
                 {
                     stringBuilder.Append(new string(' ', SWITCH_COLUMN_WIDTH - stringBuilder.Length));
@@ -193,6 +198,7 @@ namespace ElectronSharp.CLI
             get
             {
                 AssemblyInformationalVersionAttribute attribute = null;
+
                 try
                 {
                     attribute = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>();

@@ -53,6 +53,7 @@ namespace ElectronSharp.API
                 }
 
                 var mainFileJs = Path.Combine(tempPath, "main.js");
+
                 if (!File.Exists(mainFileJs))
                 {
                     throw new Exception("You need to run once the electron-sharp start command to bootstrap the necessary files");
@@ -109,8 +110,8 @@ namespace ElectronSharp.API
 
                 arguments += $" --development=true --devauth={BridgeConnector.AuthKey} --devport={socketPort}";
 
-                string path = Path.Combine(tempPath, "node_modules", ".bin");
-                bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+                string path      = Path.Combine(tempPath, "node_modules", ".bin");
+                bool   isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
                 if (isWindows)
                 {
@@ -123,7 +124,7 @@ namespace ElectronSharp.API
 
                 BridgeSettings.InitializePorts(socketPort, webPort);
                 await Task.Delay(500);
-                
+
                 return socketPort;
             }
 

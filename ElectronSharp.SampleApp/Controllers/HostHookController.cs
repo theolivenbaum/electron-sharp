@@ -14,9 +14,10 @@ namespace ElectronSharp.SampleApp.Controllers
                 Electron.IpcMain.On("start-hoosthook", async (args) =>
                 {
                     var mainWindow = Electron.WindowManager.BrowserWindows.First();
+
                     var options = new OpenDialogOptions
                     {
-                        Properties = new OpenDialogProperty[] 
+                        Properties = new OpenDialogProperty[]
                         {
                             OpenDialogProperty.openDirectory
                         }

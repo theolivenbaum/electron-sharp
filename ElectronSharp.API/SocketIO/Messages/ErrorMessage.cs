@@ -32,10 +32,11 @@ namespace SocketIOClient.Messages
             else
             {
                 int index = msg.IndexOf('{');
+
                 if (index > 0)
                 {
                     Namespace = msg.Substring(0, index - 1);
-                    msg = msg.Substring(index);
+                    msg       = msg.Substring(index);
                 }
                 var doc = JsonDocument.Parse(msg);
                 Message = doc.RootElement.GetProperty("message").GetString();

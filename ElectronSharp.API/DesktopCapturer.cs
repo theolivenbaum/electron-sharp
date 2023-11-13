@@ -6,8 +6,8 @@ namespace ElectronSharp.API
 {
     public sealed class DesktopCapturer
     {
-        private static readonly object _syncRoot = new();
-        private static DesktopCapturer _desktopCapturer;
+        private static readonly object          _syncRoot = new();
+        private static          DesktopCapturer _desktopCapturer;
 
         internal DesktopCapturer() { }
 
@@ -30,7 +30,7 @@ namespace ElectronSharp.API
             }
         }
 
-        public async Task<DesktopCapturerSource[]> GetSourcesAsync(SourcesOption option) 
+        public async Task<DesktopCapturerSource[]> GetSourcesAsync(SourcesOption option)
         {
             return await BridgeConnector.OnResult<DesktopCapturerSource[]>("desktop-capturer-get-sources", "desktop-capturer-get-sources-result", option);
         }

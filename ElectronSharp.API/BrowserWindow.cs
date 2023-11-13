@@ -922,8 +922,9 @@ namespace ElectronSharp.API
 
         private event Action _newWindowForTab;
 
-        internal BrowserWindow(int id) {
-            Id = id;
+        internal BrowserWindow(int id)
+        {
+            Id          = id;
             WebContents = new WebContents(id);
         }
 
@@ -1088,7 +1089,7 @@ namespace ElectronSharp.API
         {
             BridgeConnector.Emit("browserWindowSetFullScreen", Id, flag);
         }
-        
+
         /// <summary>
         /// Sets whether the background color of the window
         /// </summary>
@@ -1775,7 +1776,8 @@ namespace ElectronSharp.API
             _items.AddRange(menuItems);
 
             BridgeConnector.Off("windowMenuItemClicked");
-            BridgeConnector.On<string>("windowMenuItemClicked", (id) => 
+
+            BridgeConnector.On<string>("windowMenuItemClicked", (id) =>
             {
                 MenuItem menuItem = _items.GetMenuItem(id);
                 menuItem?.Click();
@@ -1830,7 +1832,6 @@ namespace ElectronSharp.API
         /// Sets whether the window should have a shadow. On Windows and Linux does nothing.
         /// </summary>
         /// <param name="hasShadow"></param>
-
         [SupportedOSPlatform("macos")]
         public void SetHasShadow(bool hasShadow)
         {
@@ -1875,7 +1876,7 @@ namespace ElectronSharp.API
         {
             var taskCompletionSource = new TaskCompletionSource<bool?>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            BridgeConnector.On<bool?>("browserWindowSetThumbarButtons-completed" + Id, (success) => 
+            BridgeConnector.On<bool?>("browserWindowSetThumbarButtons-completed" + Id, (success) =>
             {
                 BridgeConnector.Off("browserWindowSetThumbarButtons-completed" + Id);
 
@@ -1888,7 +1889,8 @@ namespace ElectronSharp.API
             _thumbarButtons.AddRange(thumbarButtons);
 
             BridgeConnector.Off("thumbarButtonClicked");
-            BridgeConnector.On<string>("thumbarButtonClicked", (id) => 
+
+            BridgeConnector.On<string>("thumbarButtonClicked", (id) =>
             {
                 ThumbarButton thumbarButton = _thumbarButtons.GetThumbarButton(id);
                 thumbarButton?.Click();
@@ -2201,7 +2203,7 @@ namespace ElectronSharp.API
 
         private static readonly JsonSerializer _jsonSerializer = new()
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            ContractResolver  = new CamelCasePropertyNamesContractResolver(),
             NullValueHandling = NullValueHandling.Ignore
         };
     }

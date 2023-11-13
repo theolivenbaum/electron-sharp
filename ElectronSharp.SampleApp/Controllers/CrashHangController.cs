@@ -15,12 +15,13 @@ namespace ElectronSharp.SampleApp.Controllers
                     string viewPath = $"http://localhost:{BridgeSettings.WebPort}/crashhang/processcrash";
 
                     var browserWindow = await Electron.WindowManager.CreateWindowAsync(viewPath);
+
                     browserWindow.WebContents.OnCrashed += async (killed) =>
                     {
                         var options = new MessageBoxOptions("This process has crashed.")
                         {
-                            Type = MessageBoxType.info,
-                            Title = "Renderer Process Crashed",
+                            Type    = MessageBoxType.info,
+                            Title   = "Renderer Process Crashed",
                             Buttons = new string[] { "Reload", "Close" }
                         };
                         var result = await Electron.Dialog.ShowMessageBoxAsync(options);
@@ -41,12 +42,13 @@ namespace ElectronSharp.SampleApp.Controllers
                     string viewPath = $"http://localhost:{BridgeSettings.WebPort}/crashhang/processhang";
 
                     var browserWindow = await Electron.WindowManager.CreateWindowAsync(viewPath);
+
                     browserWindow.OnUnresponsive += async () =>
                     {
                         var options = new MessageBoxOptions("This process is hanging.")
                         {
-                            Type = MessageBoxType.info,
-                            Title = "Renderer Process Hanging",
+                            Type    = MessageBoxType.info,
+                            Title   = "Renderer Process Hanging",
                             Buttons = new string[] { "Reload", "Close" }
                         };
                         var result = await Electron.Dialog.ShowMessageBoxAsync(options);

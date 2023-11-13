@@ -4,6 +4,6 @@
     {
         public string[] args { get; set; }
 
-        public string workingDirectory  { get;set;}
+        public string workingDirectory { get; set; }
     }
 }

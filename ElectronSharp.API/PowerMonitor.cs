@@ -20,7 +20,7 @@ namespace ElectronSharp.API
             {
                 if (_lockScreen == null)
                 {
-                    BridgeConnector.On("pm-lock-screen" , () =>
+                    BridgeConnector.On("pm-lock-screen", () =>
                     {
                         _lockScreen();
                     });
@@ -204,7 +204,6 @@ namespace ElectronSharp.API
         /// </summary>
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("macos")]
-
         public event Action OnShutdown
         {
             add
@@ -231,8 +230,8 @@ namespace ElectronSharp.API
 
         private event Action _shutdown;
 
-        private static PowerMonitor _powerMonitor;
-        private static readonly object _syncRoot = new();
+        private static          PowerMonitor _powerMonitor;
+        private static readonly object       _syncRoot = new();
 
         internal PowerMonitor() { }
 

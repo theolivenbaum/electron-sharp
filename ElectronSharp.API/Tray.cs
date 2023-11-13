@@ -13,7 +13,6 @@ namespace ElectronSharp.API
     /// <summary>
     /// Add icons and context menus to the system's notification area.
     /// </summary>
-    
     [SupportedOSPlatform("macos")]
     [SupportedOSPlatform("windows")]
     public sealed class Tray
@@ -173,7 +172,6 @@ namespace ElectronSharp.API
         /// Windows: Emitted when the tray balloon is closed 
         /// because of timeout or user manually closes it.
         /// </summary>
-
         [SupportedOSPlatform("windows")]
         public event Action OnBalloonClosed
         {
@@ -203,7 +201,7 @@ namespace ElectronSharp.API
 
         // TODO: Implement macOS Events
 
-        private static Tray _tray;
+        private static          Tray   _tray;
         private static readonly object _syncRoot = new();
 
         internal Tray() { }
@@ -259,6 +257,7 @@ namespace ElectronSharp.API
             _items.AddRange(menuItems);
 
             BridgeConnector.Off("trayMenuItemClicked");
+
             BridgeConnector.On<string>("trayMenuItemClicked", (id) =>
             {
                 MenuItem menuItem = _items.GetMenuItem(id.ToString());
@@ -370,7 +369,7 @@ namespace ElectronSharp.API
 
         private readonly JsonSerializer _jsonSerializer = new()
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            ContractResolver  = new CamelCasePropertyNamesContractResolver(),
             NullValueHandling = NullValueHandling.Ignore
         };
     }

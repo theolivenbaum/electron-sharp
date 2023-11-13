@@ -44,7 +44,7 @@ namespace ElectronSharp.API
                 if (Directory.Exists($"{AppDomain.CurrentDomain.BaseDirectory}\\wwwroot"))
                 {
                     builder.UseContentRoot(AppDomain.CurrentDomain.BaseDirectory)
-                        .UseUrls("http://localhost:" + BridgeSettings.WebPort);
+                       .UseUrls("http://localhost:" + BridgeSettings.WebPort);
                 }
                 else
                 {

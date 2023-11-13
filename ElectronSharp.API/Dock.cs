@@ -16,7 +16,7 @@ namespace ElectronSharp.API
     [SupportedOSPlatform("macos")]
     public sealed class Dock
     {
-        private static Dock _dock;
+        private static          Dock   _dock;
         private static readonly object _syncRoot = new();
 
         internal Dock()
@@ -144,7 +144,9 @@ namespace ElectronSharp.API
             _items.AddRange(menuItems);
 
             BridgeConnector.Off("dockMenuItemClicked");
-            BridgeConnector.On<string>("dockMenuItemClicked", (id) => {
+
+            BridgeConnector.On<string>("dockMenuItemClicked", (id) =>
+            {
                 MenuItem menuItem = _items.GetMenuItem(id);
                 menuItem?.Click();
             });
@@ -167,7 +169,7 @@ namespace ElectronSharp.API
 
         private static readonly JsonSerializer _jsonSerializer = new()
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            ContractResolver  = new CamelCasePropertyNamesContractResolver(),
             NullValueHandling = NullValueHandling.Ignore
         };
     }

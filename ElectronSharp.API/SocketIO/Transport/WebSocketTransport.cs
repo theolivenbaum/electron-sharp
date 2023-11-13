@@ -13,23 +13,24 @@ namespace SocketIOClient.Transport
         public WebSocketTransport(IClientWebSocket ws, SocketIOOptions options, IJsonSerializer jsonSerializer, ILogger logger)
             : base(options, jsonSerializer, logger)
         {
-            _ws = ws;
+            _ws       = ws;
             _sendLock = new SemaphoreSlim(1, 1);
             _ws.TextObservable.Subscribe(this);
             _ws.BytesObservable.Subscribe(this);
         }
 
         const int ReceiveChunkSize = 1024 * 8;
-        const int SendChunkSize = 1024 * 8;
+        const int SendChunkSize    = 1024 * 8;
 
         readonly IClientWebSocket _ws;
-        readonly SemaphoreSlim _sendLock;
+        readonly SemaphoreSlim    _sendLock;
 
         private async Task SendAsync(TransportMessageType type, byte[] bytes, CancellationToken cancellationToken)
         {
             try
             {
                 await _sendLock.WaitAsync().ConfigureAwait(false);
+
                 if (type == TransportMessageType.Binary && Options.EIO == 3)
                 {
                     byte[] buffer = new byte[bytes.Length + 1];
@@ -38,10 +39,12 @@ namespace SocketIOClient.Transport
                     bytes = buffer;
                 }
                 int pages = (int)Math.Ceiling(bytes.Length * 1.0 / SendChunkSize);
+
                 for (int i = 0; i < pages; i++)
                 {
                     int offset = i * SendChunkSize;
                     int length = SendChunkSize;
+
                     if (offset + length > bytes.Length)
                     {
                         length = bytes.Length - offset;
@@ -72,6 +75,7 @@ namespace SocketIOClient.Transport
         {
             byte[] bytes = Encoding.UTF8.GetBytes(payload.Text);
             await SendAsync(TransportMessageType.Text, bytes, cancellationToken);
+
             if (payload.Bytes != null)
             {
                 foreach (var item in payload.Bytes)

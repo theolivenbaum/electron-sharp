@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ElectronSharp.API.Entities 
+namespace ElectronSharp.API.Entities
 {
     /// <summary>
     /// 
     /// </summary>
-    public class CookieFilter 
+    public class CookieFilter
     {
         /// <summary>
         /// (optional) - Retrieves cookies which are associated with url.Empty implies retrieving cookies of all URLs.

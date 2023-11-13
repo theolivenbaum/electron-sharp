@@ -25,7 +25,7 @@ namespace ElectronSharp.API
 
             var line = Console.ReadLine();
 
-            if(line.StartsWith("Auth="))
+            if (line.StartsWith("Auth="))
             {
                 BridgeConnector.AuthKey = line.Substring("Auth=".Length);
             }
@@ -40,9 +40,10 @@ namespace ElectronSharp.API
         /// </summary>
         public static ILoggerFactory LoggerFactory
         {
-            private get => loggerFactory; set
+            private get => loggerFactory;
+            set
             {
-                loggerFactory = value;
+                loggerFactory          = value;
                 BridgeConnector.Logger = value.CreateLogger<App>();
             }
         }

@@ -86,7 +86,7 @@ namespace ElectronSharp.API
 
         internal WebContents(int id)
         {
-            Id = id;
+            Id      = id;
             Session = new Session(id);
         }
 
@@ -112,8 +112,9 @@ namespace ElectronSharp.API
         /// </summary>
         /// <param name="options"></param>
         /// <returns>success</returns>
-        public Task<bool> PrintAsync(PrintOptions options = null) => options is null ? BridgeConnector.OnResult<bool>("webContents-print", "webContents-print-completed" + Id, Id, "")
-                                                                                     : BridgeConnector.OnResult<bool>("webContents-print", "webContents-print-completed" + Id, Id, options);
+        public Task<bool> PrintAsync(PrintOptions options = null) => options is null
+            ? BridgeConnector.OnResult<bool>("webContents-print", "webContents-print-completed" + Id, Id, "")
+            : BridgeConnector.OnResult<bool>("webContents-print", "webContents-print-completed" + Id, Id, options);
 
         /// <summary>
         /// Prints window's web page as PDF with Chromium's preview printing custom
@@ -124,8 +125,9 @@ namespace ElectronSharp.API
         /// <param name="path"></param>
         /// <param name="options"></param>
         /// <returns>success</returns>
-        public Task<bool> PrintToPDFAsync(string path, PrintToPDFOptions options = null) => options is null ? BridgeConnector.OnResult<bool>("webContents-printToPDF", "webContents-printToPDF-completed" + Id, Id, "", path)
-                                                                                                            : BridgeConnector.OnResult<bool>("webContents-printToPDF", "webContents-printToPDF-completed" + Id, Id, options, path);
+        public Task<bool> PrintToPDFAsync(string path, PrintToPDFOptions options = null) => options is null
+            ? BridgeConnector.OnResult<bool>("webContents-printToPDF", "webContents-printToPDF-completed" + Id, Id, "", path)
+            : BridgeConnector.OnResult<bool>("webContents-printToPDF", "webContents-printToPDF-completed" + Id, Id, options, path);
 
         /// <summary>
         /// Is used to get the Url of the loaded page.
@@ -177,7 +179,7 @@ namespace ElectronSharp.API
         /// <param name="url"></param>
         /// <param name="options"></param>
         public Task LoadURLAsync(string url, LoadURLOptions options)
-        {  
+        {
             var taskCompletionSource = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
 
             BridgeConnector.On("webContents-loadURL-complete" + Id, () =>

@@ -14,6 +14,7 @@ namespace SocketIOClient.Transport
         public override async Task PostAsync(string uri, IEnumerable<byte[]> bytes, CancellationToken cancellationToken)
         {
             var list = new List<byte>();
+
             foreach (var item in bytes)
             {
                 list.Add(1);
@@ -31,6 +32,7 @@ namespace SocketIOClient.Transport
         private List<int> SplitInt(int number)
         {
             List<int> list = new List<int>();
+
             while (number > 0)
             {
                 list.Add(number % 10);
@@ -43,13 +45,16 @@ namespace SocketIOClient.Transport
         protected override void ProduceText(string text)
         {
             int p = 0;
+
             while (true)
             {
                 int index = text.IndexOf(':', p);
+
                 if (index == -1)
                 {
                     break;
                 }
+
                 if (int.TryParse(text.Substring(p, index - p), out int length))
                 {
                     string msg = text.Substring(index + 1, length);
@@ -60,6 +65,7 @@ namespace SocketIOClient.Transport
                     break;
                 }
                 p = index + length + 1;
+
                 if (p >= text.Length)
                 {
                     break;

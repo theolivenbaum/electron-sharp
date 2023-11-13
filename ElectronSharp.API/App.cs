@@ -140,7 +140,7 @@ namespace ElectronSharp.API
             {
                 _windowAllClosed -= value;
 
-                if(_windowAllClosed == null)
+                if (_windowAllClosed == null)
                     BridgeConnector.Off("app-window-all-closed" + GetHashCode());
             }
         }
@@ -283,7 +283,7 @@ namespace ElectronSharp.API
                 {
                     BridgeConnector.On("app-will-quit" + GetHashCode() + "quitting", async () =>
                     {
-                        if(_willQuit == null)
+                        if (_willQuit == null)
                         {
                             await _quitting();
                             Exit();
@@ -457,11 +457,11 @@ namespace ElectronSharp.API
         /// <summary>
         /// Emitted when the application has finished basic startup.
         /// </summary>
-        public event Action Ready 
+        public event Action Ready
         {
             add
             {
-                if(IsReady)
+                if (IsReady)
                 {
                     value();
                 }
@@ -479,14 +479,14 @@ namespace ElectronSharp.API
         /// <summary>
         /// Application host fully started.
         /// </summary>
-        public bool IsReady 
-        { 
+        public bool IsReady
+        {
             get { return _isReady; }
             internal set
             {
                 _isReady = value;
 
-                if(value)
+                if (value)
                 {
                     _ready?.Invoke();
                 }
@@ -603,7 +603,7 @@ namespace ElectronSharp.API
                 {
                     lock (_syncRoot)
                     {
-                        if(_app == null)
+                        if (_app == null)
                         {
                             _app = new App();
                         }
@@ -622,7 +622,7 @@ namespace ElectronSharp.API
             Instance.IsReady = true;
         }
 
-        private static App _app;
+        private static          App    _app;
         private static readonly object _syncRoot = new();
 
         /// <summary>
@@ -1072,11 +1072,12 @@ namespace ElectronSharp.API
         /// should continue loading. And returns true if your process has sent its parameters to another instance, and
         /// you should immediately quit.
         /// </returns>
-        public async Task<bool> RequestSingleInstanceLockAsync(Action<string[], string> newInstanceOpened, CancellationToken cancellationToken = default) 
+        public async Task<bool> RequestSingleInstanceLockAsync(Action<string[], string> newInstanceOpened, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             var taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
             using (cancellationToken.Register(() => taskCompletionSource.TrySetCanceled()))
             {
                 BridgeConnector.On<bool>("appRequestSingleInstanceLockCompleted", (success) =>
@@ -1086,6 +1087,7 @@ namespace ElectronSharp.API
                 });
 
                 BridgeConnector.Off("secondInstance");
+
                 BridgeConnector.On<SecondInstanceResponse>("secondInstance", (result) =>
                 {
                     newInstanceOpened(result.args, result.workingDirectory);
@@ -1149,7 +1151,7 @@ namespace ElectronSharp.API
         /// The type of the currently running activity.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        [SupportedOSPlatform("macos")] 
+        [SupportedOSPlatform("macos")]
         public Task<string> GetCurrentActivityTypeAsync(CancellationToken cancellationToken = default) => BridgeConnector.OnResult<string>("appGetCurrentActivityType", "appGetCurrentActivityTypeCompleted", cancellationToken);
 
 
@@ -1273,8 +1275,9 @@ namespace ElectronSharp.API
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
         public Task<LoginItemSettings> GetLoginItemSettingsAsync(LoginItemSettingsOptions options, CancellationToken cancellationToken = default) =>
-            options is null ? BridgeConnector.OnResult<LoginItemSettings>("appGetLoginItemSettings", "appGetLoginItemSettingsCompleted", cancellationToken)
-                            : BridgeConnector.OnResult<LoginItemSettings>("appGetLoginItemSettings", "appGetLoginItemSettingsCompleted", cancellationToken, JObject.FromObject(options, _jsonSerializer));
+            options is null
+                ? BridgeConnector.OnResult<LoginItemSettings>("appGetLoginItemSettings", "appGetLoginItemSettingsCompleted", cancellationToken)
+                : BridgeConnector.OnResult<LoginItemSettings>("appGetLoginItemSettings", "appGetLoginItemSettingsCompleted", cancellationToken, JObject.FromObject(options, _jsonSerializer));
 
         /// <summary>
         /// Set the app's login item settings.
@@ -1416,7 +1419,7 @@ namespace ElectronSharp.API
         /// If you're using a splashscreen in the electron.manifest.json, the window will ony be fully destroyed once you call this method once.
         /// You should only do this after creating another window, to avoid a bug where the Electron renderer process frezees till any window interaction.
         /// </summary>
-        public void DestroySplashScreen() =>  BridgeConnector.Emit("splashscreen-destroy");
+        public void DestroySplashScreen() => BridgeConnector.Emit("splashscreen-destroy");
 
         private readonly JsonSerializer _jsonSerializer = new()
         {

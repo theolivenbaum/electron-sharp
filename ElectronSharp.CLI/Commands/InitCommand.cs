@@ -11,14 +11,14 @@ namespace ElectronSharp.CLI.Commands
 {
     public class InitCommand : ICommand
     {
-        public const string COMMAND_NAME = "init";
-        public const string COMMAND_DESCRIPTION = "Creates the needed ElectronSharp config for your Electron Application.";
-        public const string COMMAND_ARGUMENTS = "<Path> from ASP.NET Core Project.";
+        public const  string               COMMAND_NAME        = "init";
+        public const  string               COMMAND_DESCRIPTION = "Creates the needed ElectronSharp config for your Electron Application.";
+        public const  string               COMMAND_ARGUMENTS   = "<Path> from ASP.NET Core Project.";
         public static IList<CommandOption> CommandOptions { get; set; } = new List<CommandOption>();
 
-        private static SimpleCommandLineParser _parser = new SimpleCommandLineParser();
-        private static string ConfigName = "electron.manifest.json";
-        private const string DefaultConfigFileName = "electron.manifest.json";
+        private static SimpleCommandLineParser _parser               = new SimpleCommandLineParser();
+        private static string                  ConfigName            = "electron.manifest.json";
+        private const  string                  DefaultConfigFileName = "electron.manifest.json";
 
         public InitCommand(string[] args)
         {
@@ -26,7 +26,7 @@ namespace ElectronSharp.CLI.Commands
         }
 
         private const string _aspCoreProjectPath = "project-path";
-        private const string _manifest = "manifest";
+        private const string _manifest           = "manifest";
 
         public Task<bool> ExecuteAsync()
         {
@@ -37,6 +37,7 @@ namespace ElectronSharp.CLI.Commands
                 if (_parser.Arguments.ContainsKey(_aspCoreProjectPath))
                 {
                     string projectPath = _parser.Arguments[_aspCoreProjectPath].First();
+
                     if (Directory.Exists(projectPath))
                     {
                         aspCoreProjectPath = projectPath;
@@ -49,7 +50,7 @@ namespace ElectronSharp.CLI.Commands
 
                 var currentDirectory = aspCoreProjectPath;
 
-                if(_parser.Arguments.ContainsKey(_manifest))
+                if (_parser.Arguments.ContainsKey(_manifest))
                 {
                     ConfigName = "electron.manifest." + _parser.Arguments[_manifest].First() + ".json";
                     Console.WriteLine($"Adding your custom {ConfigName} config file to your project...");
@@ -72,9 +73,10 @@ namespace ElectronSharp.CLI.Commands
 
                 // search .csproj/.fsproj (.csproj has higher precedence)
                 Console.WriteLine($"Search your .csproj/fsproj to add the needed {ConfigName}...");
+
                 var projectFile = Directory.EnumerateFiles(currentDirectory, "*.csproj", SearchOption.TopDirectoryOnly)
-                    .Union(Directory.EnumerateFiles(currentDirectory, "*.fsproj", SearchOption.TopDirectoryOnly))
-                    .FirstOrDefault();
+                   .Union(Directory.EnumerateFiles(currentDirectory, "*.fsproj", SearchOption.TopDirectoryOnly))
+                   .FirstOrDefault();
 
                 // update config file with the name of the csproj/fsproj
                 // ToDo: If the csproj/fsproj name != application name, this will fail
@@ -114,11 +116,11 @@ namespace ElectronSharp.CLI.Commands
 
             string launchSettingText = File.ReadAllText(launchSettingFile);
 
-            if(_parser.Arguments.ContainsKey(_manifest))
+            if (_parser.Arguments.ContainsKey(_manifest))
             {
                 string manifestName = _parser.Arguments[_manifest].First();
 
-                if(launchSettingText.Contains("start /manifest " + ConfigName) == false)
+                if (launchSettingText.Contains("start /manifest " + ConfigName) == false)
                 {
                     StringBuilder debugProfileBuilder = new StringBuilder();
                     debugProfileBuilder.AppendLine("profiles\": {");
@@ -138,7 +140,7 @@ namespace ElectronSharp.CLI.Commands
                 {
                     Console.WriteLine($"Debug profile already existing");
                 }
-            } 
+            }
             else if (launchSettingText.Contains("\"executablePath\": \"electron-sharp\"") == false)
             {
                 StringBuilder debugProfileBuilder = new StringBuilder();
@@ -168,6 +170,7 @@ namespace ElectronSharp.CLI.Commands
                 var xmlDocument = XDocument.Load(stream);
 
                 var projectElement = xmlDocument.Descendants("Project").FirstOrDefault();
+
                 if (projectElement == null || projectElement.Attribute("Sdk")?.Value != "Microsoft.NET.Sdk.Web")
                 {
                     Console.WriteLine(
@@ -184,10 +187,10 @@ namespace ElectronSharp.CLI.Commands
                 Console.WriteLine($"{ConfigName} will be added to csproj/fsproj.");
 
                 string itemGroupXmlString = "<ItemGroup>" +
-                                            "<Content Update=\"" + ConfigName + "\">" +
-                                            "<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>" +
-                                            "</Content>" +
-                                            "</ItemGroup>";
+                    "<Content Update=\"" + ConfigName + "\">" +
+                    "<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>" +
+                    "</Content>" +
+                    "</ItemGroup>";
 
                 var newItemGroupForConfig = XElement.Parse(itemGroupXmlString);
                 xmlDocument.Root.Add(newItemGroupForConfig);
@@ -198,8 +201,9 @@ namespace ElectronSharp.CLI.Commands
                 var xws = new XmlWriterSettings
                 {
                     OmitXmlDeclaration = true,
-                    Indent = true
+                    Indent             = true
                 };
+
                 using (XmlWriter xw = XmlWriter.Create(stream, xws))
                 {
                     xmlDocument.Save(xw);

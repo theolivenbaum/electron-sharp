@@ -16,6 +16,7 @@ namespace ElectronSharp.CLI.Commands.Actions
             }
 
             var dirs = dir.GetDirectories();
+
             // If the destination directory doesn't exist, create it.
             if (!Directory.Exists(destDirName))
             {
@@ -24,7 +25,7 @@ namespace ElectronSharp.CLI.Commands.Actions
             else
             {
                 var targetDir = new DirectoryInfo(destDirName);
-                
+
                 foreach (var fileDel in targetDir.EnumerateFiles())
                 {
                     fileDel.Delete();
@@ -37,10 +38,9 @@ namespace ElectronSharp.CLI.Commands.Actions
             }
 
 
-
-
             // Get the files in the directory and copy them to the new location.
             var files = dir.GetFiles();
+
             foreach (var file in files)
             {
                 string temppath = Path.Combine(destDirName, file.Name);

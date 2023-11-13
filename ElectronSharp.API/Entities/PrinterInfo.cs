@@ -14,7 +14,7 @@ namespace ElectronSharp.API.Entities
         /// Name
         /// </summary>
         public string Description { get; set; }
-        
+
         /// <summary>
         /// Status
         /// </summary>

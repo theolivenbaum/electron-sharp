@@ -17,11 +17,11 @@ namespace ElectronSharp.SampleApp.Controllers
 
                     var saveOptions = new SaveDialogOptions
                     {
-                        Title = "Save an PDF-File",
+                        Title       = "Save an PDF-File",
                         DefaultPath = await Electron.App.GetPathAsync(PathName.Documents),
                         Filters = new FileFilter[]
                         {
-                        new FileFilter { Name = "PDF", Extensions = new string[] { "pdf" } }
+                            new FileFilter { Name = "PDF", Extensions = new string[] { "pdf" } }
                         }
                     };
                     var path = await Electron.Dialog.ShowSaveDialogAsync(mainWindow, saveOptions);

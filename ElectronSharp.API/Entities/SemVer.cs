@@ -8,7 +8,7 @@
         /// <summary>
         /// 
         /// </summary>
-       public string  Raw { get; set; }
+        public string Raw { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -46,7 +46,8 @@
     /// <summary>
     /// 
     /// </summary>
-    public class SemVerOptions {
+    public class SemVerOptions
+    {
         /// <summary>
         /// 
         /// </summary>

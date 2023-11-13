@@ -67,7 +67,7 @@ namespace ElectronSharp.API.Entities
         /// true for landscape, false for portrait.
         /// </summary>
         public bool Landscape { get; set; }
-        
+
         /// <summary>
         /// The scale factor of the web page
         /// </summary>

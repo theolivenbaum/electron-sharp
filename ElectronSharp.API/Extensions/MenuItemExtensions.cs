@@ -12,6 +12,7 @@ namespace ElectronSharp.API.Extensions
             for (int index = 0; index < menuItems.Length; index++)
             {
                 var menuItem = menuItems[index];
+
                 if (menuItem?.Submenu?.Length > 0)
                 {
                     AddMenuItemsId(menuItem.Submenu);
@@ -39,6 +40,7 @@ namespace ElectronSharp.API.Extensions
                 else if (item?.Submenu?.Length > 0)
                 {
                     var menuItem = GetMenuItem(item.Submenu.ToList(), id);
+
                     if (menuItem.Id == id)
                     {
                         result = menuItem;
@@ -54,9 +56,10 @@ namespace ElectronSharp.API.Extensions
             for (int index = 0; index < menuItems.Length; index++)
             {
                 var menuItem = menuItems[index];
+
                 if (menuItem?.Submenu?.Length > 0)
                 {
-                    if(menuItem.Type == MenuType.normal)
+                    if (menuItem.Type == MenuType.normal)
                     {
                         menuItem.Type = MenuType.submenu;
                     }

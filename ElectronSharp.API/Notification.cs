@@ -14,8 +14,8 @@ namespace ElectronSharp.API
     /// </summary>
     public sealed class Notification
     {
-        private static Notification _notification;
-        private static readonly object _syncRoot = new();
+        private static          Notification _notification;
+        private static readonly object       _syncRoot = new();
 
         internal Notification() { }
 
@@ -58,10 +58,12 @@ namespace ElectronSharp.API
             if (notificationOptions.OnShow != null)
             {
                 notificationOptions.ShowID = Guid.NewGuid().ToString();
-                isActionDefined = true;
+                isActionDefined            = true;
 
                 BridgeConnector.Off("NotificationEventShow");
-                BridgeConnector.On<string>("NotificationEventShow", (id) => {
+
+                BridgeConnector.On<string>("NotificationEventShow", (id) =>
+                {
                     _notificationOptions.Single(x => x.ShowID == id).OnShow();
                 });
             }
@@ -69,10 +71,12 @@ namespace ElectronSharp.API
             if (notificationOptions.OnClick != null)
             {
                 notificationOptions.ClickID = Guid.NewGuid().ToString();
-                isActionDefined = true;
+                isActionDefined             = true;
 
                 BridgeConnector.Off("NotificationEventClick");
-                BridgeConnector.On<string>("NotificationEventClick", (id) => {
+
+                BridgeConnector.On<string>("NotificationEventClick", (id) =>
+                {
                     _notificationOptions.Single(x => x.ClickID == id).OnClick();
                 });
             }
@@ -80,10 +84,12 @@ namespace ElectronSharp.API
             if (notificationOptions.OnClose != null)
             {
                 notificationOptions.CloseID = Guid.NewGuid().ToString();
-                isActionDefined = true;
+                isActionDefined             = true;
 
                 BridgeConnector.Off("NotificationEventClose");
-                BridgeConnector.On<string>("NotificationEventClose", (id) => {
+
+                BridgeConnector.On<string>("NotificationEventClose", (id) =>
+                {
                     _notificationOptions.Single(x => x.CloseID == id.ToString()).OnClose();
                 });
             }
@@ -91,10 +97,12 @@ namespace ElectronSharp.API
             if (notificationOptions.OnReply != null)
             {
                 notificationOptions.ReplyID = Guid.NewGuid().ToString();
-                isActionDefined = true;
+                isActionDefined             = true;
 
                 BridgeConnector.Off("NotificationEventReply");
-                BridgeConnector.On<string[]>("NotificationEventReply", (args) => {
+
+                BridgeConnector.On<string[]>("NotificationEventReply", (args) =>
+                {
                     _notificationOptions.Single(x => x.ReplyID == args[0].ToString()).OnReply(args[1].ToString());
                 });
             }
@@ -102,10 +110,12 @@ namespace ElectronSharp.API
             if (notificationOptions.OnAction != null)
             {
                 notificationOptions.ActionID = Guid.NewGuid().ToString();
-                isActionDefined = true;
+                isActionDefined              = true;
 
                 BridgeConnector.Off("NotificationEventAction");
-                BridgeConnector.On<string[]>("NotificationEventAction", (args) => {
+
+                BridgeConnector.On<string[]>("NotificationEventAction", (args) =>
+                {
                     _notificationOptions.Single(x => x.ReplyID == args[0].ToString()).OnAction(args[1].ToString());
                 });
             }
@@ -137,8 +147,8 @@ namespace ElectronSharp.API
 
         private static readonly JsonSerializer _jsonSerializer = new()
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            NullValueHandling = NullValueHandling.Ignore,
+            ContractResolver     = new CamelCasePropertyNamesContractResolver(),
+            NullValueHandling    = NullValueHandling.Ignore,
             DefaultValueHandling = DefaultValueHandling.Ignore
         };
     }

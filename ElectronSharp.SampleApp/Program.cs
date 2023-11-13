@@ -25,10 +25,11 @@ namespace ElectronSharp.SampleApp
             }
 
             var webPort = Electron.Experimental.FreeTcpPort();
-            
+
             await Electron.Experimental.StartElectronForDevelopment(webPort);
 
             builder = CreateWebHostBuilder(args);
+
             // check for the content folder if its exists in base director otherwise no need to include
             // It was used before because we are publishing the project which copies everything to bin folder and contentroot wwwroot was folder there.
             // now we have implemented the live reload if app is run using /watch then we need to use the default project path.
@@ -36,7 +37,7 @@ namespace ElectronSharp.SampleApp
             {
                 builder.UseContentRoot(AppDomain.CurrentDomain.BaseDirectory);
             }
-            
+
             builder.UseUrls("http://localhost:" + webPort);
 #else
             builder = CreateWebHostBuilder(args);
@@ -51,8 +52,8 @@ namespace ElectronSharp.SampleApp
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             return WebHost.CreateDefaultBuilder(args)
-                .ConfigureLogging((hostingContext, logging) => { logging.AddConsole(); })
-                .UseStartup<Startup>();
+               .ConfigureLogging((hostingContext, logging) => { logging.AddConsole(); })
+               .UseStartup<Startup>();
         }
     }
 }

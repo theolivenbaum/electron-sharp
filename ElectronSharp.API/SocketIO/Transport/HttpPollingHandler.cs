@@ -13,18 +13,18 @@ namespace SocketIOClient.Transport
     {
         public HttpPollingHandler(HttpClient httpClient)
         {
-            HttpClient = httpClient;
-            TextSubject = new Subject<string>();
-            BytesSubject = new Subject<byte[]>();
-            TextObservable = TextSubject.AsObservable();
+            HttpClient      = httpClient;
+            TextSubject     = new Subject<string>();
+            BytesSubject    = new Subject<byte[]>();
+            TextObservable  = TextSubject.AsObservable();
             BytesObservable = BytesSubject.AsObservable();
         }
 
-        protected HttpClient HttpClient { get; }
-        protected Subject<string> TextSubject{get;}
-        protected Subject<byte[]> BytesSubject{get;}
+        protected HttpClient      HttpClient   { get; }
+        protected Subject<string> TextSubject  { get; }
+        protected Subject<byte[]> BytesSubject { get; }
 
-        public IObservable<string> TextObservable { get; }
+        public IObservable<string> TextObservable  { get; }
         public IObservable<byte[]> BytesObservable { get; }
 
         protected string AppendRandom(string uri)
@@ -34,8 +34,9 @@ namespace SocketIOClient.Transport
 
         public async Task GetAsync(string uri, CancellationToken cancellationToken)
         {
-            var req = new HttpRequestMessage(HttpMethod.Get, AppendRandom(uri));
+            var req    = new HttpRequestMessage(HttpMethod.Get, AppendRandom(uri));
             var resMsg = await HttpClient.SendAsync(req, cancellationToken).ConfigureAwait(false);
+
             if (!resMsg.IsSuccessStatusCode)
             {
                 throw new HttpRequestException($"Response status code does not indicate success: {resMsg.StatusCode}");
@@ -46,6 +47,7 @@ namespace SocketIOClient.Transport
         public async Task SendAsync(HttpRequestMessage req, CancellationToken cancellationToken)
         {
             var resMsg = await HttpClient.SendAsync(req, cancellationToken).ConfigureAwait(false);
+
             if (!resMsg.IsSuccessStatusCode)
             {
                 throw new HttpRequestException($"Response status code does not indicate success: {resMsg.StatusCode}");
@@ -56,7 +58,7 @@ namespace SocketIOClient.Transport
         public async virtual Task PostAsync(string uri, string content, CancellationToken cancellationToken)
         {
             var httpContent = new StringContent(content);
-            var resMsg = await HttpClient.PostAsync(AppendRandom(uri), httpContent, cancellationToken).ConfigureAwait(false);
+            var resMsg      = await HttpClient.PostAsync(AppendRandom(uri), httpContent, cancellationToken).ConfigureAwait(false);
             await ProduceMessageAsync(resMsg).ConfigureAwait(false);
         }
 
@@ -81,11 +83,13 @@ namespace SocketIOClient.Transport
         private void ProduceBytes(byte[] bytes)
         {
             int i = 0;
+
             while (bytes.Length > i + 4)
             {
-                byte type = bytes[i];
-                var builder = new StringBuilder();
+                byte type    = bytes[i];
+                var  builder = new StringBuilder();
                 i++;
+
                 while (bytes[i] != byte.MaxValue)
                 {
                     builder.Append(bytes[i]);
@@ -93,6 +97,7 @@ namespace SocketIOClient.Transport
                 }
                 i++;
                 int length = int.Parse(builder.ToString());
+
                 if (type == 0)
                 {
                     var buffer = new byte[length];

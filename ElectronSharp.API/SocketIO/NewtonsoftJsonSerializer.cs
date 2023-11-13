@@ -12,12 +12,13 @@ namespace SocketIOClient.Newtonsoft.Json
         public JsonSerializeResult Serialize(object[] data)
         {
             var converter = new ByteArrayConverter();
-            var settings = GetOptions();
+            var settings  = GetOptions();
             settings.Converters.Add(converter);
             string json = JsonConvert.SerializeObject(data, settings);
+
             return new JsonSerializeResult
             {
-                Json = json,
+                Json  = json,
                 Bytes = converter.Bytes
             };
         }
@@ -40,10 +41,12 @@ namespace SocketIOClient.Newtonsoft.Json
         private JsonSerializerSettings GetOptions()
         {
             JsonSerializerSettings options = null;
+
             if (OptionsProvider != null)
             {
                 options = OptionsProvider();
             }
+
             if (options == null)
             {
                 options = new JsonSerializerSettings();

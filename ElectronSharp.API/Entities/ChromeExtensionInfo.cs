@@ -16,7 +16,7 @@ namespace ElectronSharp.API.Entities
         /// <param name="version">The version of the Chrome extension.</param>
         public ChromeExtensionInfo(string name, string version)
         {
-            Name = name;
+            Name    = name;
             Version = version;
         }
 

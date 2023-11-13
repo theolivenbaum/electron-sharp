@@ -9,6 +9,7 @@ namespace SocketIOClient.UriConverters
         public Uri GetServerUri(bool ws, Uri serverUri, int eio, string path, IEnumerable<KeyValuePair<string, string>> queryParams)
         {
             var builder = new StringBuilder();
+
             if (serverUri.Scheme == "https" || serverUri.Scheme == "wss")
             {
                 builder.Append(ws ? "wss://" : "https://");
@@ -22,10 +23,12 @@ namespace SocketIOClient.UriConverters
                 throw new ArgumentException("Only supports 'http, https, ws, wss' protocol");
             }
             builder.Append(serverUri.Host);
+
             if (!serverUri.IsDefaultPort)
             {
                 builder.Append(":").Append(serverUri.Port);
             }
+
             if (string.IsNullOrEmpty(path))
             {
                 builder.Append("/socket.io");
@@ -34,11 +37,12 @@ namespace SocketIOClient.UriConverters
             {
                 builder.Append(path);
             }
+
             builder
-                .Append("/?EIO=")
-                .Append(eio)
-                .Append("&transport=")
-                .Append(ws ? "websocket" : "polling");
+               .Append("/?EIO=")
+               .Append(eio)
+               .Append("&transport=")
+               .Append(ws ? "websocket" : "polling");
 
             if (queryParams != null)
             {

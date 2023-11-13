@@ -8,9 +8,9 @@ namespace ElectronSharp.API
     /// </summary>
     internal class Events
     {
-        private static Events _events;
-        private static readonly object _syncRoot = new();
-        private readonly TextInfo _ti = new CultureInfo("en-US", false).TextInfo;
+        private static          Events   _events;
+        private static readonly object   _syncRoot = new();
+        private readonly        TextInfo _ti       = new CultureInfo("en-US", false).TextInfo;
         private Events()
         {
 
@@ -52,9 +52,9 @@ namespace ElectronSharp.API
         /// <param name="fn">The event handler</param>
         public void On(string moduleName, string eventName, Action<object> fn)
         {
-            var listener = $"{moduleName}{_ti.ToTitleCase(eventName)}Completed";
+            var listener   = $"{moduleName}{_ti.ToTitleCase(eventName)}Completed";
             var subscriber = $"register-{moduleName}-on-event";
-            
+
             BridgeConnector.On(listener, fn);
             BridgeConnector.Emit(subscriber, eventName, listener);
         }
@@ -75,7 +75,7 @@ namespace ElectronSharp.API
         /// <param name="fn">The event handler</param>
         public void Once(string moduleName, string eventName, Action<object> fn)
         {
-            var listener = $"{moduleName}{_ti.ToTitleCase(eventName)}Completed";
+            var listener   = $"{moduleName}{_ti.ToTitleCase(eventName)}Completed";
             var subscriber = $"register-{moduleName}-once-event";
             BridgeConnector.Once(listener, fn);
             BridgeConnector.Emit(subscriber, eventName, listener);

@@ -27,7 +27,7 @@ namespace ElectronSharp.API
 
         internal Session(int id)
         {
-            Id = id;
+            Id      = id;
             Cookies = new Cookies(id);
         }
 
@@ -47,8 +47,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task ClearAuthCacheAsync(RemovePassword options)
         {
-            var taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On("webContents-session-clearAuthCache-completed" + guid, () =>
             {
@@ -66,8 +66,8 @@ namespace ElectronSharp.API
         /// </summary>
         public Task ClearAuthCacheAsync()
         {
-            var taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On("webContents-session-clearAuthCache-completed" + guid, () =>
             {
@@ -86,8 +86,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task ClearCacheAsync()
         {
-            var taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On("webContents-session-clearCache-completed" + guid, () =>
             {
@@ -106,8 +106,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task ClearHostResolverCacheAsync()
         {
-            var taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On("webContents-session-clearHostResolverCache-completed" + guid, () =>
             {
@@ -126,8 +126,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task ClearStorageDataAsync()
         {
-            var taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On("webContents-session-clearStorageData-completed" + guid, () =>
             {
@@ -147,8 +147,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task ClearStorageDataAsync(ClearStorageDataOptions options)
         {
-            var taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On("webContents-session-clearStorageData-options-completed" + guid, () =>
             {
@@ -207,8 +207,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task<int[]> GetBlobDataAsync(string identifier)
         {
-            var taskCompletionSource = new TaskCompletionSource<int[]>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<int[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On<int[]>("webContents-session-getBlobData-completed" + guid, (buffer) =>
             {
@@ -227,8 +227,8 @@ namespace ElectronSharp.API
         /// <returns>Callback is invoked with the session's current cache size.</returns>
         public Task<int> GetCacheSizeAsync()
         {
-            var taskCompletionSource = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On<int>("webContents-session-getCacheSize-completed" + guid, (size) =>
             {
@@ -247,8 +247,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task<string[]> GetPreloadsAsync()
         {
-            var taskCompletionSource = new TaskCompletionSource<string[]>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<string[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On<string[]>("webContents-session-getPreloads-completed" + guid, (preloads) =>
             {
@@ -267,8 +267,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task<string> GetUserAgent()
         {
-            var taskCompletionSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On<string>("webContents-session-getUserAgent-completed" + guid, (userAgent) =>
             {
@@ -289,8 +289,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task<string> ResolveProxyAsync(string url)
         {
-            var taskCompletionSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On<string>("webContents-session-resolveProxy-completed" + guid, (proxy) =>
             {
@@ -331,8 +331,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task SetProxyAsync(ProxyConfig config)
         {
-            var taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On("webContents-session-setProxy-completed" + guid, () =>
             {

@@ -9,12 +9,13 @@ namespace SocketIOClient.JsonSerializer
         public JsonSerializeResult Serialize(object[] data)
         {
             var converter = new ByteArrayConverter();
-            var options = GetOptions();
+            var options   = GetOptions();
             options.Converters.Add(converter);
             string json = System.Text.Json.JsonSerializer.Serialize(data, options);
+
             return new JsonSerializeResult
             {
-                Json = json,
+                Json  = json,
                 Bytes = converter.Bytes
             };
         }
@@ -27,7 +28,7 @@ namespace SocketIOClient.JsonSerializer
 
         public T Deserialize<T>(string json, IList<byte[]> bytes)
         {
-            var options = GetOptions();
+            var options   = GetOptions();
             var converter = new ByteArrayConverter();
             options.Converters.Add(converter);
             converter.Bytes.AddRange(bytes);
@@ -37,10 +38,12 @@ namespace SocketIOClient.JsonSerializer
         private JsonSerializerOptions GetOptions()
         {
             JsonSerializerOptions options = null;
+
             if (OptionsProvider != null)
             {
                 options = OptionsProvider();
             }
+
             if (options == null)
             {
                 options = new JsonSerializerOptions();

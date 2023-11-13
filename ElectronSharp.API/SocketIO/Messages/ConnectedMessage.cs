@@ -24,8 +24,8 @@ namespace SocketIOClient.Messages
 
         public TransportProtocol Protocol { get; set; }
 
-        public IEnumerable<KeyValuePair<string, string>> Query { get; set; }
-        public string AuthJsonStr { get; set; }
+        public IEnumerable<KeyValuePair<string, string>> Query       { get; set; }
+        public string                                    AuthJsonStr { get; set; }
 
         public void Read(string msg)
         {
@@ -51,10 +51,11 @@ namespace SocketIOClient.Messages
         public void Eio4Read(string msg)
         {
             int index = msg.IndexOf('{');
+
             if (index > 0)
             {
                 Namespace = msg.Substring(0, index - 1);
-                msg = msg.Substring(index);
+                msg       = msg.Substring(index);
             }
             else
             {
@@ -66,6 +67,7 @@ namespace SocketIOClient.Messages
         public string Eio4Write()
         {
             var builder = new StringBuilder("40");
+
             if (!string.IsNullOrEmpty(Namespace))
             {
                 builder.Append(Namespace).Append(',');
@@ -79,15 +81,18 @@ namespace SocketIOClient.Messages
             if (msg.Length >= 2)
             {
                 int startIndex = msg.IndexOf('/');
+
                 if (startIndex == -1)
                 {
                     return;
                 }
                 int endIndex = msg.IndexOf('?', startIndex);
+
                 if (endIndex == -1)
                 {
                     endIndex = msg.IndexOf(',', startIndex);
                 }
+
                 if (endIndex == -1)
                 {
                     endIndex = msg.Length;
@@ -104,12 +109,15 @@ namespace SocketIOClient.Messages
             }
             var builder = new StringBuilder("40");
             builder.Append(Namespace);
+
             if (Query != null)
             {
                 int i = -1;
+
                 foreach (var item in Query)
                 {
                     i++;
+
                     if (i == 0)
                     {
                         builder.Append('?');

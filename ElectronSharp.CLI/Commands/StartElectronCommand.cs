@@ -10,9 +10,9 @@ namespace ElectronSharp.CLI.Commands
 {
     public class StartElectronCommand : ICommand
     {
-        public const string COMMAND_NAME = "start";
-        public const string COMMAND_DESCRIPTION = "Start your ASP.NET Core Application with Electron, without package it as a single exe. Faster for development.";
-        public const string COMMAND_ARGUMENTS = "<Path> from ASP.NET Core Project.";
+        public const  string               COMMAND_NAME        = "start";
+        public const  string               COMMAND_DESCRIPTION = "Start your ASP.NET Core Application with Electron, without package it as a single exe. Faster for development.";
+        public const  string               COMMAND_ARGUMENTS   = "<Path> from ASP.NET Core Project.";
         public static IList<CommandOption> CommandOptions { get; set; } = new List<CommandOption>();
 
         private readonly string[] _args;
@@ -22,12 +22,12 @@ namespace ElectronSharp.CLI.Commands
             _args = args;
         }
 
-        private const string _aspCoreProjectPath = "project-path";
-        private const string _arguments = "args";
-        private const string _manifest = "manifest";
-        private const string _clearCache = "clear-cache";
-        private const string _paramDotNetConfig = "dotnet-configuration";
-        private const string _paramTarget = "target";
+        private const string _aspCoreProjectPath    = "project-path";
+        private const string _arguments             = "args";
+        private const string _manifest              = "manifest";
+        private const string _clearCache            = "clear-cache";
+        private const string _paramDotNetConfig     = "dotnet-configuration";
+        private const string _paramTarget           = "target";
         private const string _buildInsteadOfPublish = "simple-build";
 
         public Task<bool> ExecuteAsync()
@@ -44,6 +44,7 @@ namespace ElectronSharp.CLI.Commands
                 if (parser.Arguments.ContainsKey(_aspCoreProjectPath))
                 {
                     string projectPath = parser.Arguments[_aspCoreProjectPath].First();
+
                     if (Directory.Exists(projectPath))
                     {
                         aspCoreProjectPath = projectPath;
@@ -63,6 +64,7 @@ namespace ElectronSharp.CLI.Commands
                 }
 
                 string tempPath = Path.Combine(aspCoreProjectPath, "obj", "Host");
+
                 if (Directory.Exists(tempPath) == false)
                 {
                     Directory.CreateDirectory(tempPath);
@@ -79,10 +81,12 @@ namespace ElectronSharp.CLI.Commands
                 // Format is the same as the build command.
                 // If target is not specified, autodetect it.
                 var platformInfo = GetTargetPlatformInformation.Do(string.Empty, string.Empty);
+
                 if (parser.Arguments.ContainsKey(_paramTarget))
                 {
-                    var desiredPlatform = parser.Arguments[_paramTarget][0];
+                    var    desiredPlatform     = parser.Arguments[_paramTarget][0];
                     string specifiedFromCustom = string.Empty;
+
                     if (desiredPlatform == "custom" && parser.Arguments[_paramTarget].Length > 1)
                     {
                         specifiedFromCustom = parser.Arguments[_paramTarget][1];
@@ -91,6 +95,7 @@ namespace ElectronSharp.CLI.Commands
                 }
 
                 string configuration = "Debug";
+
                 if (parser.Arguments.ContainsKey(_paramDotNetConfig))
                 {
                     configuration = parser.Arguments[_paramDotNetConfig][0];
@@ -130,7 +135,7 @@ namespace ElectronSharp.CLI.Commands
                     runNpmInstall = true;
                 }
 
-                var packagesJson = Path.Combine(tempPath, "package.json");
+                var packagesJson     = Path.Combine(tempPath, "package.json");
                 var packagesPrevious = Path.Combine(tempPath, "package.json.previous");
 
                 if (!runNpmInstall)
@@ -194,8 +199,8 @@ namespace ElectronSharp.CLI.Commands
                     arguments += " --watch=true";
                 }
 
-                string path = Path.Combine(tempPath, "node_modules", ".bin");
-                bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+                string path      = Path.Combine(tempPath, "node_modules", ".bin");
+                bool   isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
                 if (isWindows)
                 {

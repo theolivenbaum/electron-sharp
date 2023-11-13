@@ -16,10 +16,12 @@ namespace SocketIOClient.Transport
         public override async Task PostAsync(string uri, IEnumerable<byte[]> bytes, CancellationToken cancellationToken)
         {
             var builder = new StringBuilder();
+
             foreach (var item in bytes)
             {
                 builder.Append('b').Append(Convert.ToBase64String(item)).Append(Separator);
             }
+
             if (builder.Length == 0)
             {
                 return;
@@ -31,6 +33,7 @@ namespace SocketIOClient.Transport
         protected override void ProduceText(string text)
         {
             string[] items = text.Split(new[] { Separator }, StringSplitOptions.RemoveEmptyEntries);
+
             foreach (var item in items)
             {
                 if (item[0] == 'b')

@@ -8,16 +8,16 @@ namespace SocketIOClient
     {
         public SocketIOOptions()
         {
-            RandomizationFactor = 0.5;
-            ReconnectionDelay = 1000;
+            RandomizationFactor  = 0.5;
+            ReconnectionDelay    = 1000;
             ReconnectionDelayMax = 5000;
             ReconnectionAttempts = int.MaxValue;
-            Path = "/socket.io";
-            ConnectionTimeout = TimeSpan.FromSeconds(20);
-            Reconnection = true;
-            Transport = TransportProtocol.Polling;
-            EIO = 4;
-            AutoUpgrade = true;
+            Path                 = "/socket.io";
+            ConnectionTimeout    = TimeSpan.FromSeconds(20);
+            Reconnection         = true;
+            Transport            = TransportProtocol.Polling;
+            EIO                  = 4;
+            AutoUpgrade          = true;
         }
 
         public string Path { get; set; }
@@ -31,9 +31,9 @@ namespace SocketIOClient
         /// </summary>
         public bool Reconnection { get; set; }
 
-        public double ReconnectionDelay { get; set; }
-        public int ReconnectionDelayMax { get; set; }
-        public int ReconnectionAttempts { get; set; }
+        public double ReconnectionDelay    { get; set; }
+        public int    ReconnectionDelayMax { get; set; }
+        public int    ReconnectionAttempts { get; set; }
 
         double _randomizationFactor;
         public double RandomizationFactor

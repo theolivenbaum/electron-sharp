@@ -13,6 +13,7 @@ namespace ElectronSharp.CLI.Commands.Actions
             EmbeddedFileHelper.DeployEmbeddedFile(tempPath, "build-helper.js");
 
             string hostApiFolder = Path.Combine(tempPath, "api");
+
             if (Directory.Exists(hostApiFolder) == false)
             {
                 Directory.CreateDirectory(hostApiFolder);
@@ -38,6 +39,7 @@ namespace ElectronSharp.CLI.Commands.Actions
             EmbeddedFileHelper.DeployEmbeddedFile(hostApiFolder, "nativeTheme.js", "api.");
 
             string splashscreenFolder = Path.Combine(tempPath, "splashscreen");
+
             if (Directory.Exists(splashscreenFolder) == false)
             {
                 Directory.CreateDirectory(splashscreenFolder);

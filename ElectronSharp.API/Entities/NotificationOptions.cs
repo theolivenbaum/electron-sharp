@@ -41,32 +41,32 @@ namespace ElectronSharp.API.Entities
         /// <summary>
         /// Whether or not to add an inline reply option to the notification.
         /// </summary>
-        [SupportedOSPlatform("macos")] 
+        [SupportedOSPlatform("macos")]
         public bool HasReply { get; set; }
 
         /// <summary>
         /// The timeout duration of the notification. Can be 'default' or 'never'.
         /// </summary>
         [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("linux")] 
+        [SupportedOSPlatform("linux")]
         public string TimeoutType { get; set; }
 
         /// <summary>
         /// The placeholder to write in the inline reply input field.
         /// </summary>
-        [SupportedOSPlatform("macos")] 
+        [SupportedOSPlatform("macos")]
         public string ReplyPlaceholder { get; set; }
 
         /// <summary>
         /// The name of the sound file to play when the notification is shown.
         /// </summary>
-        [SupportedOSPlatform("macos")] 
+        [SupportedOSPlatform("macos")]
         public string Sound { get; set; }
 
         /// <summary>
         /// The urgency level of the notification. Can be 'normal', 'critical', or 'low'.
         /// </summary>
-        [SupportedOSPlatform("linux")] 
+        [SupportedOSPlatform("linux")]
         public string Urgency { get; set; }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace ElectronSharp.API.Entities
         /// A custom title for the close button of an alert. An empty string will cause the
         /// default localized text to be used.
         /// </summary>
-        [SupportedOSPlatform("macos")] 
+        [SupportedOSPlatform("macos")]
         public string CloseButtonText { get; set; }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace ElectronSharp.API.Entities
         public NotificationOptions(string title, string body)
         {
             Title = title;
-            Body = body;
+            Body  = body;
         }
     }
 }

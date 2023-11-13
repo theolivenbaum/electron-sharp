@@ -11,8 +11,8 @@ namespace ElectronSharp.API
     /// </summary>
     public sealed class NativeTheme
     {
-        private static NativeTheme _nativeTheme;
-        private static readonly object _syncRoot = new();
+        private static          NativeTheme _nativeTheme;
+        private static readonly object      _syncRoot = new();
 
         internal NativeTheme() { }
 

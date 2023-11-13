@@ -9,6 +9,7 @@ namespace ElectronSharp.API.Extensions
         public static string GetDescription<T>(this T enumerationValue) where T : struct
         {
             Type type = enumerationValue.GetType();
+
             if (!type.IsEnum)
             {
                 throw new ArgumentException("EnumerationValue must be of Enum type", nameof(enumerationValue));
@@ -17,6 +18,7 @@ namespace ElectronSharp.API.Extensions
             //Tries to find a DescriptionAttribute for a potential friendly name
             //for the enum
             MemberInfo[] memberInfo = type.GetMember(enumerationValue.ToString());
+
             if (memberInfo != null && memberInfo.Length > 0)
             {
                 object[] attrs = memberInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);

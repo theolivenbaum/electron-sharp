@@ -28,8 +28,8 @@
         /// <param name="proxyBypassRules">Rules indicating which URLs should bypass the proxy settings.</param>
         public ProxyConfig(string pacScript, string proxyRules, string proxyBypassRules)
         {
-            PacScript = pacScript;
-            ProxyRules = proxyRules;
+            PacScript        = pacScript;
+            ProxyRules       = proxyRules;
             ProxyBypassRules = proxyBypassRules;
         }
     }

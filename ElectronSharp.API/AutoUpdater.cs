@@ -40,7 +40,7 @@ namespace ElectronSharp.API
         public Task<bool> IsFullChangeLogEnabledAsync() => BridgeConnector.OnResult<bool>("autoUpdater-fullChangelog-get", "autoUpdater-fullChangelog-get-reply");
 
         public Task<bool> IsAllowDowngradeEnabledAsync() => BridgeConnector.OnResult<bool>("autoUpdater-allowDowngrade-get", "autoUpdater-allowDowngrade-get-reply");
-        
+
 
         /// <summary>
         /// Whether to automatically download an update when it is found. (Default is true)
@@ -312,8 +312,8 @@ namespace ElectronSharp.API
 
         private event Action<UpdateInfo> _updateDownloaded;
 
-        private static AutoUpdater _autoUpdater;
-        private static readonly object _syncRoot = new();
+        private static          AutoUpdater _autoUpdater;
+        private static readonly object      _syncRoot = new();
 
         internal AutoUpdater() { }
 
@@ -342,8 +342,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task<UpdateCheckResult> CheckForUpdatesAsync()
         {
-            var taskCompletionSource = new TaskCompletionSource<UpdateCheckResult>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<UpdateCheckResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On<UpdateCheckResult>("autoUpdaterCheckForUpdatesComplete" + guid, (updateCheckResult) =>
             {
@@ -358,11 +358,13 @@ namespace ElectronSharp.API
                     taskCompletionSource.SetException(ex);
                 }
             });
+
             BridgeConnector.On<string>("autoUpdaterCheckForUpdatesError" + guid, (error) =>
             {
                 BridgeConnector.Off("autoUpdaterCheckForUpdatesComplete" + guid);
                 BridgeConnector.Off("autoUpdaterCheckForUpdatesError" + guid);
                 string message = "An error occurred in CheckForUpdatesAsync";
+
                 if (!string.IsNullOrEmpty(error))
                     message = JsonConvert.SerializeObject(error);
                 taskCompletionSource.SetException(new Exception(message));
@@ -381,8 +383,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task<UpdateCheckResult> CheckForUpdatesAndNotifyAsync()
         {
-            var taskCompletionSource = new TaskCompletionSource<UpdateCheckResult>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<UpdateCheckResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On<UpdateCheckResult>("autoUpdaterCheckForUpdatesAndNotifyComplete" + guid, (updateCheckResult) =>
             {
@@ -390,6 +392,7 @@ namespace ElectronSharp.API
                 {
                     BridgeConnector.Off("autoUpdaterCheckForUpdatesAndNotifyComplete" + guid);
                     BridgeConnector.Off("autoUpdaterCheckForUpdatesAndNotifyError" + guid);
+
                     if (updateCheckResult == null)
                         taskCompletionSource.SetResult(null);
                     else
@@ -400,11 +403,13 @@ namespace ElectronSharp.API
                     taskCompletionSource.SetException(ex);
                 }
             });
+
             BridgeConnector.On<string>("autoUpdaterCheckForUpdatesAndNotifyError" + guid, (error) =>
             {
                 BridgeConnector.Off("autoUpdaterCheckForUpdatesAndNotifyComplete" + guid);
                 BridgeConnector.Off("autoUpdaterCheckForUpdatesAndNotifyError" + guid);
                 string message = "An error occurred in autoUpdaterCheckForUpdatesAndNotify";
+
                 if (error != null)
                     message = JsonConvert.SerializeObject(error);
                 taskCompletionSource.SetException(new Exception(message));
@@ -436,8 +441,8 @@ namespace ElectronSharp.API
         /// <returns>Paths to downloaded files.</returns>
         public Task<string[]> DownloadUpdateAsync()
         {
-            var taskCompletionSource = new TaskCompletionSource<string[]>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<string[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On<string[]>("autoUpdaterDownloadUpdateComplete" + guid, (downloadedPaths) =>
             {

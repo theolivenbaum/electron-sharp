@@ -31,12 +31,14 @@ namespace SocketIOClient.Messages
 
         public void Read(string msg)
         {
-            int index = msg.IndexOf('[');
+            int index     = msg.IndexOf('[');
             int lastIndex = msg.LastIndexOf(',', index);
+
             if (lastIndex > -1)
             {
                 string text = msg.Substring(0, index);
                 Namespace = text.Substring(0, lastIndex);
+
                 if (index - lastIndex > 1)
                 {
                     Id = int.Parse(text.Substring(lastIndex + 1));
@@ -58,13 +60,15 @@ namespace SocketIOClient.Messages
             //    msg = msg.Substring(index);
             //}
             var array = JsonDocument.Parse(msg).RootElement.EnumerateArray();
-            int i = -1;
+            int i     = -1;
+
             foreach (var item in array)
             {
                 i++;
+
                 if (i == 0)
                 {
-                    Event = item.GetString();
+                    Event        = item.GetString();
                     JsonElements = new List<JsonElement>();
                 }
                 else
@@ -78,10 +82,12 @@ namespace SocketIOClient.Messages
         {
             var builder = new StringBuilder();
             builder.Append("42");
+
             if (!string.IsNullOrEmpty(Namespace))
             {
                 builder.Append(Namespace).Append(',');
             }
+
             if (string.IsNullOrEmpty(Json))
             {
                 builder.Append("[\"").Append(Event).Append("\"]");

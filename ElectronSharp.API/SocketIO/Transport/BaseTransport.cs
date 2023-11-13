@@ -14,36 +14,38 @@ namespace SocketIOClient.Transport
     {
         public BaseTransport(SocketIOOptions options, IJsonSerializer jsonSerializer, ILogger logger)
         {
-            Options = options;
+            Options        = options;
             MessageSubject = new Subject<IMessage>();
             JsonSerializer = jsonSerializer;
-            UriConverter = new UriConverter();
-            _messageQueue = new Queue<IMessage>();
-            _logger = logger;
+            UriConverter   = new UriConverter();
+            _messageQueue  = new Queue<IMessage>();
+            _logger        = logger;
         }
 
-        DateTime _pingTime;
+        DateTime                 _pingTime;
         readonly Queue<IMessage> _messageQueue;
-        readonly ILogger _logger;
+        readonly ILogger         _logger;
 
-        protected SocketIOOptions Options { get; }
+        protected SocketIOOptions   Options        { get; }
         protected Subject<IMessage> MessageSubject { get; }
 
-        protected IJsonSerializer JsonSerializer { get; }
+        protected IJsonSerializer         JsonSerializer  { get; }
         protected CancellationTokenSource PingTokenSource { get; private set; }
-        protected OpenedMessage OpenedMessage { get; private set; }
+        protected OpenedMessage           OpenedMessage   { get; private set; }
 
-        public string Namespace { get; set; }
+        public string        Namespace    { get; set; }
         public IUriConverter UriConverter { get; set; }
 
         public async Task SendAsync(IMessage msg, CancellationToken cancellationToken)
         {
-            msg.Eio = Options.EIO;
+            msg.Eio      = Options.EIO;
             msg.Protocol = Options.Transport;
+
             var payload = new Payload
             {
                 Text = msg.Write()
             };
+
             if (msg.OutgoingBytes != null)
             {
                 payload.Bytes = msg.OutgoingBytes;
@@ -54,16 +56,19 @@ namespace SocketIOClient.Transport
         protected virtual async Task OpenAsync(OpenedMessage msg)
         {
             OpenedMessage = msg;
+
             if (Options.EIO == 3 && string.IsNullOrEmpty(Namespace))
             {
                 return;
             }
+
             var connectMsg = new ConnectedMessage
             {
                 Namespace = Namespace,
-                Eio = Options.EIO,
-                Query = Options.Query,
+                Eio       = Options.EIO,
+                Query     = Options.Query,
             };
+
             if (Options.EIO == 4)
             {
                 if (Options.Auth != null)
@@ -97,15 +102,18 @@ namespace SocketIOClient.Transport
         private void StartPing(CancellationToken cancellationToken)
         {
             _logger.LogDebug($"[Ping] Interval: {OpenedMessage.PingInterval}");
+
             Task.Factory.StartNew(async () =>
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     await Task.Delay(OpenedMessage.PingInterval);
+
                     if (cancellationToken.IsCancellationRequested)
                     {
                         break;
                     }
+
                     try
                     {
                         var ping = new PingMessage();
@@ -135,6 +143,7 @@ namespace SocketIOClient.Transport
         {
             MessageSubject.Dispose();
             _messageQueue.Clear();
+
             if (PingTokenSource != null)
             {
                 PingTokenSource.Cancel();
@@ -158,16 +167,19 @@ namespace SocketIOClient.Transport
         {
             _logger.LogDebug($"[Receive] {text}");
             var msg = MessageFactory.CreateMessage(Options.EIO, text);
+
             if (msg == null)
             {
                 return;
             }
+
             if (msg.BinaryCount > 0)
             {
                 msg.IncomingBytes = new List<byte[]>(msg.BinaryCount);
                 _messageQueue.Enqueue(msg);
                 return;
             }
+
             if (msg.Type == MessageType.Opened)
             {
                 OpenAsync(msg as OpenedMessage).ConfigureAwait(false);
@@ -179,6 +191,7 @@ namespace SocketIOClient.Transport
                 {
                     var connectMsg = msg as ConnectedMessage;
                     connectMsg.Sid = OpenedMessage.Sid;
+
                     if ((string.IsNullOrEmpty(Namespace) && string.IsNullOrEmpty(connectMsg.Namespace)) || connectMsg.Namespace == Namespace)
                     {
                         if (PingTokenSource != null)
@@ -205,12 +218,14 @@ namespace SocketIOClient.Transport
             if (msg.Type == MessageType.Ping)
             {
                 _pingTime = DateTime.Now;
+
                 try
                 {
                     SendAsync(new PongMessage(), CancellationToken.None).ConfigureAwait(false);
+
                     MessageSubject.OnNext(new PongMessage
                     {
-                        Eio = Options.EIO,
+                        Eio      = Options.EIO,
                         Protocol = Options.Transport,
                         Duration = DateTime.Now - _pingTime
                     });
@@ -225,10 +240,12 @@ namespace SocketIOClient.Transport
         public void OnNext(byte[] bytes)
         {
             _logger.LogDebug($"[Receive] binary message");
+
             if (_messageQueue.Count > 0)
             {
                 var msg = _messageQueue.Peek();
                 msg.IncomingBytes.Add(bytes);
+
                 if (msg.IncomingBytes.Count == msg.BinaryCount)
                 {
                     MessageSubject.OnNext(msg);

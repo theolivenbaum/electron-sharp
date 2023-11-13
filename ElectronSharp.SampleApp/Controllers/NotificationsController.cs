@@ -8,9 +8,10 @@ namespace ElectronSharp.SampleApp.Controllers
     {
         public IActionResult Index()
         {
-            if(HybridSupport.IsElectronActive)
+            if (HybridSupport.IsElectronActive)
             {
-                Electron.IpcMain.On("basic-noti", (args) => {
+                Electron.IpcMain.On("basic-noti", (args) =>
+                {
 
                     var options = new NotificationOptions("Basic Notification", "Short message part")
                     {
@@ -21,12 +22,13 @@ namespace ElectronSharp.SampleApp.Controllers
 
                 });
 
-                Electron.IpcMain.On("advanced-noti", (args) => {
+                Electron.IpcMain.On("advanced-noti", (args) =>
+                {
 
                     var options = new NotificationOptions("Notification with image", "Short message plus a custom image")
                     {
                         OnClick = async () => await Electron.Dialog.ShowMessageBoxAsync("Notification clicked"),
-                        Icon = "/assets/img/programming.png"
+                        Icon    = "/assets/img/programming.png"
                     };
 
                     Electron.Notification.Show(options);

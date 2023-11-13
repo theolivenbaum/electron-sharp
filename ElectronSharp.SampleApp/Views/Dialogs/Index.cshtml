@@ -3,7 +3,9 @@
         <header class="section-header">
             <div class="section-wrapper">
                 <h1>
-                    <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-native-ui"></use></svg>
+                    <svg class="section-icon">
+                        <use xlink:href="assets/img/icons.svg#icon-native-ui"></use>
+                    </svg>
                     Use system dialogs
                 </h1>
                 <h3>The <code>Electron.Dialog</code> in ElectronSharp allows you to use native system dialogs for opening files or directories, saving a file or displaying informational messages.</h3>
@@ -173,7 +175,7 @@ ipcRenderer.on("save-dialog-reply", (sender, path) => {
                 </div>
             </div>
         </div>
-        
+
         <script>
             (function(){
                 const { ipcRenderer } = require("electron");

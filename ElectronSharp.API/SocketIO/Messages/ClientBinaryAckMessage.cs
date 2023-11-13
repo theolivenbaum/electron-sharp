@@ -41,10 +41,11 @@ namespace SocketIOClient.Messages
             int index2 = msg.IndexOf('[');
 
             int index3 = msg.LastIndexOf(',', index2);
+
             if (index3 > -1)
             {
                 Namespace = msg.Substring(index1 + 1, index3 - index1 - 1);
-                Id = int.Parse(msg.Substring(index3 + 1, index2 - index3 - 1));
+                Id        = int.Parse(msg.Substring(index3 + 1, index2 - index3 - 1));
             }
             else
             {
@@ -58,15 +59,18 @@ namespace SocketIOClient.Messages
         public string Write()
         {
             var builder = new StringBuilder();
+
             builder
-                .Append("45")
-                .Append(OutgoingBytes.Count)
-                .Append('-');
+               .Append("45")
+               .Append(OutgoingBytes.Count)
+               .Append('-');
+
             if (!string.IsNullOrEmpty(Namespace))
             {
                 builder.Append(Namespace).Append(',');
             }
             builder.Append(Id);
+
             if (string.IsNullOrEmpty(Json))
             {
                 builder.Append("[\"").Append(Event).Append("\"]");

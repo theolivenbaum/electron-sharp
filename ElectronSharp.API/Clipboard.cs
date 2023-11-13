@@ -12,8 +12,8 @@ namespace ElectronSharp.API
     /// </summary>
     public sealed class Clipboard
     {
-        private static Clipboard _clipboard;
-        private static readonly object _syncRoot = new();
+        private static          Clipboard _clipboard;
+        private static readonly object    _syncRoot = new();
 
         internal Clipboard() { }
 
@@ -95,7 +95,7 @@ namespace ElectronSharp.API
         /// </summary>
         /// <returns></returns>
         [SupportedOSPlatform("windows")]
-        [SupportedOSPlatform("macos")] 
+        [SupportedOSPlatform("macos")]
         public Task<ReadBookmark> ReadBookmarkAsync() => BridgeConnector.OnResult<ReadBookmark>("clipboard-readBookmark", "clipboard-readBookmark-Completed");
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace ElectronSharp.API
         /// find pasteboard whenever the application is activated.
         /// </summary>
         /// <returns></returns>
-        [SupportedOSPlatform("macos")] 
+        [SupportedOSPlatform("macos")]
         public Task<string> ReadFindTextAsync() => BridgeConnector.OnResult<string>("clipboard-readFindText", "clipboard-readFindText-Completed");
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace ElectronSharp.API
         /// <param name="type"></param>
         /// <returns></returns>
         public Task<NativeImage> ReadImageAsync(string type = "") => BridgeConnector.OnResult<NativeImage>("clipboard-readImage", "clipboard-readImage-Completed", type);
-        
+
         /// <summary>
         /// Writes an image to the clipboard.
         /// </summary>
@@ -180,8 +180,8 @@ namespace ElectronSharp.API
 
         private static readonly JsonSerializer _jsonSerializer = new()
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            NullValueHandling = NullValueHandling.Ignore,
+            ContractResolver     = new CamelCasePropertyNamesContractResolver(),
+            NullValueHandling    = NullValueHandling.Ignore,
             DefaultValueHandling = DefaultValueHandling.Ignore
         };
     }

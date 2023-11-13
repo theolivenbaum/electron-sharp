@@ -24,12 +24,12 @@ namespace ElectronSharp.API
                     cmd.StartInfo = new ProcessStartInfo("bash", $"-c \"{escapedArgs}\"");
                 }
 
-                cmd.StartInfo.RedirectStandardInput = false;
+                cmd.StartInfo.RedirectStandardInput  = false;
                 cmd.StartInfo.RedirectStandardOutput = false;
-                cmd.StartInfo.RedirectStandardError = false;
-                cmd.StartInfo.CreateNoWindow = true;
-                cmd.StartInfo.UseShellExecute = false;
-                cmd.StartInfo.WorkingDirectory = workingDirectoryPath;
+                cmd.StartInfo.RedirectStandardError  = false;
+                cmd.StartInfo.CreateNoWindow         = true;
+                cmd.StartInfo.UseShellExecute        = false;
+                cmd.StartInfo.WorkingDirectory       = workingDirectoryPath;
                 cmd.Start();
             }
         }

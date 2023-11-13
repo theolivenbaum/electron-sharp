@@ -13,8 +13,8 @@ namespace ElectronSharp.API
     /// </summary>
     public sealed class IpcMain
     {
-        private static IpcMain _ipcMain;
-        private static readonly object _syncRoot = new();
+        private static          IpcMain _ipcMain;
+        private static readonly object  _syncRoot = new();
 
         internal IpcMain() { }
 
@@ -22,11 +22,11 @@ namespace ElectronSharp.API
         {
             get
             {
-                if(_ipcMain == null)
+                if (_ipcMain == null)
                 {
                     lock (_syncRoot)
                     {
-                        if(_ipcMain == null)
+                        if (_ipcMain == null)
                         {
                             _ipcMain = new IpcMain();
                         }
@@ -37,8 +37,8 @@ namespace ElectronSharp.API
             }
         }
 
-        public static bool IsConnected => BridgeConnector.IsConnected;
-        public static long SocketMessagesSent => BridgeConnector.MessagesSent;
+        public static bool IsConnected            => BridgeConnector.IsConnected;
+        public static long SocketMessagesSent     => BridgeConnector.MessagesSent;
         public static long SocketMessagesReceived => BridgeConnector.MessagesReceived;
         /// <summary>
         ///  Listens to channel, when a new message arrives listener would be called with 
@@ -50,6 +50,7 @@ namespace ElectronSharp.API
         {
             BridgeConnector.Emit("registerIpcMainChannel", channel);
             BridgeConnector.Off(channel);
+
             BridgeConnector.On<object[]>(channel, (args) =>
             {
                 var objectArray = FormatArguments(args);
@@ -75,6 +76,7 @@ namespace ElectronSharp.API
         {
             BridgeConnector.Emit("registerIpcMainChannelWithId", channel);
             BridgeConnector.Off(channel);
+
             BridgeConnector.On<ArgsAndIds>(channel, (data) =>
             {
                 var objectArray = FormatArguments(data.args);
@@ -92,8 +94,8 @@ namespace ElectronSharp.API
 
         private class ArgsAndIds
         {
-            public int  id { get; set; }
-            public int wcId { get; set; }
+            public int      id   { get; set; }
+            public int      wcId { get; set; }
             public object[] args { get; set; }
         }
 
@@ -114,9 +116,12 @@ namespace ElectronSharp.API
         public void OnSync(string channel, Func<object, object> listener)
         {
             BridgeConnector.Emit("registerSyncIpcMainChannel", channel);
-            BridgeConnector.On<object[]>(channel, (args) => {
-                var objectArray = FormatArguments(args);
+
+            BridgeConnector.On<object[]>(channel, (args) =>
+            {
+                var    objectArray = FormatArguments(args);
                 object parameter;
+
                 if (objectArray.Count == 1)
                 {
                     parameter = objectArray.First();
@@ -140,6 +145,7 @@ namespace ElectronSharp.API
         public void Once(string channel, Action<object> listener)
         {
             BridgeConnector.Emit("registerOnceIpcMainChannel", channel);
+
             BridgeConnector.Once<object[]>(channel, (args) =>
             {
                 var objectArray = FormatArguments(args);
@@ -183,15 +189,15 @@ namespace ElectronSharp.API
 
             foreach (var parameterObject in data)
             {
-                if(parameterObject.GetType().IsArray || parameterObject.GetType().IsGenericType && parameterObject is IEnumerable)
+                if (parameterObject.GetType().IsArray || parameterObject.GetType().IsGenericType && parameterObject is IEnumerable)
                 {
                     objectsWithCorrectSerialization.Add(JArray.FromObject(parameterObject, _jsonSerializer));
-                } 
-                else if(parameterObject.GetType().IsClass && !parameterObject.GetType().IsPrimitive && !(parameterObject is string))
+                }
+                else if (parameterObject.GetType().IsClass && !parameterObject.GetType().IsPrimitive && !(parameterObject is string))
                 {
                     objectsWithCorrectSerialization.Add(JObject.FromObject(parameterObject, _jsonSerializer));
-                } 
-                else if(parameterObject.GetType().IsPrimitive || (parameterObject is string))
+                }
+                else if (parameterObject.GetType().IsPrimitive || (parameterObject is string))
                 {
                     objectsWithCorrectSerialization.Add(parameterObject);
                 }
@@ -212,24 +218,26 @@ namespace ElectronSharp.API
         public void Send(BrowserView browserView, string channel, params object[] data)
         {
             List<JObject> jobjects = new();
-            List<JArray> jarrays = new();
-            List<object> objects = new();
+            List<JArray>  jarrays  = new();
+            List<object>  objects  = new();
 
             foreach (var parameterObject in data)
             {
-                if(parameterObject.GetType().IsArray || parameterObject.GetType().IsGenericType && parameterObject is IEnumerable)
+                if (parameterObject.GetType().IsArray || parameterObject.GetType().IsGenericType && parameterObject is IEnumerable)
                 {
                     jarrays.Add(JArray.FromObject(parameterObject, _jsonSerializer));
-                } else if(parameterObject.GetType().IsClass && !parameterObject.GetType().IsPrimitive && !(parameterObject is string))
+                }
+                else if (parameterObject.GetType().IsClass && !parameterObject.GetType().IsPrimitive && !(parameterObject is string))
                 {
                     jobjects.Add(JObject.FromObject(parameterObject, _jsonSerializer));
-                } else if(parameterObject.GetType().IsPrimitive || (parameterObject is string))
+                }
+                else if (parameterObject.GetType().IsPrimitive || (parameterObject is string))
                 {
                     objects.Add(parameterObject);
                 }
             }
 
-            if(jobjects.Count > 0 || jarrays.Count > 0)
+            if (jobjects.Count > 0 || jarrays.Count > 0)
             {
                 BridgeConnector.Emit("sendToIpcRendererBrowserView", browserView.Id, channel, jarrays.ToArray(), jobjects.ToArray(), objects.ToArray());
             }
@@ -254,7 +262,6 @@ namespace ElectronSharp.API
         /// as in that case we can't open pipes to read the console output from the child process anymore
         /// </summary>
         /// <param name="text">Message to log</param>
-
         public static void ConsoleError(string text)
         {
             BridgeConnector.Emit("console-stderr", text);
@@ -262,8 +269,8 @@ namespace ElectronSharp.API
 
         private readonly JsonSerializer _jsonSerializer = new()
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            NullValueHandling = NullValueHandling.Ignore,
+            ContractResolver     = new CamelCasePropertyNamesContractResolver(),
+            NullValueHandling    = NullValueHandling.Ignore,
             DefaultValueHandling = DefaultValueHandling.Ignore
         };
     }

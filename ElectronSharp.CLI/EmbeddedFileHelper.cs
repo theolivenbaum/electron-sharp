@@ -6,18 +6,18 @@ namespace ElectronSharp.CLI
 {
     public static class EmbeddedFileHelper
     {
-        private const string ResourcePath = "ElectronSharp.CLI.{0}";
+        private const string ResourcePath  = "ElectronSharp.CLI.{0}";
         private const string ResourcePath2 = "ElectronSharp.CLI.{0}";
 
         private static Stream GetTestResourceFileStream(string folderAndFileInProjectPath)
         {
-            var asm = Assembly.GetExecutingAssembly();
-            var resource = string.Format(ResourcePath, folderAndFileInProjectPath);
+            var asm       = Assembly.GetExecutingAssembly();
+            var resource  = string.Format(ResourcePath, folderAndFileInProjectPath);
             var resource2 = string.Format(ResourcePath2, folderAndFileInProjectPath);
 
             var stream = asm.GetManifestResourceStream(resource) ?? asm.GetManifestResourceStream(resource2);
 
-            if(stream is null)
+            if (stream is null)
             {
                 PrintAllResources();
 
@@ -46,6 +46,7 @@ namespace ElectronSharp.CLI
             using (var fileStream = File.Create(Path.Combine(targetPath, file)))
             {
                 var streamFromEmbeddedFile = GetTestResourceFileStream("ElectronHost." + namespacePath + file);
+
                 if (streamFromEmbeddedFile == null)
                 {
                     Console.WriteLine("Error: Couldn't find embedded file: " + file);
@@ -60,6 +61,7 @@ namespace ElectronSharp.CLI
             using (var fileStream = File.Create(Path.Combine(targetPath, targetFile)))
             {
                 var streamFromEmbeddedFile = GetTestResourceFileStream("ElectronHost." + namespacePath + embeddedFile);
+
                 if (streamFromEmbeddedFile == null)
                 {
                     Console.WriteLine("Error: Couldn't find embedded file: " + embeddedFile);

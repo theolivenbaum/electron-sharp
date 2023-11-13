@@ -3,7 +3,9 @@
         <header class="section-header">
             <div class="section-wrapper">
                 <h1>
-                    <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-media"></use></svg>
+                    <svg class="section-icon">
+                        <use xlink:href="assets/img/icons.svg#icon-media"></use>
+                    </svg>
                     Print to PDF
                 </h1>
                 <h3>The <code>BrowserWindow</code> class in ElectronSharp has a property, <code>WebContents</code>, which allows your app to print as well as print to PDF.</h3>
@@ -64,7 +66,7 @@ document.getElementById("print-pdf").addEventListener("click", () => {
                 </div>
             </div>
         </div>
-        
+
         <script>
             (function(){
                 const { ipcRenderer } = require("electron");

@@ -39,11 +39,12 @@ namespace SocketIOClient.Messages
 
         public static IMessage CreateMessage(int eio, string msg)
         {
-            foreach (var (prefix,item) in _messageTypes)
+            foreach (var (prefix, item) in _messageTypes)
             {
                 if (msg.StartsWith(prefix))
                 {
                     IMessage result = CreateMessage(item);
+
                     if (result != null)
                     {
                         result.Eio = eio;
@@ -58,6 +59,7 @@ namespace SocketIOClient.Messages
         public static OpenedMessage CreateOpenedMessage(string msg)
         {
             var openedMessage = new OpenedMessage();
+
             if (msg[0] == '0')
             {
                 openedMessage.Eio = 4;

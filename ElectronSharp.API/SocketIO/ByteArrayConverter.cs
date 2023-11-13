@@ -22,18 +22,23 @@ namespace SocketIOClient.Newtonsoft.Json
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, global::Newtonsoft.Json.JsonSerializer serializer)
         {
             byte[] bytes = null;
+
             if (reader.TokenType == JsonToken.StartObject)
             {
                 reader.Read();
+
                 if (reader.TokenType == JsonToken.PropertyName && reader.Value?.ToString() == "_placeholder")
                 {
                     reader.Read();
+
                     if (reader.TokenType == JsonToken.Boolean && (bool)reader.Value)
                     {
                         reader.Read();
+
                         if (reader.TokenType == JsonToken.PropertyName && reader.Value?.ToString() == "num")
                         {
                             reader.Read();
+
                             if (reader.Value != null)
                             {
                                 if (int.TryParse(reader.Value.ToString(), out int num))

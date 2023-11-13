@@ -13,7 +13,7 @@ namespace ElectronSharp.API
     /// </summary>
     public sealed class Shell
     {
-        private static Shell _shell;
+        private static          Shell  _shell;
         private static readonly object _syncRoot = new();
 
         internal Shell() { }
@@ -94,7 +94,6 @@ namespace ElectronSharp.API
         /// <param name="url">Max 2081 characters on windows.</param>
         /// <param name="options">Controls the behavior of OpenExternal.</param>
         /// <returns>The error message corresponding to the failure if a failure occurred, otherwise <see cref="string.Empty"/>.</returns>
-
         public Task<string> OpenExternalAsync(string url, OpenExternalOptions options)
         {
             var taskCompletionSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);

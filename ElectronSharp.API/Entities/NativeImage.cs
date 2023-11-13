@@ -18,22 +18,23 @@ namespace ElectronSharp.API.Entities
     public class NativeImage
     {
         private readonly Dictionary<float, Image> _images = new();
-        private bool _isTemplateImage;
+        private          bool                     _isTemplateImage;
 
         private static readonly Dictionary<string, float> ScaleFactorPairs = new()
         {
-            {"@2x",   2.0f}, {"@3x",     3.0f}, {"@1x",     1.0f}, {"@4x",   4.0f},
-            {"@5x",   5.0f}, {"@1.25x", 1.25f}, {"@1.33x", 1.33f}, {"@1.4x", 1.4f},
-            {"@1.5x", 1.5f}, {"@1.8x",   1.8f}, {"@2.5x",   2.5f}
+            { "@2x", 2.0f }, { "@3x", 3.0f }, { "@1x", 1.0f }, { "@4x", 4.0f },
+            { "@5x", 5.0f }, { "@1.25x", 1.25f }, { "@1.33x", 1.33f }, { "@1.4x", 1.4f },
+            { "@1.5x", 1.5f }, { "@1.8x", 1.8f }, { "@2.5x", 2.5f }
         };
 
         private static float? ExtractDpiFromFilePath(string filePath)
         {
             var withoutExtension = Path.GetFileNameWithoutExtension(filePath);
+
             return ScaleFactorPairs
-                .Where(p => withoutExtension.EndsWith(p.Key))
-                .Select(p => p.Value)
-                .FirstOrDefault();
+               .Where(p => withoutExtension.EndsWith(p.Key))
+               .Select(p => p.Value)
+               .FirstOrDefault();
         }
         private static Image BytesToImage(byte[] bytes)
         {
@@ -82,10 +83,10 @@ namespace ElectronSharp.API.Entities
         /// <param name="dataUrl">A data URL with a base64 encoded image.</param>
         public static NativeImage CreateFromDataURL(string dataUrl)
         {
-            var images = new Dictionary<float,Image>();
+            var images        = new Dictionary<float, Image>();
             var parsedDataUrl = Regex.Match(dataUrl, @"data:image/(?<type>.+?),(?<data>.+)");
-            var actualData = parsedDataUrl.Groups["data"].Value;
-            var binData = Convert.FromBase64String(actualData);
+            var actualData    = parsedDataUrl.Groups["data"].Value;
+            var binData       = Convert.FromBase64String(actualData);
 
             var image = BytesToImage(binData);
 
@@ -100,10 +101,12 @@ namespace ElectronSharp.API.Entities
         /// <param name="path">The path of the image</param>
         public static NativeImage CreateFromPath(string path)
         {
-            var images = new Dictionary<float,Image>();
+            var images = new Dictionary<float, Image>();
+
             if (Regex.IsMatch(path, "(@.+?x)"))
             {
                 var dpi = ExtractDpiFromFilePath(path);
+
                 if (dpi == null)
                 {
                     throw new Exception($"Invalid scaling factor for '{path}'.");
@@ -114,16 +117,18 @@ namespace ElectronSharp.API.Entities
             else
             {
                 var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(path);
-                var extension = Path.GetExtension(path);
+                var extension                = Path.GetExtension(path);
                 // Load as 1x dpi
                 images[1.0f] = Image.Load(path);
 
                 foreach (var scale in ScaleFactorPairs)
                 {
                     var fileName = $"{fileNameWithoutExtension}{scale}.{extension}";
+
                     if (File.Exists(fileName))
                     {
                         var dpi = ExtractDpiFromFilePath(fileName);
+
                         if (dpi != null)
                         {
                             images[dpi.Value] = Image.Load(fileName);
@@ -164,6 +169,7 @@ namespace ElectronSharp.API.Entities
         public NativeImage Crop(Rectangle rect)
         {
             var images = new Dictionary<float, Image>();
+
             foreach (var image in _images)
             {
                 images.Add(image.Key, Crop(rect.X, rect.Y, rect.Width, rect.Height, image.Key));
@@ -178,6 +184,7 @@ namespace ElectronSharp.API.Entities
         public NativeImage Resize(ResizeOptions options)
         {
             var images = new Dictionary<float, Image>();
+
             foreach (var image in _images)
             {
                 images.Add(image.Key, Resize(options.Width, options.Height, image.Key));
@@ -195,8 +202,8 @@ namespace ElectronSharp.API.Entities
             if (options.Buffer.Length > 0)
             {
                 _images[options.ScaleFactor] =
-                    CreateFromBuffer(options.Buffer, new CreateFromBufferOptions {ScaleFactor = options.ScaleFactor})
-                        .GetScale(options.ScaleFactor);
+                    CreateFromBuffer(options.Buffer, new CreateFromBufferOptions { ScaleFactor = options.ScaleFactor })
+                       .GetScale(options.ScaleFactor);
             }
             else if (!string.IsNullOrEmpty(options.DataUrl))
             {
@@ -211,6 +218,7 @@ namespace ElectronSharp.API.Entities
         public float GetAspectRatio(float scaleFactor = 1.0f)
         {
             var image = GetScale(scaleFactor);
+
             if (image != null)
             {
                 return (float)image.Width / image.Height;
@@ -218,7 +226,7 @@ namespace ElectronSharp.API.Entities
 
             return 0f;
         }
-     
+
         /// <summary>
         /// Gets the size of the specified image based on scale factor
         /// </summary>
@@ -227,9 +235,10 @@ namespace ElectronSharp.API.Entities
             if (_images.ContainsKey(scaleFactor))
             {
                 var image = _images[scaleFactor];
+
                 return new Size
                 {
-                    Width = image.Width,
+                    Width  = image.Width,
                     Height = image.Height
                 };
             }
@@ -308,6 +317,7 @@ namespace ElectronSharp.API.Entities
             {
                 throw new KeyNotFoundException($"Missing scaleFactor = {scaleFactor}");
             }
+
             if (width is null && height is null)
             {
                 throw new ArgumentNullException("Missing width or height");
@@ -316,12 +326,12 @@ namespace ElectronSharp.API.Entities
             var aspect = GetAspectRatio(scaleFactor);
             width  ??= Convert.ToInt32(image.Width * aspect);
             height ??= Convert.ToInt32(image.Height * aspect);
-            width   =  Convert.ToInt32(width * scaleFactor);
-            height  =  Convert.ToInt32(height * scaleFactor);
+            width  =   Convert.ToInt32(width * scaleFactor);
+            height =   Convert.ToInt32(height * scaleFactor);
 
             return image.Clone(c => c.Resize(new SixLabors.ImageSharp.Processing.ResizeOptions
             {
-                Size = new(width.Value, height.Value),
+                Size    = new(width.Value, height.Value),
                 Sampler = KnownResamplers.Triangle,
             }));
         }
@@ -339,18 +349,19 @@ namespace ElectronSharp.API.Entities
             x = Convert.ToInt32(x * scaleFactor);
             y = Convert.ToInt32(y * scaleFactor);
 
-            width ??= image.Width;
+            width  ??= image.Width;
             height ??= image.Height;
 
-            width = Convert.ToInt32(width * scaleFactor);
+            width  = Convert.ToInt32(width * scaleFactor);
             height = Convert.ToInt32(height * scaleFactor);
 
             return image.Clone(c => c.Crop(new SixLabors.ImageSharp.Rectangle(x.Value, y.Value, width.Value, height.Value)));
         }
 
-        internal Dictionary<float,string> GetAllScaledImages()
+        internal Dictionary<float, string> GetAllScaledImages()
         {
-            var dict = new Dictionary<float,string>();
+            var dict = new Dictionary<float, string>();
+
             try
             {
                 foreach (var (scale, image) in _images)
@@ -362,7 +373,7 @@ namespace ElectronSharp.API.Entities
             {
                 BridgeConnector.LogError(ex, "Error getting scaled images");
             }
-            
+
             return dict;
         }
 

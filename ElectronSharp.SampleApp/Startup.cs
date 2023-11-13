@@ -54,9 +54,9 @@ namespace ElectronSharp.SampleApp
 
             var browserWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
             {
-                Width = 1152,
+                Width  = 1152,
                 Height = 940,
-                Show = false
+                Show   = false
             });
 
             await browserWindow.WebContents.Session.ClearCacheAsync();
@@ -74,7 +74,7 @@ namespace ElectronSharp.SampleApp
             Electron.App.On("activate", (obj) =>
             {
                 // obj should be a boolean that represents where there are active windows or not.
-                var hasWindows = (bool) obj;
+                var hasWindows = (bool)obj;
 
                 Electron.Notification.Show(
                     new NotificationOptions("Activate", $"activate event has been captured. Active windows = {hasWindows}")
@@ -87,7 +87,7 @@ namespace ElectronSharp.SampleApp
             {
                 new MenuItem
                 {
-                    Type = MenuType.normal,
+                    Type  = MenuType.normal,
                     Label = "MenuItem",
                     Click = () =>
                     {
@@ -98,13 +98,13 @@ namespace ElectronSharp.SampleApp
                 },
                 new MenuItem
                 {
-                    Type = MenuType.submenu,
+                    Type  = MenuType.submenu,
                     Label = "SubMenu",
                     Submenu = new[]
                     {
                         new MenuItem
                         {
-                            Type = MenuType.normal,
+                            Type  = MenuType.normal,
                             Label = "Sub MenuItem",
                             Click = () =>
                             {

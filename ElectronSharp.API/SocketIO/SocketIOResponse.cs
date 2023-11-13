@@ -10,22 +10,22 @@ namespace SocketIOClient
     {
         public SocketIOResponse(IList<JsonElement> array, SocketIO socket)
         {
-            _array = array;
+            _array        = array;
             InComingBytes = new List<byte[]>();
-            SocketIO = socket;
-            PacketId = -1;
+            SocketIO      = socket;
+            PacketId      = -1;
         }
 
         readonly IList<JsonElement> _array;
 
         public List<byte[]> InComingBytes { get; }
-        public SocketIO SocketIO { get; }
-        public int PacketId { get; set; }
+        public SocketIO     SocketIO      { get; }
+        public int          PacketId      { get; set; }
 
         public T GetValue<T>(int index = 0)
         {
-            var element = GetValue(index);
-            string json = element.GetRawText();
+            var    element = GetValue(index);
+            string json    = element.GetRawText();
             return SocketIO.JsonSerializer.Deserialize<T>(json, InComingBytes);
         }
 
@@ -37,9 +37,11 @@ namespace SocketIOClient
         {
             var builder = new StringBuilder();
             builder.Append('[');
+
             foreach (var item in _array)
             {
                 builder.Append(item.GetRawText());
+
                 if (_array.IndexOf(item) < _array.Count - 1)
                 {
                     builder.Append(',');

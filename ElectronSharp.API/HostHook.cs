@@ -15,9 +15,9 @@ namespace ElectronSharp.API
     /// </summary>
     public sealed class HostHook
     {
-        private static HostHook _electronHostHook;
-        private static readonly object _syncRoot = new();
-        readonly string oneCallguid = Guid.NewGuid().ToString();
+        private static          HostHook _electronHostHook;
+        private static readonly object   _syncRoot   = new();
+        readonly                string   oneCallguid = Guid.NewGuid().ToString();
 
         internal HostHook() { }
 
@@ -65,8 +65,8 @@ namespace ElectronSharp.API
         /// <returns></returns>
         public Task<T> CallAsync<T>(string socketEventName, params dynamic[] arguments)
         {
-            var taskCompletionSource = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On<string>(socketEventName + "Error" + guid, (result) =>
             {

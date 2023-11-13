@@ -7,9 +7,9 @@ namespace ElectronSharp.CLI.Commands
 {
     public class VersionCommand : ICommand
     {
-        public const string COMMAND_NAME = "version";
-        public const string COMMAND_DESCRIPTION = "Displays the ElectronSharp.CLI version";
-        public const string COMMAND_ARGUMENTS = "";
+        public const  string               COMMAND_NAME        = "version";
+        public const  string               COMMAND_DESCRIPTION = "Displays the ElectronSharp.CLI version";
+        public const  string               COMMAND_ARGUMENTS   = "";
         public static IList<CommandOption> CommandOptions { get; set; } = new List<CommandOption>();
 
         public VersionCommand()
@@ -21,9 +21,9 @@ namespace ElectronSharp.CLI.Commands
             return Task.Run(() =>
             {
                 var runtimeVersion = typeof(VersionCommand)
-                    .GetTypeInfo()
-                    .Assembly
-                    .GetCustomAttribute<AssemblyFileVersionAttribute>();
+                   .GetTypeInfo()
+                   .Assembly
+                   .GetCustomAttribute<AssemblyFileVersionAttribute>();
 
                 Console.WriteLine($"ElectronSharp.CLI Version: " + runtimeVersion.Version);
 

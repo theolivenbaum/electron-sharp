@@ -37,15 +37,18 @@ namespace SocketIOClient.Messages
         public string Write()
         {
             var builder = new StringBuilder();
+
             builder
-                .Append("46")
-                .Append(OutgoingBytes.Count)
-                .Append('-');
+               .Append("46")
+               .Append(OutgoingBytes.Count)
+               .Append('-');
+
             if (!string.IsNullOrEmpty(Namespace))
             {
                 builder.Append(Namespace).Append(',');
             }
             builder.Append(Id);
+
             if (string.IsNullOrEmpty(Json))
             {
                 builder.Append("[]");

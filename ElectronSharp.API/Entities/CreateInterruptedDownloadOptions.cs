@@ -56,12 +56,12 @@
         /// <param name="eTag">ETag header value.</param>
         public CreateInterruptedDownloadOptions(string path, string[] urlChain, int offset, int length, string lastModified, string eTag)
         {
-            Path = path;
-            UrlChain = urlChain;
-            Offset = offset;
-            Length = length;
+            Path         = path;
+            UrlChain     = urlChain;
+            Offset       = offset;
+            Length       = length;
             LastModified = lastModified;
-            ETag = eTag;
+            ETag         = eTag;
         }
     }
 }

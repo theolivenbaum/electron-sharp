@@ -12,31 +12,31 @@ namespace SocketIOClient.Transport
     {
         public SystemNetWebSocketsClientWebSocket(int eio)
         {
-            _eio = eio;
-            _textSubject = new Subject<string>();
-            _bytesSubject = new Subject<byte[]>();
-            TextObservable = _textSubject.AsObservable();
-            BytesObservable = _bytesSubject.AsObservable();
-            _ws = new ClientWebSocket();
+            _eio                = eio;
+            _textSubject        = new Subject<string>();
+            _bytesSubject       = new Subject<byte[]>();
+            TextObservable      = _textSubject.AsObservable();
+            BytesObservable     = _bytesSubject.AsObservable();
+            _ws                 = new ClientWebSocket();
             _listenCancellation = new CancellationTokenSource();
-            _sendLock = new SemaphoreSlim(1, 1);
+            _sendLock           = new SemaphoreSlim(1, 1);
         }
 
         const int ReceiveChunkSize = 1024 * 8;
 
-        readonly int _eio;
-        readonly ClientWebSocket _ws;
-        readonly Subject<string> _textSubject;
-        readonly Subject<byte[]> _bytesSubject;
+        readonly int                     _eio;
+        readonly ClientWebSocket         _ws;
+        readonly Subject<string>         _textSubject;
+        readonly Subject<byte[]>         _bytesSubject;
         readonly CancellationTokenSource _listenCancellation;
-        readonly SemaphoreSlim _sendLock;
+        readonly SemaphoreSlim           _sendLock;
 
-        public IObservable<string> TextObservable { get; }
+        public IObservable<string> TextObservable  { get; }
         public IObservable<byte[]> BytesObservable { get; }
 
         private void Listen()
         {
-            Task.Factory.StartNew(async() =>
+            Task.Factory.StartNew(async () =>
             {
                 while (true)
                 {
@@ -44,13 +44,14 @@ namespace SocketIOClient.Transport
                     {
                         break;
                     }
-                    var buffer = new byte[ReceiveChunkSize];
-                    int count = 0;
+                    var                    buffer = new byte[ReceiveChunkSize];
+                    int                    count  = 0;
                     WebSocketReceiveResult result = null;
 
                     while (_ws.State == WebSocketState.Open)
                     {
                         var subBuffer = new byte[ReceiveChunkSize];
+
                         try
                         {
                             result = await _ws.ReceiveAsync(new ArraySegment<byte>(subBuffer), CancellationToken.None).ConfigureAwait(false);
@@ -62,6 +63,7 @@ namespace SocketIOClient.Transport
                             }
                             Buffer.BlockCopy(subBuffer, 0, buffer, count, result.Count);
                             count += result.Count;
+
                             if (result.EndOfMessage)
                             {
                                 break;
@@ -87,6 +89,7 @@ namespace SocketIOClient.Transport
                             break;
                         case WebSocketMessageType.Binary:
                             byte[] bytes;
+
                             if (_eio == 3)
                             {
                                 bytes = new byte[count - 1];
@@ -121,6 +124,7 @@ namespace SocketIOClient.Transport
         public async Task SendAsync(byte[] bytes, TransportMessageType type, bool endOfMessage, CancellationToken cancellationToken)
         {
             var msgType = WebSocketMessageType.Text;
+
             if (type == TransportMessageType.Binary)
             {
                 msgType = WebSocketMessageType.Binary;

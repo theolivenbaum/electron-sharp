@@ -2,7 +2,7 @@
 {
     public enum TransportMessageType
     {
-        Text = 0,
+        Text   = 0,
         Binary = 1
     }
 }

@@ -10,22 +10,23 @@ namespace SocketIOClient.Transport
 {
     public class HttpTransport : BaseTransport
     {
-        public HttpTransport(HttpClient http,
+        public HttpTransport(
+            HttpClient          http,
             IHttpPollingHandler pollingHandler,
-            SocketIOOptions options,
-            IJsonSerializer jsonSerializer,
-            ILogger logger) : base(options, jsonSerializer, logger)
+            SocketIOOptions     options,
+            IJsonSerializer     jsonSerializer,
+            ILogger             logger) : base(options, jsonSerializer, logger)
         {
-            _http = http;
+            _http               = http;
             _httpPollingHandler = pollingHandler;
             _httpPollingHandler.TextObservable.Subscribe(this);
             _httpPollingHandler.BytesObservable.Subscribe(this);
         }
 
-        string _httpUri;
+        string                  _httpUri;
         CancellationTokenSource _pollingTokenSource;
 
-        readonly HttpClient _http;
+        readonly HttpClient          _http;
         readonly IHttpPollingHandler _httpPollingHandler;
 
         private void StartPolling(CancellationToken cancellationToken)
@@ -33,6 +34,7 @@ namespace SocketIOClient.Transport
             Task.Factory.StartNew(async () =>
             {
                 int retry = 0;
+
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     if (!_httpUri.Contains("&sid="))
@@ -40,6 +42,7 @@ namespace SocketIOClient.Transport
                         await Task.Delay(20);
                         continue;
                     }
+
                     try
                     {
                         await _httpPollingHandler.GetAsync(_httpUri, CancellationToken.None).ConfigureAwait(false);
@@ -47,6 +50,7 @@ namespace SocketIOClient.Transport
                     catch (Exception e)
                     {
                         retry++;
+
                         if (retry >= 3)
                         {
                             MessageSubject.OnError(e);
@@ -71,6 +75,7 @@ namespace SocketIOClient.Transport
 
             _httpUri = uri.ToString();
             await _httpPollingHandler.SendAsync(req, new CancellationTokenSource(Options.ConnectionTimeout).Token).ConfigureAwait(false);
+
             if (_pollingTokenSource != null)
             {
                 _pollingTokenSource.Cancel();
@@ -82,6 +87,7 @@ namespace SocketIOClient.Transport
         public override Task DisconnectAsync(CancellationToken cancellationToken)
         {
             _pollingTokenSource.Cancel();
+
             if (PingTokenSource != null)
             {
                 PingTokenSource.Cancel();
@@ -103,6 +109,7 @@ namespace SocketIOClient.Transport
         public override async Task SendAsync(Payload payload, CancellationToken cancellationToken)
         {
             await _httpPollingHandler.PostAsync(_httpUri, payload.Text, cancellationToken);
+
             if (payload.Bytes != null && payload.Bytes.Count > 0)
             {
                 await _httpPollingHandler.PostAsync(_httpUri, payload.Bytes, cancellationToken);

@@ -8,7 +8,15 @@
         /// <summary>
         /// An enum for the possible values for an option
         /// </summary>
-        public enum CommandOptionValueType { NoValue, StringValue, BoolValue, IntValue, CommaDelimitedList, KeyValuePairs }
+        public enum CommandOptionValueType
+        {
+            NoValue,
+            StringValue,
+            BoolValue,
+            IntValue,
+            CommaDelimitedList,
+            KeyValuePairs
+        }
 
         /// <summary>
         /// The name of the option.
@@ -43,6 +51,7 @@
             get
             {
                 var key = this.Switch;
+
                 if (key.StartsWith("--"))
                     key = key.Substring(2);
 

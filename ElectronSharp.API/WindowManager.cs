@@ -17,8 +17,8 @@ namespace ElectronSharp.API
     /// </summary>
     public sealed class WindowManager
     {
-        private static WindowManager _windowManager;
-        private static readonly object _syncRoot = new();
+        private static          WindowManager _windowManager;
+        private static readonly object        _syncRoot = new();
 
         internal WindowManager() { }
 
@@ -75,7 +75,7 @@ namespace ElectronSharp.API
         public bool TryGetBrowserWindows(int id, out BrowserWindow window) => _browserWindows.TryGetValue(id, out window);
 
 
-        private readonly ConcurrentDictionary<int, BrowserWindow> _browserWindows = new ();
+        private readonly ConcurrentDictionary<int, BrowserWindow> _browserWindows = new();
 
         /// <summary>
         /// Gets the browser views.
@@ -84,7 +84,7 @@ namespace ElectronSharp.API
         /// The browser view.
         /// </value>
         public IReadOnlyCollection<BrowserView> BrowserViews { get { return _browserViews.Values.ToList().AsReadOnly(); } }
-        private readonly ConcurrentDictionary<int, BrowserView> _browserViews = new ();
+        private readonly ConcurrentDictionary<int, BrowserView> _browserViews = new();
 
         /// <summary>
         /// Get a browser view using the ID
@@ -137,7 +137,7 @@ namespace ElectronSharp.API
             // https://github.com/electron/electron/issues/4045
             if (IsWindows10())
             {
-                options.Width += 14;
+                options.Width  += 14;
                 options.Height += 7;
             }
 
@@ -164,15 +164,15 @@ namespace ElectronSharp.API
         }
 
 
-        private bool _hasClosedEvent = false;
-        private readonly object _hasClosedEventLock  = new();
+        private          bool   _hasClosedEvent     = false;
+        private readonly object _hasClosedEventLock = new();
         private void BootstrapUpdateOpenIDsEvent()
         {
             if (!_hasClosedEvent)
             {
-                lock(_hasClosedEventLock)
+                lock (_hasClosedEventLock)
                 {
-                    if(!_hasClosedEvent)
+                    if (!_hasClosedEvent)
                     {
                         BridgeConnector.On<int[]>("BrowserWindowUpdateOpenIDs", (browserWindowIdsStillOpen) =>
                         {
@@ -190,7 +190,7 @@ namespace ElectronSharp.API
                         });
                         _hasClosedEvent = true;
                     }
-                }    
+                }
             }
         }
 
@@ -258,7 +258,7 @@ namespace ElectronSharp.API
 
         private static readonly JsonSerializer _keepDefaultValuesSerializer = new()
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            ContractResolver  = new CamelCasePropertyNamesContractResolver(),
             NullValueHandling = NullValueHandling.Ignore
         };
     }

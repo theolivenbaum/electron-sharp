@@ -8,7 +8,7 @@ namespace ElectronSharp.SampleApp.Controllers
     {
         public IActionResult Index()
         {
-            if(HybridSupport.IsElectronActive)
+            if (HybridSupport.IsElectronActive)
             {
                 Electron.IpcMain.On("async-msg", (args) =>
                 {

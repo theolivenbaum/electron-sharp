@@ -101,7 +101,7 @@ namespace ElectronSharp.API
 
         private event Action<Display, string[]> _onDisplayMetricsChanged;
 
-        private static Screen _screen;
+        private static          Screen _screen;
         private static readonly object _syncRoot = new();
 
         internal Screen() { }

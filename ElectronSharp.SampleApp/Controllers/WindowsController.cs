@@ -22,7 +22,7 @@ namespace ElectronSharp.SampleApp.Controllers
                 {
 
                     var browserWindow = await Electron.WindowManager.CreateWindowAsync(viewPath);
-                    browserWindow.OnMove += UpdateReply;
+                    browserWindow.OnMove   += UpdateReply;
                     browserWindow.OnResize += UpdateReply;
                 });
 
@@ -32,7 +32,7 @@ namespace ElectronSharp.SampleApp.Controllers
 
                     var browserWindow = await Electron.WindowManager.CreateWindowAsync(viewPath);
                     browserWindow.OnFocus += () => Electron.IpcMain.Send(mainBrowserWindow, "listen-to-window-focus");
-                    browserWindow.OnBlur += () => Electron.IpcMain.Send(mainBrowserWindow, "listen-to-window-blur");
+                    browserWindow.OnBlur  += () => Electron.IpcMain.Send(mainBrowserWindow, "listen-to-window-blur");
 
                     Electron.IpcMain.On("listen-to-window-set-focus", (x) => browserWindow.Focus());
                 });
@@ -52,10 +52,10 @@ namespace ElectronSharp.SampleApp.Controllers
 
         private async void UpdateReply()
         {
-            var browserWindow = Electron.WindowManager.BrowserWindows.Last();
-            var size = await browserWindow.GetSizeAsync();
-            var position = await browserWindow.GetPositionAsync();
-            string message = $"Size: {size[0]},{size[1]} Position: {position[0]},{position[1]}";
+            var    browserWindow = Electron.WindowManager.BrowserWindows.Last();
+            var    size          = await browserWindow.GetSizeAsync();
+            var    position      = await browserWindow.GetPositionAsync();
+            string message       = $"Size: {size[0]},{size[1]} Position: {position[0]},{position[1]}";
 
             var mainWindow = Electron.WindowManager.BrowserWindows.First();
             Electron.IpcMain.Send(mainWindow, "manage-window-reply", message);

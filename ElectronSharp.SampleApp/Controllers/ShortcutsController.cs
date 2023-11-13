@@ -15,7 +15,7 @@ namespace ElectronSharp.SampleApp.Controllers
                 {
                     var options = new MessageBoxOptions("You pressed the registered global shortcut keybinding.")
                     {
-                        Type = MessageBoxType.info,
+                        Type  = MessageBoxType.info,
                         Title = "Success!"
                     };
 

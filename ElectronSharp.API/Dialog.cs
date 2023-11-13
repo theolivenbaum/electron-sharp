@@ -15,7 +15,7 @@ namespace ElectronSharp.API
     /// </summary>
     public sealed class Dialog
     {
-        private static Dialog _dialog;
+        private static          Dialog _dialog;
         private static readonly object _syncRoot = new();
 
         internal Dialog() { }
@@ -28,7 +28,7 @@ namespace ElectronSharp.API
                 {
                     lock (_syncRoot)
                     {
-                        if(_dialog == null)
+                        if (_dialog == null)
                         {
                             _dialog = new Dialog();
                         }
@@ -49,8 +49,8 @@ namespace ElectronSharp.API
         /// <returns>An array of file paths chosen by the user</returns>
         public Task<string[]> ShowOpenDialogAsync(BrowserWindow browserWindow, OpenDialogOptions options)
         {
-            var taskCompletionSource = new TaskCompletionSource<string[]>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<string[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On<string[]>("showOpenDialogComplete" + guid, (filePaths) =>
             {
@@ -78,8 +78,8 @@ namespace ElectronSharp.API
         /// <returns>Returns String, the path of the file chosen by the user, if a callback is provided it returns an empty string.</returns>
         public Task<string> ShowSaveDialogAsync(BrowserWindow browserWindow, SaveDialogOptions options)
         {
-            var taskCompletionSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On<string>("showSaveDialogComplete" + guid, (filename) =>
             {
@@ -145,7 +145,7 @@ namespace ElectronSharp.API
         public Task<MessageBoxResult> ShowMessageBoxAsync(BrowserWindow browserWindow, MessageBoxOptions messageBoxOptions)
         {
             var taskCompletionSource = new TaskCompletionSource<MessageBoxResult>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var guid = Guid.NewGuid().ToString();
+            var guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On<MessageBoxResponse>("showMessageBoxComplete" + guid, (args) =>
             {
@@ -153,7 +153,7 @@ namespace ElectronSharp.API
 
                 taskCompletionSource.SetResult(new MessageBoxResult
                 {
-                    Response = args.response,
+                    Response        = args.response,
                     CheckboxChecked = args.@checked
                 });
 
@@ -162,7 +162,8 @@ namespace ElectronSharp.API
             if (browserWindow is null)
             {
                 BridgeConnector.Emit("showMessageBox", JObject.FromObject(messageBoxOptions, _jsonSerializer), guid);
-            } else
+            }
+            else
             {
                 BridgeConnector.Emit("showMessageBox", JObject.FromObject(messageBoxOptions, _jsonSerializer), JObject.FromObject(messageBoxOptions, _jsonSerializer), guid);
             }
@@ -211,8 +212,8 @@ namespace ElectronSharp.API
         [SupportedOSPlatform("macos")]
         public Task ShowCertificateTrustDialogAsync(BrowserWindow browserWindow, CertificateTrustDialogOptions options)
         {
-            var taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            string guid = Guid.NewGuid().ToString();
+            var    taskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid                 = Guid.NewGuid().ToString();
 
             BridgeConnector.On("showCertificateTrustDialogComplete" + guid, () =>
             {
@@ -227,8 +228,8 @@ namespace ElectronSharp.API
 
         private static readonly JsonSerializer _jsonSerializer = new()
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            NullValueHandling = NullValueHandling.Ignore,
+            ContractResolver     = new CamelCasePropertyNamesContractResolver(),
+            NullValueHandling    = NullValueHandling.Ignore,
             DefaultValueHandling = DefaultValueHandling.Ignore
         };
     }

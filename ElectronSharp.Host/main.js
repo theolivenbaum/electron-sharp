@@ -1,10 +1,10 @@
-const { app, nativeTheme, BrowserWindow, protocol } = require('electron');
+const {app, nativeTheme, BrowserWindow, protocol} = require('electron');
 const path = require('path');
 const cProcess = require('child_process');
 const process = require('process');
 const portscanner = require('portscanner');
-const { imageSize } = require('image-size');
-const { connect } = require('http2');
+const {imageSize} = require('image-size');
+const {connect} = require('http2');
 const crypto = require('crypto');
 const fs = require('fs');
 
@@ -33,15 +33,18 @@ app.commandLine.appendSwitch('disable-features', 'HardwareMediaKeyHandling,Parti
 
 if (app.commandLine.hasSwitch('manifest')) {
     manifestJsonFileName = app.commandLine.getSwitchValue('manifest');
-};
+}
+;
 
 if (app.commandLine.hasSwitch('watch')) {
     watchable = true;
-};
+}
+;
 
 if (app.commandLine.hasSwitch('development')) {
     development = true;
-};
+}
+;
 
 let currentBinPath1 = path.join(__dirname.replace('app.asar', ''), 'bin');
 
@@ -80,7 +83,10 @@ app.on('will-finish-launching', () => {
 });
 
 function prepareForUpdate() {
-    try { console.log('closing all windows before update'); } catch { }
+    try {
+        console.log('closing all windows before update');
+    } catch {
+    }
 
     ignoreApiProcessClosed = true;
 
@@ -94,15 +100,16 @@ function prepareForUpdate() {
                 w.removeAllListeners("close");
                 w.hide();
                 w.destroy();
-            }
-            catch {
+            } catch {
                 //ignore, probably already destroyed
             }
         });
     }
 }
 
-app.on('before-quit-for-update', () => { prepareForUpdate(); });
+app.on('before-quit-for-update', () => {
+    prepareForUpdate();
+});
 
 const manifestJsonFile = require(manifestJsonFilePath);
 
@@ -164,7 +171,10 @@ app.on('ready', () => {
 
     if (development) {
         let port = parseInt(app.commandLine.getSwitchValue('devport'));
-        try { console.log('Electron Socket IO Port: ' + port); } catch { }
+        try {
+            console.log('Electron Socket IO Port: ' + port);
+        } catch {
+        }
         startSocketApiBridge(port);
     } else {
 
@@ -178,7 +188,10 @@ app.on('ready', () => {
         }
         // hostname needs to be localhost, otherwise Windows Firewall will be triggered.
         portscanner.findAPortNotInUse(defaultElectronPort, 65535, 'localhost', function (error, port) {
-            try { console.log('Electron Socket IO Port: ' + port); } catch { }
+            try {
+                console.log('Electron Socket IO Port: ' + port);
+            } catch {
+            }
             startSocketApiBridge(port);
         });
     }
@@ -220,7 +233,8 @@ function startSplashScreen() {
             try {
                 console.log('load splashscreen error:');
                 console.error(error);
-            } catch { }
+            } catch {
+            }
 
             throw new Error(error.message);
         }
@@ -294,12 +308,15 @@ function startSocketApiBridge(port) {
         }
     }
 
-    io.attach(server, { pingTimeout: pingTimeout, pingInterval: pingInterval, maxHttpBufferSize: socketBufferSize });
+    io.attach(server, {pingTimeout: pingTimeout, pingInterval: pingInterval, maxHttpBufferSize: socketBufferSize});
 
     server.listen(port, 'localhost');
 
     server.on('listening', function () {
-        try { console.log('Electron Socket started on port %s at %s', server.address().port, server.address().address); } catch { }
+        try {
+            console.log('Electron Socket started on port %s at %s', server.address().port, server.address().address);
+        } catch {
+        }
         // Now that socket connection is established, we can guarantee port will not be open for portscanner
 
         if (watchable) {
@@ -319,13 +336,19 @@ function startSocketApiBridge(port) {
     let checkReconnectTimeout = 0;
     // @ts-ignore
     io.on('connection', (socket) => {
-        try { console.log('Socket ' + socket.id + ' connected from .NET'); } catch { }
-        
+        try {
+            console.log('Socket ' + socket.id + ' connected from .NET');
+        } catch {
+        }
+
         isConnected = true;
         clearTimeout(checkReconnectTimeout);
 
         socket.on('disconnect', function (reason) {
-            try { console.log('Socket ' + socket.id + ' disconnected from .NET with reason: ' + reason); } catch { }
+            try {
+                console.log('Socket ' + socket.id + ' disconnected from .NET with reason: ' + reason);
+            } catch {
+            }
             try {
                 if (hostHook) {
                     const hostHookScriptFilePath = path.join(__dirname, 'ElectronHostHook', 'index.js');
@@ -333,7 +356,10 @@ function startSocketApiBridge(port) {
                     hostHook = undefined;
                 }
             } catch (error) {
-                try { console.error(error.message); } catch { }
+                try {
+                    console.error(error.message);
+                } catch {
+                }
             }
 
             clearTimeout(checkReconnectTimeout);
@@ -358,7 +384,10 @@ function startSocketApiBridge(port) {
             global['electronsocket'] = socket;
             socket.setMaxListeners(0);
 
-            try { console.log('.NET connected on socket ' + socket.id + ' on ' + new Date()); } catch { }
+            try {
+                console.log('.NET connected on socket ' + socket.id + ' on ' + new Date());
+            } catch {
+            }
 
             appApi = require('./api/app')(socket, app, firstTime);
             browserWindows = require('./api/browserWindows')(socket, app, firstTime);
@@ -387,7 +416,9 @@ function startSocketApiBridge(port) {
                 }
             });
 
-            socket.on('prepare-for-update', () => { prepareForUpdate(); });
+            socket.on('prepare-for-update', () => {
+                prepareForUpdate();
+            });
 
             socket.on('register-app-open-file-event', (id) => {
                 global['electronsocket'] = socket;
@@ -416,23 +447,32 @@ function startSocketApiBridge(port) {
             });
 
             socket.on('console-stdout', (data) => {
-                try { console.log(`stdout: ${data.toString()}`); } catch { }
+                try {
+                    console.log(`stdout: ${data.toString()}`);
+                } catch {
+                }
             });
 
             socket.on('console-stderr', (data) => {
-                try { console.log(`stderr: ${data.toString()}`); } catch { }
+                try {
+                    console.log(`stderr: ${data.toString()}`);
+                } catch {
+                }
             });
 
             try {
                 const hostHookScriptFilePath = path.join(__dirname, 'ElectronHostHook', 'index.js');
 
                 if (isModuleAvailable(hostHookScriptFilePath) && hostHook === undefined) {
-                    const { HookService } = require(hostHookScriptFilePath);
+                    const {HookService} = require(hostHookScriptFilePath);
                     hostHook = new HookService(socket, app);
                     hostHook.onHostReady();
                 }
             } catch (error) {
-                try { console.error(error.message); } catch { }
+                try {
+                    console.error(error.message);
+                } catch {
+                }
             }
         });
     });
@@ -442,7 +482,8 @@ function isModuleAvailable(name) {
     try {
         require.resolve(name);
         return true;
-    } catch (e) { }
+    } catch (e) {
+    }
     return false;
 }
 
@@ -480,12 +521,12 @@ function startAspCoreBackend(electronPort) {
         let env = process.env;
 
         if (manifestJsonFile.hasOwnProperty('variables')) {
-            env = { ...env, ...manifestJsonFile.variables };
+            env = {...env, ...manifestJsonFile.variables};
         }
 
         let binFilePath = path.join(currentBinPath, binaryFile);
 
-        var options = { cwd: currentBinPath, env : env, detached: detachedProcess, stdio: stdioopt };
+        var options = {cwd: currentBinPath, env: env, detached: detachedProcess, stdio: stdioopt};
 
         apiProcess = cProcess.spawn(binFilePath, parameters, options);
 
@@ -506,8 +547,7 @@ function startAspCoreBackend(electronPort) {
                     console.log(`Will quit Electron, as exit code != 0 (got ${code})`);
                 }
                 app.exit(code);
-            }
-            else if (os.platform() === 'darwin') {
+            } else if (os.platform() === 'darwin') {
                 //There is a bug on the updater on macOS never quiting and starting the update process
                 //We give Squirrel.Mac enough time to access the update file, and then just force-exit here
                 setTimeout(() => app.exit(0), 30_000);
@@ -554,10 +594,10 @@ function startAspCoreBackendWithWatch(electronPort) {
         let env = process.env;
 
         if (manifestJsonFile.hasOwnProperty('variables')) {
-            env = { ...env, ...manifestJsonFile.variables };
+            env = {...env, ...manifestJsonFile.variables};
         }
 
-        var options = { cwd: currentBinPath, env: env, detached: detachedProcess, stdio: stdioopt };
+        var options = {cwd: currentBinPath, env: env, detached: detachedProcess, stdio: stdioopt};
 
         apiProcess = cProcess.spawn('dotnet', parameters, options);
 
@@ -580,14 +620,12 @@ function startAspCoreBackendWithWatch(electronPort) {
                 console.log('Will quit Electron now');
 
                 app.exit(code);
-            }
-            else if (os.platform() === 'darwin') {
+            } else if (os.platform() === 'darwin') {
                 console.log('.NET process and Electron has a pending update, will force quit in 10s...');
                 //There is a bug on the updater on macOS never quiting and starting the update process
                 //We give Squirrel.Mac enough time to access the update file, and then just force-exit here
                 setTimeout(() => app.exit(0), 10_000);
-            }
-            else {
+            } else {
                 console.log('.NET process and Electron has a pending update...');
             }
         });
@@ -650,7 +688,7 @@ function shellEnvSync() {
     }
 
     try {
-        let { stdout } = cProcess.spawnSync(shell, args, { env });
+        let {stdout} = cProcess.spawnSync(shell, args, {env});
         if (Buffer.isBuffer(stdout)) {
             stdout = stdout.toString();
         }

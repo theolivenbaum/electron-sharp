@@ -12,6 +12,7 @@ if (!Version.TryParse(version, out _))
 using var client = new HttpClient();
 
 var response = await client.GetAsync($"https://github.com/electron/electron/releases/tag/v{version}");
+
 if (!response.IsSuccessStatusCode)
 {
     Console.WriteLine($"Version not found on GitHub : {version}");
@@ -24,7 +25,7 @@ var csFile      = Path.GetFullPath("../ElectronSharp.CLI/Commands/BuildCommand.c
 var packageFile = Path.GetFullPath("../ElectronSharp.Host/package.json");
 var packagePath = Path.GetFullPath("../ElectronSharp.Host");
 
-if(!File.Exists(yamlFile) || !File.Exists(csFile) || !(File.Exists(packageFile)))
+if (!File.Exists(yamlFile) || !File.Exists(csFile) || !(File.Exists(packageFile)))
 {
     Console.WriteLine($"One of these files was not found:\n{yamlFile}\n{csFile}\n{packageFile}");
     return 0xDEAD;
@@ -35,14 +36,14 @@ var reCs      = new Regex(@"_defaultElectronVersion = ""\d{1,2}\.\d{1,2}\.\d{1,2
 var rePackage = new Regex(@"""electron"": ""\d{1,2}\.\d{1,2}\.\d{1,2}""");
 
 
-var yaml = File.ReadAllText(yamlFile);
-var cs = File.ReadAllText(csFile);
+var yaml    = File.ReadAllText(yamlFile);
+var cs      = File.ReadAllText(csFile);
 var package = File.ReadAllText(packageFile);
 
-if(reYaml.IsMatch(yaml) && reCs.IsMatch(cs) && rePackage.IsMatch(package))
+if (reYaml.IsMatch(yaml) && reCs.IsMatch(cs) && rePackage.IsMatch(package))
 {
-    yaml = reYaml.Replace(yaml, $"PackageVersion: {version}");
-    cs = reCs.Replace(cs, $"_defaultElectronVersion = \"{version}\"");
+    yaml    = reYaml.Replace(yaml, $"PackageVersion: {version}");
+    cs      = reCs.Replace(cs, $"_defaultElectronVersion = \"{version}\"");
     package = rePackage.Replace(package, $"\"electron\": \"{version}\"");
 
     File.WriteAllText(yamlFile, yaml);
@@ -52,7 +53,7 @@ if(reYaml.IsMatch(yaml) && reCs.IsMatch(cs) && rePackage.IsMatch(package))
     Directory.SetCurrentDirectory(packagePath);
 
     var psi = new ProcessStartInfo();
-    psi.FileName = "cmd";
+    psi.FileName  = "cmd";
     psi.Arguments = "/c \"npm update -D\"";
 
     var npmProcess = Process.Start(psi);
@@ -66,4 +67,3 @@ else
     Console.WriteLine($"Regex didn't match, check source code");
     return 0xDEAD;
 }
-

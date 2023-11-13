@@ -14,7 +14,7 @@ namespace ElectronSharp.API
     /// </summary>
     public sealed class Menu
     {
-        private static Menu _menu;
+        private static          Menu   _menu;
         private static readonly object _syncRoot = new();
 
         internal Menu() { }
@@ -27,7 +27,7 @@ namespace ElectronSharp.API
                 {
                     lock (_syncRoot)
                     {
-                        if(_menu == null)
+                        if (_menu == null)
                         {
                             _menu = new Menu();
                         }
@@ -62,7 +62,9 @@ namespace ElectronSharp.API
             _menuItems.AddRange(menuItems);
 
             BridgeConnector.Off("menuItemClicked");
-            BridgeConnector.On<string>("menuItemClicked", (id) => {
+
+            BridgeConnector.On<string>("menuItemClicked", (id) =>
+            {
                 MenuItem menuItem = _menuItems.GetMenuItem(id);
                 menuItem.Click?.Invoke();
             });
@@ -97,6 +99,7 @@ namespace ElectronSharp.API
             }
 
             BridgeConnector.Off("contextMenuItemClicked");
+
             BridgeConnector.On<MenuResponse>("contextMenuItemClicked", (results) =>
             {
                 MenuItem menuItem = _contextMenuItems[results.windowId].GetMenuItem(results.id);
@@ -115,7 +118,7 @@ namespace ElectronSharp.API
 
         private readonly JsonSerializer _jsonSerializer = new()
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            ContractResolver  = new CamelCasePropertyNamesContractResolver(),
             NullValueHandling = NullValueHandling.Ignore
         };
     }

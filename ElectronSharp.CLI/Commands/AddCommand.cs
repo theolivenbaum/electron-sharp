@@ -10,9 +10,9 @@ namespace ElectronSharp.CLI.Commands
 {
     public class AddCommand : ICommand
     {
-        public const string COMMAND_NAME = "add";
-        public const string COMMAND_DESCRIPTION = "The add command needs to be invoked via 'add hosthook'. This creates a special folder for your custom npm package installation.";
-        public const string COMMAND_ARGUMENTS = "hosthook";
+        public const  string               COMMAND_NAME        = "add";
+        public const  string               COMMAND_DESCRIPTION = "The add command needs to be invoked via 'add hosthook'. This creates a special folder for your custom npm package installation.";
+        public const  string               COMMAND_ARGUMENTS   = "hosthook";
         public static IList<CommandOption> CommandOptions { get; set; } = new List<CommandOption>();
 
 
@@ -29,13 +29,13 @@ namespace ElectronSharp.CLI.Commands
         {
             return Task.Run(() =>
             {
-                if(_args.Length == 0)
+                if (_args.Length == 0)
                 {
                     Console.WriteLine("Specify 'hosthook' to add custom npm packages.");
                     return false;
                 }
 
-                if(_args[0].ToLowerInvariant() != "hosthook")
+                if (_args[0].ToLowerInvariant() != "hosthook")
                 {
                     Console.WriteLine("Specify 'hosthook' to add custom npm packages.");
                     return false;
@@ -50,7 +50,7 @@ namespace ElectronSharp.CLI.Commands
 
                 var targetFilePath = Path.Combine(currentDirectory, ElectronHostHookFolderName);
 
-                if(Directory.Exists(targetFilePath))
+                if (Directory.Exists(targetFilePath))
                 {
                     Console.WriteLine("ElectronHostHook directory already in place. If you want to start over, delete the folder and invoke this command again.");
                     return false;
@@ -77,9 +77,10 @@ namespace ElectronSharp.CLI.Commands
 
                 // search .csproj or .fsproj (.csproj has higher precedence)
                 Console.WriteLine($"Search your .csproj/.fsproj to add configure CopyToPublishDirectory to 'Never'");
+
                 var projectFile = Directory.EnumerateFiles(currentDirectory, "*.csproj", SearchOption.TopDirectoryOnly)
-                    .Union(Directory.EnumerateFiles(currentDirectory, "*.fsproj", SearchOption.TopDirectoryOnly))
-                    .FirstOrDefault();
+                   .Union(Directory.EnumerateFiles(currentDirectory, "*.fsproj", SearchOption.TopDirectoryOnly))
+                   .FirstOrDefault();
 
                 var extension = Path.GetExtension(projectFile);
                 Console.WriteLine($"Found your {extension}: {projectFile} - check for existing CopyToPublishDirectory setting or update it.");
@@ -100,6 +101,7 @@ namespace ElectronSharp.CLI.Commands
                 var xmlDocument = XDocument.Load(stream);
 
                 var projectElement = xmlDocument.Descendants("Project").FirstOrDefault();
+
                 if (projectElement == null || projectElement.Attribute("Sdk")?.Value != "Microsoft.NET.Sdk.Web")
                 {
                     Console.WriteLine(
@@ -108,10 +110,10 @@ namespace ElectronSharp.CLI.Commands
                 }
 
                 string itemGroupXmlString = "<ItemGroup>" +
-                                                "<Content Update=\"ElectronHostHook\\**\\*.*\">" +
-                                                    "<CopyToPublishDirectory>Never</CopyToPublishDirectory>" +
-                                                "</Content>" +
-                                            "</ItemGroup>";
+                    "<Content Update=\"ElectronHostHook\\**\\*.*\">" +
+                    "<CopyToPublishDirectory>Never</CopyToPublishDirectory>" +
+                    "</Content>" +
+                    "</ItemGroup>";
 
                 var newItemGroupForConfig = XElement.Parse(itemGroupXmlString);
                 xmlDocument.Root.Add(newItemGroupForConfig);
@@ -122,9 +124,9 @@ namespace ElectronSharp.CLI.Commands
                 var xws = new XmlWriterSettings
                 {
                     OmitXmlDeclaration = true,
-                    Indent = true
+                    Indent             = true
                 };
-                
+
                 using XmlWriter xw = XmlWriter.Create(stream, xws);
 
                 xmlDocument.Save(xw);

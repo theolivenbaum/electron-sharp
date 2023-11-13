@@ -35,11 +35,13 @@ namespace SocketIOClient.Messages
         {
             var builder = new StringBuilder();
             builder.Append("43");
+
             if (!string.IsNullOrEmpty(Namespace))
             {
                 builder.Append(Namespace).Append(',');
             }
             builder.Append(Id);
+
             if (string.IsNullOrEmpty(Json))
             {
                 builder.Append("[]");

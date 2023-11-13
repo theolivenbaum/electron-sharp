@@ -18,15 +18,19 @@ namespace SocketIOClient.JsonSerializer
         public override byte[] Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             byte[] bytes = null;
+
             if (reader.TokenType == JsonTokenType.StartObject)
             {
                 reader.Read();
+
                 if (reader.TokenType == JsonTokenType.PropertyName && reader.GetString() == "_placeholder")
                 {
                     reader.Read();
+
                     if (reader.TokenType == JsonTokenType.True && reader.GetBoolean())
                     {
                         reader.Read();
+
                         if (reader.TokenType == JsonTokenType.PropertyName && reader.GetString() == "num")
                         {
                             reader.Read();

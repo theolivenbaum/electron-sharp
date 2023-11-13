@@ -8,7 +8,7 @@ namespace ElectronSharp.API.Entities
     /// The cause of the change 
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum CookieChangedCause 
+    public enum CookieChangedCause
     {
         /// <summary>
         ///The cookie was changed directly by a consumer's action.

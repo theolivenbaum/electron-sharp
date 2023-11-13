@@ -9,8 +9,8 @@ namespace ElectronSharp.API
     /// </summary>
     public sealed class GlobalShortcut
     {
-        private static GlobalShortcut _globalShortcut;
-        private static readonly object _syncRoot = new();
+        private static          GlobalShortcut _globalShortcut;
+        private static readonly object         _syncRoot = new();
 
         internal GlobalShortcut() { }
 
@@ -50,6 +50,7 @@ namespace ElectronSharp.API
                 _shortcuts.Add(accelerator, function);
 
                 BridgeConnector.Off("globalShortcut-pressed");
+
                 BridgeConnector.On<string>("globalShortcut-pressed", (shortcut) =>
                 {
                     if (_shortcuts.ContainsKey(shortcut))

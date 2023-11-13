@@ -41,7 +41,7 @@ namespace ElectronSharp.SampleApp.Controllers
                 };
 
             }
-            
+
             return View();
         }
     }

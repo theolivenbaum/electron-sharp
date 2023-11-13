@@ -7,55 +7,55 @@ namespace ElectronSharp.CLI.Commands.Actions
     {
         public struct GetTargetPlatformInformationResult
         {
-            public string NetCorePublishRid { get; set; }
+            public string NetCorePublishRid      { get; set; }
             public string ElectronPackerPlatform { get; set; }
 
         }
 
         public static GetTargetPlatformInformationResult Do(string desiredPlatform, string specifiedPlatfromFromCustom)
         {
-            string netCorePublishRid = string.Empty;
+            string netCorePublishRid      = string.Empty;
             string electronPackerPlatform = string.Empty;
 
             switch (desiredPlatform)
             {
                 case "win":
-                    netCorePublishRid = "win-x64";
+                    netCorePublishRid      = "win-x64";
                     electronPackerPlatform = "win";
                     break;
                 case "osx":
-                    netCorePublishRid = "osx-x64";
+                    netCorePublishRid      = "osx-x64";
                     electronPackerPlatform = "mac";
                     break;
                 case "osx-arm64":
-                    netCorePublishRid = "osx-arm64";
+                    netCorePublishRid      = "osx-arm64";
                     electronPackerPlatform = "mac";
                     break;
                 case "linux":
-                    netCorePublishRid = "linux-x64";
+                    netCorePublishRid      = "linux-x64";
                     electronPackerPlatform = "linux";
                     break;
                 case "linux-arm":
-                    netCorePublishRid = "linux-arm";
+                    netCorePublishRid      = "linux-arm";
                     electronPackerPlatform = "linux";
                     break;
                 case "custom":
                     var splittedSpecified = specifiedPlatfromFromCustom.Split(';');
-                    netCorePublishRid = splittedSpecified[0];
+                    netCorePublishRid      = splittedSpecified[0];
                     electronPackerPlatform = splittedSpecified[1];
                     break;
                 default:
 
                     if (desiredPlatform.StartsWith("osx.")) //Versioned osx target platform
                     {
-                        netCorePublishRid = desiredPlatform;
+                        netCorePublishRid      = desiredPlatform;
                         electronPackerPlatform = "mac";
                         break;
                     }
 
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     {
-                        netCorePublishRid = $"win-x{(Environment.Is64BitOperatingSystem ? "64" : "86")}";
+                        netCorePublishRid      = $"win-x{(Environment.Is64BitOperatingSystem ? "64" : "86")}";
                         electronPackerPlatform = "win";
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -63,19 +63,19 @@ namespace ElectronSharp.CLI.Commands.Actions
                         if (RuntimeInformation.OSArchitecture.Equals(Architecture.Arm64))
                         {
                             //Apple Silicon Mac:
-                            netCorePublishRid = "osx-arm64";
+                            netCorePublishRid      = "osx-arm64";
                             electronPackerPlatform = "mac";
                         }
                         else
                         {
                             //Intel Mac:
-                            netCorePublishRid = "osx-x64";
+                            netCorePublishRid      = "osx-x64";
                             electronPackerPlatform = "mac";
                         }
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
-                        netCorePublishRid = "linux-x64";
+                        netCorePublishRid      = "linux-x64";
                         electronPackerPlatform = "linux";
                     }
 
@@ -85,7 +85,7 @@ namespace ElectronSharp.CLI.Commands.Actions
             return new GetTargetPlatformInformationResult()
             {
                 ElectronPackerPlatform = electronPackerPlatform,
-                NetCorePublishRid = netCorePublishRid
+                NetCorePublishRid      = netCorePublishRid
             };
         }
     }

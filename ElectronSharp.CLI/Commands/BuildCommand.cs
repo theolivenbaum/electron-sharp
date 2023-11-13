@@ -12,10 +12,10 @@ namespace ElectronSharp.CLI.Commands
     {
         private const string _defaultElectronVersion = "27.0.4";
 
-        public const string COMMAND_NAME = "build";
+        public const string COMMAND_NAME        = "build";
         public const string COMMAND_DESCRIPTION = "Build your Electron Application.";
-        public const string COMMAND_ARGUMENTS = 
-@"Needed: '/target' with params 'win/osx/linux' to build for a typical app or use 'custom' and specify .NET Core build config & electron build config
+        public const string COMMAND_ARGUMENTS =
+            @"Needed: '/target' with params 'win/osx/linux' to build for a typical app or use 'custom' and specify .NET Core build config & electron build config
 for custom target, check .NET Core RID Catalog and Electron build target/
 e.g. '/target win' or '/target custom ""win7-x86;win""'
 Optional: '/dotnet-configuration' with the desired .NET Core build config e.g. release or debug. Default = Release
@@ -39,19 +39,19 @@ Full example for a 32bit debug build with electron prune: build /target custom w
         }
 
 
-        private const string _paramTarget = "target";
-        private const string _paramDotNetConfig = "dotnet-configuration";
-        private const string _paramElectronArch = "electron-arch";
-        private const string _paramElectronParams = "electron-params";
-        private const string _paramElectronVersion = "electron-version";
-        private const string _paramOutputDirectory = "relative-path";
-        private const string _paramAbsoluteOutput = "absolute-path";
-        private const string _paramPackageJson = "package-json";
-        private const string _paramForceNodeInstall = "install-modules";
-        private const string _manifest = "manifest";
+        private const string _paramTarget            = "target";
+        private const string _paramDotNetConfig      = "dotnet-configuration";
+        private const string _paramElectronArch      = "electron-arch";
+        private const string _paramElectronParams    = "electron-params";
+        private const string _paramElectronVersion   = "electron-version";
+        private const string _paramOutputDirectory   = "relative-path";
+        private const string _paramAbsoluteOutput    = "absolute-path";
+        private const string _paramPackageJson       = "package-json";
+        private const string _paramForceNodeInstall  = "install-modules";
+        private const string _manifest               = "manifest";
         private const string _paramPublishReadyToRun = "PublishReadyToRun";
         private const string _paramPublishSingleFile = "PublishSingleFile";
-        private const string _paramVersion = "Version";
+        private const string _paramVersion           = "Version";
 
         public Task<bool> ExecuteAsync()
         {
@@ -64,6 +64,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
 
                 //This version will be shared between the dotnet publish and electron-builder commands
                 string version = null;
+
                 if (parser.Arguments.ContainsKey(_paramVersion))
                     version = parser.Arguments[_paramVersion][0];
 
@@ -74,8 +75,9 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                     return false;
                 }
 
-                var desiredPlatform = parser.Arguments[_paramTarget][0];
+                var    desiredPlatform     = parser.Arguments[_paramTarget][0];
                 string specifiedFromCustom = string.Empty;
+
                 if (desiredPlatform == "custom" && parser.Arguments[_paramTarget].Length > 1)
                 {
                     specifiedFromCustom = parser.Arguments[_paramTarget][1];
@@ -110,12 +112,12 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                 string tempBinPath = Path.Combine(tempPath, "bin");
 
                 Console.WriteLine($"Build ASP.NET Core App for {platformInfo.NetCorePublishRid} under {configuration}-Configuration...");
-                
+
                 var dotNetPublishFlags = GetDotNetPublishFlags(parser, "false", "false");
 
                 var command =
                     $"dotnet publish -r {platformInfo.NetCorePublishRid} -c \"{configuration}\" --output \"{tempBinPath}\" {string.Join(' ', dotNetPublishFlags.Select(kvp => $"{kvp.Key}={kvp.Value}"))} --self-contained";
-                
+
                 // output the command 
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(command);
@@ -141,7 +143,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
 
                 var checkForNodeModulesDirPath = Path.Combine(tempPath, "node_modules");
 
-                if (!Directory.Exists(checkForNodeModulesDirPath)|| parser.Contains(_paramForceNodeInstall) || parser.Contains(_paramPackageJson))
+                if (!Directory.Exists(checkForNodeModulesDirPath) || parser.Contains(_paramForceNodeInstall) || parser.Contains(_paramPackageJson))
                 {
                     Console.WriteLine("Start npm install...");
                     ProcessHelper.CmdExecute("npm install --production", tempPath);
@@ -167,6 +169,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
 
                 // Specifying an absolute path supercedes a relative path
                 string buildPath = Path.Combine(Directory.GetCurrentDirectory(), "bin", "desktop");
+
                 if (parser.Arguments.ContainsKey(_paramAbsoluteOutput))
                 {
                     buildPath = parser.Arguments[_paramAbsoluteOutput][0];
@@ -182,15 +185,16 @@ Full example for a 32bit debug build with electron prune: build /target custom w
 
                 if (platformInfo.NetCorePublishRid.StartsWith("osx") && platformInfo.NetCorePublishRid.EndsWith("arm64")) //Apple Silicon Mac
                 {
-                    electronArch = "arm64"; 
+                    electronArch = "arm64";
                 }
-                
+
                 if (parser.Arguments.ContainsKey(_paramElectronArch))
                 {
                     electronArch = parser.Arguments[_paramElectronArch][0];
                 }
 
                 var electronVersion = "";
+
                 if (parser.Arguments.ContainsKey(_paramElectronVersion))
                 {
                     electronVersion = parser.Arguments[_paramElectronVersion][0];
@@ -198,14 +202,15 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                 else
                 {
                     //try getting version from project
-                    foreach(var project in Directory.GetFiles(Directory.GetCurrentDirectory(), "*.csproj"))
+                    foreach (var project in Directory.GetFiles(Directory.GetCurrentDirectory(), "*.csproj"))
                     {
                         var projectXML = File.ReadAllText(project);
-                        var match = Regex.Match(projectXML, @"<PackageReference\s+Include=""ElectronSharp\.API""\s+Version=""([0-9\.]+)""\s+\/>");
+                        var match      = Regex.Match(projectXML, @"<PackageReference\s+Include=""ElectronSharp\.API""\s+Version=""([0-9\.]+)""\s+\/>");
+
                         if (match.Success)
                         {
-                            var candidate = match.Groups[1].Value;
-                            var majorMinorRevision = string.Join(".",candidate.Split(new char[] { '.' }).Take(3));
+                            var candidate          = match.Groups[1].Value;
+                            var majorMinorRevision = string.Join(".", candidate.Split(new char[] { '.' }).Take(3));
                             electronVersion = majorMinorRevision;
                             Console.WriteLine($"Found electron version {majorMinorRevision} in project file {project}");
                             break;
@@ -220,6 +225,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
 
 
                 string electronParams = "";
+
                 if (parser.Arguments.ContainsKey(_paramElectronParams))
                 {
                     electronParams = parser.Arguments[_paramElectronParams][0];
@@ -241,6 +247,8 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                         : $"node build-helper.js {manifestFileName} {version}", tempPath);
 
                 Console.WriteLine($"Package Electron App for Platform {platformInfo.ElectronPackerPlatform}...");
+
+
                 ProcessHelper.CmdExecute($"npx electron-builder --config=./bin/electron-builder.json --{platformInfo.ElectronPackerPlatform} --{electronArch} -c.electronVersion={electronVersion} {electronParams}", tempPath);
 
                 Console.WriteLine("... done");
@@ -253,27 +261,30 @@ Full example for a 32bit debug build with electron prune: build /target custom w
         {
             var dotNetPublishFlags = new Dictionary<string, string>
             {
-                {"/p:PublishReadyToRun", parser.TryGet(_paramPublishReadyToRun, out var rtr) ? rtr[0] : defaultReadyToRun},
-                {"/p:PublishSingleFile", parser.TryGet(_paramPublishSingleFile, out var psf) ? psf[0] : defaultSingleFile},
+                { "/p:PublishReadyToRun", parser.TryGet(_paramPublishReadyToRun, out var rtr) ? rtr[0] : defaultReadyToRun },
+                { "/p:PublishSingleFile", parser.TryGet(_paramPublishSingleFile, out var psf) ? psf[0] : defaultSingleFile },
             };
 
             if (parser.Arguments.ContainsKey(_paramVersion))
             {
-                if(parser.Arguments.Keys.All(key => !key.StartsWith("p:Version=") && !key.StartsWith("property:Version=")))
+                if (parser.Arguments.Keys.All(key => !key.StartsWith("p:Version=") && !key.StartsWith("property:Version=")))
                     dotNetPublishFlags.Add("/p:Version", parser.Arguments[_paramVersion][0]);
-                if(parser.Arguments.Keys.All(key => !key.StartsWith("p:ProductVersion=") && !key.StartsWith("property:ProductVersion=")))
+
+                if (parser.Arguments.Keys.All(key => !key.StartsWith("p:ProductVersion=") && !key.StartsWith("property:ProductVersion=")))
                     dotNetPublishFlags.Add("/p:ProductVersion", parser.Arguments[_paramVersion][0]);
             }
 
             foreach (var parm in parser.Arguments.Keys.Where(key => key.StartsWith("p:") || key.StartsWith("property:")))
             {
                 var split = parm.IndexOf('=');
+
                 if (split < 0)
                 {
                     continue;
                 }
 
                 var key = $"/{parm.Substring(0, split)}";
+
                 // normalize the key
                 if (key.StartsWith("/property:"))
                 {

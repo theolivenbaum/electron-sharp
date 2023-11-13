@@ -11,7 +11,7 @@ namespace ElectronSharp.CLI
 
         public static void KillActive()
         {
-            foreach(var kv in _activeProcess)
+            foreach (var kv in _activeProcess)
             {
                 if (!kv.Key.HasExited)
                 {
@@ -23,6 +23,7 @@ namespace ElectronSharp.CLI
                     {
 
                     }
+
                     try
                     {
                         kv.Key.Kill(true);
@@ -53,17 +54,17 @@ namespace ElectronSharp.CLI
                     cmd.StartInfo = new ProcessStartInfo("bash", $"-c \"{escapedArgs}\"");
                 }
 
-                cmd.StartInfo.RedirectStandardInput = true;
+                cmd.StartInfo.RedirectStandardInput  = true;
                 cmd.StartInfo.RedirectStandardOutput = true;
-                cmd.StartInfo.RedirectStandardError = true;
-                cmd.StartInfo.CreateNoWindow = true;
-                cmd.StartInfo.UseShellExecute = false;
-                cmd.StartInfo.WorkingDirectory = workingDirectoryPath;
+                cmd.StartInfo.RedirectStandardError  = true;
+                cmd.StartInfo.CreateNoWindow         = true;
+                cmd.StartInfo.UseShellExecute        = false;
+                cmd.StartInfo.WorkingDirectory       = workingDirectoryPath;
 
                 if (output)
                 {
                     cmd.OutputDataReceived += (s, e) => Console.WriteLine(e.Data);
-                    cmd.ErrorDataReceived += (s, e) => Console.WriteLine(e.Data);
+                    cmd.ErrorDataReceived  += (s, e) => Console.WriteLine(e.Data);
                 }
 
                 Console.WriteLine(command);

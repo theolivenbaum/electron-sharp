@@ -33,6 +33,7 @@ namespace SocketIOClient.Messages
         {
             var p = element.GetProperty(name);
             int val;
+
             switch (p.ValueKind)
             {
                 case JsonValueKind.String:
@@ -49,15 +50,16 @@ namespace SocketIOClient.Messages
 
         public void Read(string msg)
         {
-            var doc = JsonDocument.Parse(msg);
+            var doc  = JsonDocument.Parse(msg);
             var root = doc.RootElement;
             Sid = root.GetProperty("sid").GetString();
 
             PingInterval = GetInt32FromJsonElement(root, msg, "pingInterval");
-            PingTimeout = GetInt32FromJsonElement(root, msg, "pingTimeout");
+            PingTimeout  = GetInt32FromJsonElement(root, msg, "pingTimeout");
 
             Upgrades = new List<string>();
             var upgrades = root.GetProperty("upgrades").EnumerateArray();
+
             foreach (var item in upgrades)
             {
                 Upgrades.Add(item.GetString());

@@ -14,7 +14,8 @@ namespace ElectronSharp.CLI
         public void Parse(string[] args)
         {
             var currentName = "";
-            var values = new List<string>();
+            var values      = new List<string>();
+
             foreach (var arg in args)
             {
                 if (arg.StartsWith("/"))
@@ -35,11 +36,12 @@ namespace ElectronSharp.CLI
                     values.Add(arg);
                 }
             }
+
             if (currentName != "")
                 Arguments[currentName] = values.ToArray();
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Arguments: \n\t{string.Join("\n\t",Arguments.Keys.Select(i => $"{i} = {string.Join(" ", Arguments[i])}"))}");
+            Console.WriteLine($"Arguments: \n\t{string.Join("\n\t", Arguments.Keys.Select(i => $"{i} = {string.Join(" ", Arguments[i])}"))}");
             Console.ResetColor();
         }
         public bool Contains(string name)
@@ -50,7 +52,9 @@ namespace ElectronSharp.CLI
         internal bool TryGet(string key, out string[] value)
         {
             value = null;
-            if (!Contains(key)) {
+
+            if (!Contains(key))
+            {
                 return false;
             }
             value = Arguments[key];

@@ -4,11 +4,11 @@ const manifestFile = require('./bin/' + manifestFileName);
 const dasherize = require('dasherize');
 const fs = require('fs');
 
-const builderConfiguration = { ...manifestFile.build };
-if(process.argv.length > 3) {
+const builderConfiguration = {...manifestFile.build};
+if (process.argv.length > 3) {
     builderConfiguration.buildVersion = process.argv[3];
 }
-if(builderConfiguration.hasOwnProperty('buildVersion')) {
+if (builderConfiguration.hasOwnProperty('buildVersion')) {
     // @ts-ignore
     const packageJson = require('./package');
     packageJson.name = dasherize(manifestFile.name || 'electron-sharp');
@@ -17,11 +17,11 @@ if(builderConfiguration.hasOwnProperty('buildVersion')) {
     packageJson.description = manifestFile.description || '';
 
     fs.writeFile('./package.json', JSON.stringify(packageJson), (error) => {
-        if(error) {
+        if (error) {
             console.log(error.message);
         }
     });
-    
+
     try {
         // @ts-ignore
         const packageLockJson = require('./package-lock');
@@ -29,7 +29,7 @@ if(builderConfiguration.hasOwnProperty('buildVersion')) {
         packageLockJson.author = manifestFile.author || '';
         packageLockJson.version = builderConfiguration.buildVersion;
         fs.writeFile('./package-lock.json', JSON.stringify(packageLockJson), (error) => {
-            if(error) {
+            if (error) {
                 console.log(error.message);
             }
         });
@@ -40,14 +40,14 @@ if(builderConfiguration.hasOwnProperty('buildVersion')) {
 
 const builderConfigurationString = JSON.stringify(builderConfiguration);
 fs.writeFile('./bin/electron-builder.json', builderConfigurationString, (error) => {
-    if(error) {
+    if (error) {
         console.log(error.message);
     }
 });
 
 const manifestContent = JSON.stringify(manifestFile);
 fs.writeFile('./bin/electron.manifest.json', manifestContent, (error) => {
-    if(error) {
+    if (error) {
         console.log(error.message);
     }
 });

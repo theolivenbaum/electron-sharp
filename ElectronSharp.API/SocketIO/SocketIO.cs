@@ -47,7 +47,7 @@ namespace SocketIOClient
         public SocketIO(Uri uri, SocketIOOptions options)
         {
             ServerUri = uri ?? throw new ArgumentNullException("uri");
-            Options = options ?? throw new ArgumentNullException("options");
+            Options   = options ?? throw new ArgumentNullException("options");
             Initialize();
         }
 
@@ -60,6 +60,7 @@ namespace SocketIOClient
                 if (_serverUri != value)
                 {
                     _serverUri = value;
+
                     if (value != null && value.AbsolutePath != "/")
                     {
                         _namespace = value.AbsolutePath;
@@ -103,33 +104,34 @@ namespace SocketIOClient
             set
             {
                 _loggerFactory = value ?? throw new ArgumentNullException(nameof(LoggerFactory));
-                Logger = _loggerFactory.CreateLogger<SocketIO>();
+                Logger         = _loggerFactory.CreateLogger<SocketIO>();
             }
         }
 
         public HttpClient HttpClient { get; set; }
 
-        public Func<IClientWebSocket> ClientWebSocketProvider { get; set; }
-        private IClientWebSocket _clientWebsocket;
+        public  Func<IClientWebSocket> ClientWebSocketProvider { get; set; }
+        private IClientWebSocket       _clientWebsocket;
 
         BaseTransport _transport;
 
         List<Type> _expectedExceptions;
 
-        int _packetId;
-        bool _isConnectCoreRunning;
-        Uri _realServerUri;
-        Exception _connectCoreException;
-        Dictionary<int, Action<SocketIOResponse>> _ackHandlers;
-        List<OnAnyHandler> _onAnyHandlers;
+        int                                          _packetId;
+        bool                                         _isConnectCoreRunning;
+        Uri                                          _realServerUri;
+        Exception                                    _connectCoreException;
+        Dictionary<int, Action<SocketIOResponse>>    _ackHandlers;
+        List<OnAnyHandler>                           _onAnyHandlers;
         Dictionary<string, Action<SocketIOResponse>> _eventHandlers;
-        CancellationTokenSource _connectionTokenSource;
-        double _reconnectionDelay;
-        bool _hasError;
-        bool _isFaild;
-        readonly static object _connectionLock = new object();
+        CancellationTokenSource                      _connectionTokenSource;
+        double                                       _reconnectionDelay;
+        bool                                         _hasError;
+        bool                                         _isFaild;
+        readonly static object                       _connectionLock = new object();
 
-        #region Socket.IO event
+#region Socket.IO event
+
         public event EventHandler OnConnected;
         //public event EventHandler<string> OnConnectError;
         //public event EventHandler<string> OnConnectTimeout;
@@ -155,28 +157,31 @@ namespace SocketIOClient
         /// Fired when couldn’t reconnect within reconnectionAttempts
         /// </summary>
         public event EventHandler OnReconnectFailed;
-        public event EventHandler OnPing;
+        public event EventHandler           OnPing;
         public event EventHandler<TimeSpan> OnPong;
 
-        #endregion
+#endregion
 
-        #region Observable Event
+#region Observable Event
+
         //Subject<Unit> _onConnected;
         //public IObservable<Unit> ConnectedObservable { get; private set; }
-        #endregion
+
+#endregion
 
         private void Initialize()
         {
-            _packetId = -1;
-            _ackHandlers = new Dictionary<int, Action<SocketIOResponse>>();
+            _packetId      = -1;
+            _ackHandlers   = new Dictionary<int, Action<SocketIOResponse>>();
             _eventHandlers = new Dictionary<string, Action<SocketIOResponse>>();
             _onAnyHandlers = new List<OnAnyHandler>();
 
             JsonSerializer = new SystemTextJsonSerializer();
-            UriConverter = new UriConverter();
+            UriConverter   = new UriConverter();
 
-            HttpClient = new HttpClient();
+            HttpClient              = new HttpClient();
             ClientWebSocketProvider = () => new SystemNetWebSocketsClientWebSocket(Options.EIO);
+
             _expectedExceptions = new List<Type>
             {
                 typeof(TimeoutException),
@@ -191,9 +196,11 @@ namespace SocketIOClient
         private async Task CreateTransportAsync()
         {
             Options.Transport = await GetProtocolAsync();
+
             if (Options.Transport == TransportProtocol.Polling)
             {
                 HttpPollingHandler handler;
+
                 if (Options.EIO == 3)
                     handler = new Eio3HttpPollingHandler(HttpClient);
                 else
@@ -203,7 +210,7 @@ namespace SocketIOClient
             else
             {
                 _clientWebsocket = ClientWebSocketProvider();
-                _transport = new WebSocketTransport(_clientWebsocket, Options, JsonSerializer, Logger);
+                _transport       = new WebSocketTransport(_clientWebsocket, Options, JsonSerializer, Logger);
             }
             _transport.Namespace = _namespace;
             SetHeaders();
@@ -229,9 +236,10 @@ namespace SocketIOClient
         private void ConnectCore()
         {
             DisposeForReconnect();
-            _reconnectionDelay = Options.ReconnectionDelay;
+            _reconnectionDelay     = Options.ReconnectionDelay;
             _connectionTokenSource = new CancellationTokenSource();
             var cct = _connectionTokenSource.Token;
+
             Task.Factory.StartNew(async () =>
             {
                 while (true)
@@ -240,10 +248,12 @@ namespace SocketIOClient
                     _transport.TryDispose();
                     CreateTransportAsync().Wait();
                     _realServerUri = UriConverter.GetServerUri(Options.Transport == TransportProtocol.WebSocket, ServerUri, Options.EIO, Options.Path, Options.Query);
+
                     try
                     {
                         if (cct.IsCancellationRequested)
                             break;
+
                         if (_attempts > 0)
                             OnReconnectAttempt.TryInvoke(this, _attempts);
                         var timeoutCts = new CancellationTokenSource(Options.ConnectionTimeout);
@@ -260,17 +270,20 @@ namespace SocketIOClient
                                 SyncExceptionToMain(e);
                                 throw;
                             }
+
                             if (_attempts > 0)
                             {
                                 OnReconnectError.TryInvoke(this, e);
                             }
                             _attempts++;
+
                             if (_attempts <= Options.ReconnectionAttempts)
                             {
                                 if (_reconnectionDelay < Options.ReconnectionDelayMax)
                                 {
                                     _reconnectionDelay += 2 * Options.RandomizationFactor;
                                 }
+
                                 if (_reconnectionDelay > Options.ReconnectionDelayMax)
                                 {
                                     _reconnectionDelay = Options.ReconnectionDelayMax;
@@ -300,9 +313,11 @@ namespace SocketIOClient
             if (Options.Transport == TransportProtocol.Polling && Options.AutoUpgrade)
             {
                 Uri uri = UriConverter.GetServerUri(false, ServerUri, Options.EIO, Options.Path, Options.Query);
+
                 try
                 {
                     string text = await HttpClient.GetStringAsync(uri);
+
                     if (text.Contains("websocket"))
                     {
                         return TransportProtocol.WebSocket;
@@ -328,16 +343,19 @@ namespace SocketIOClient
                 _isConnectCoreRunning = true;
             }
             ConnectCore();
+
             while (_isConnectCoreRunning)
             {
                 await Task.Delay(100);
             }
+
             if (_connectCoreException != null)
             {
                 Logger.LogError(_connectCoreException, _connectCoreException.Message);
                 throw _connectCoreException;
             }
             int ms = 0;
+
             while (!Connected)
             {
                 if (_hasError)
@@ -345,12 +363,14 @@ namespace SocketIOClient
                     Logger.LogWarning($"Got a connection error, try to use '{nameof(OnError)}' to detect it.");
                     break;
                 }
+
                 if (_isFaild)
                 {
                     Logger.LogWarning($"Reconnect failed, try to use '{nameof(OnReconnectFailed)}' to detect it.");
                     break;
                 }
                 ms += 100;
+
                 if (ms > Options.ConnectionTimeout.TotalMilliseconds)
                 {
                     throw new TimeoutException();
@@ -371,9 +391,10 @@ namespace SocketIOClient
 
         private void ConnectedHandler(ConnectedMessage msg)
         {
-            Id = msg.Sid;
+            Id        = msg.Sid;
             Connected = true;
             OnConnected.TryInvoke(this, EventArgs.Empty);
+
             if (_attempts > 0)
             {
                 OnReconnected.TryInvoke(this, _attempts);
@@ -392,10 +413,12 @@ namespace SocketIOClient
             {
                 PacketId = m.Id
             };
+
             foreach (var item in _onAnyHandlers)
             {
                 item.TryInvoke(m.Event, res);
             }
+
             if (_eventHandlers.ContainsKey(m.Event))
             {
                 _eventHandlers[m.Event].TryInvoke(res);
@@ -425,10 +448,12 @@ namespace SocketIOClient
                 PacketId = msg.Id,
             };
             response.InComingBytes.AddRange(msg.IncomingBytes);
+
             foreach (var item in _onAnyHandlers)
             {
                 item.TryInvoke(msg.Event, response);
             }
+
             if (_eventHandlers.ContainsKey(msg.Event))
             {
                 _eventHandlers[msg.Event].TryInvoke(response);
@@ -503,6 +528,7 @@ namespace SocketIOClient
                 {
                     Namespace = _namespace
                 };
+
                 try
                 {
                     await _transport.SendAsync(msg, CancellationToken.None).ConfigureAwait(false);
@@ -572,16 +598,18 @@ namespace SocketIOClient
         internal async Task ClientAckAsync(int packetId, CancellationToken cancellationToken, params object[] data)
         {
             IMessage msg;
+
             if (data != null && data.Length > 0)
             {
                 var result = JsonSerializer.Serialize(data);
+
                 if (result.Bytes.Count > 0)
                 {
                     msg = new ServerBinaryAckMessage
                     {
-                        Id = packetId,
+                        Id        = packetId,
                         Namespace = _namespace,
-                        Json = result.Json
+                        Json      = result.Json
                     };
                     msg.OutgoingBytes = new List<byte[]>(result.Bytes);
                 }
@@ -590,8 +618,8 @@ namespace SocketIOClient
                     msg = new ServerAckMessage
                     {
                         Namespace = _namespace,
-                        Id = packetId,
-                        Json = result.Json
+                        Id        = packetId,
+                        Json      = result.Json
                     };
                 }
             }
@@ -600,7 +628,7 @@ namespace SocketIOClient
                 msg = new ServerAckMessage
                 {
                     Namespace = _namespace,
-                    Id = packetId
+                    Id        = packetId
                 };
             }
             await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
@@ -622,14 +650,15 @@ namespace SocketIOClient
             if (data != null && data.Length > 0)
             {
                 var result = JsonSerializer.Serialize(data);
+
                 if (result.Bytes.Count > 0)
                 {
                     var msg = new BinaryMessage
                     {
-                        Namespace = _namespace,
+                        Namespace     = _namespace,
                         OutgoingBytes = new List<byte[]>(result.Bytes),
-                        Event = eventName,
-                        Json = result.Json
+                        Event         = eventName,
+                        Json          = result.Json
                     };
                     await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
                 }
@@ -638,8 +667,8 @@ namespace SocketIOClient
                     var msg = new EventMessage
                     {
                         Namespace = _namespace,
-                        Event = eventName,
-                        Json = result.Json
+                        Event     = eventName,
+                        Json      = result.Json
                     };
                     await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
                 }
@@ -649,7 +678,7 @@ namespace SocketIOClient
                 var msg = new EventMessage
                 {
                     Namespace = _namespace,
-                    Event = eventName
+                    Event     = eventName
                 };
                 await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
             }
@@ -670,17 +699,19 @@ namespace SocketIOClient
         public async Task EmitAsync(string eventName, CancellationToken cancellationToken, Action<SocketIOResponse> ack, params object[] data)
         {
             _ackHandlers.Add(++_packetId, ack);
+
             if (data != null && data.Length > 0)
             {
                 var result = JsonSerializer.Serialize(data);
+
                 if (result.Bytes.Count > 0)
                 {
                     var msg = new ClientBinaryAckMessage
                     {
-                        Event = eventName,
-                        Namespace = _namespace,
-                        Json = result.Json,
-                        Id = _packetId,
+                        Event         = eventName,
+                        Namespace     = _namespace,
+                        Json          = result.Json,
+                        Id            = _packetId,
                         OutgoingBytes = new List<byte[]>(result.Bytes)
                     };
                     await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
@@ -689,10 +720,10 @@ namespace SocketIOClient
                 {
                     var msg = new ClientAckMessage
                     {
-                        Event = eventName,
+                        Event     = eventName,
                         Namespace = _namespace,
-                        Id = _packetId,
-                        Json = result.Json
+                        Id        = _packetId,
+                        Json      = result.Json
                     };
                     await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
                 }
@@ -701,9 +732,9 @@ namespace SocketIOClient
             {
                 var msg = new ClientAckMessage
                 {
-                    Event = eventName,
+                    Event     = eventName,
                     Namespace = _namespace,
-                    Id = _packetId
+                    Id        = _packetId
                 };
                 await _transport.SendAsync(msg, cancellationToken).ConfigureAwait(false);
             }
@@ -714,8 +745,9 @@ namespace SocketIOClient
             if (Connected)
             {
                 Connected = false;
-                Id = null;
+                Id        = null;
                 OnDisconnected.TryInvoke(this, reason);
+
                 try
                 {
                     await _transport.DisconnectAsync(CancellationToken.None).ConfigureAwait(false);
@@ -724,6 +756,7 @@ namespace SocketIOClient
                 {
                     Logger.LogError(e, e.Message);
                 }
+
                 if (reason != DisconnectReason.IOServerDisconnect && reason != DisconnectReason.IOClientDisconnect)
                 {
                     //In the this cases (explicit disconnection), the client will not try to reconnect and you need to manually call socket.connect().
@@ -746,11 +779,11 @@ namespace SocketIOClient
         private void DisposeForReconnect()
         {
             _hasError = false;
-            _isFaild = false;
+            _isFaild  = false;
             _packetId = -1;
             _ackHandlers.Clear();
             _connectCoreException = null;
-            _hasError = false;
+            _hasError             = false;
             _connectionTokenSource.TryCancel();
             _connectionTokenSource.TryDispose();
         }

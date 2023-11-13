@@ -3,7 +3,9 @@
         <header class="section-header">
             <div class="section-wrapper">
                 <h1>
-                    <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-system"></use></svg>
+                    <svg class="section-icon">
+                        <use xlink:href="assets/img/icons.svg#icon-system"></use>
+                    </svg>
                     Clipboard
                 </h1>
                 <h3>The <code>Electron.Clipboard</code> provides methods to perform copy and paste operations.</h3>
@@ -163,7 +165,7 @@ copyBtn.addEventListener('click', () => {
                 </div>
             </div>
         </div>
-        
+
         <script>
             (function () {
                 const { ipcRenderer, nativeImage } = require("electron");
