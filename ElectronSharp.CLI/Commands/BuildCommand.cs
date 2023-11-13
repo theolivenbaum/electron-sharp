@@ -107,14 +107,12 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                     Directory.CreateDirectory(tempPath);
                 }
 
-
                 string binFolderName = "bin";
 
-                if (parser.Arguments[_paramBinFolderName].Length > 0)
+                if (parser.Arguments.ContainsKey(_paramBinFolderName) && parser.Arguments[_paramBinFolderName].Length > 0)
                 {
-                    binFolderName = parser.Arguments[_paramBinFolderName][0];
+                    binFolderName = parser.Arguments[_paramBinFolderName].First();
                 }
-
 
                 Console.WriteLine("Executing dotnet publish in this directory: " + tempPath);
 
