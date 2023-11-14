@@ -18,6 +18,7 @@ namespace ElectronSharp.CLI.Commands
             @"Needed: '/target' with params 'win/osx/linux' to build for a typical app or use 'custom' and specify .NET Core build config & electron build config
 for custom target, check .NET Core RID Catalog and Electron build target/
 e.g. '/target win' or '/target custom ""win7-x86;win""'
+Optional: '/binFolderName' the output folder of binary resource files. Default = bin
 Optional: '/dotnet-configuration' with the desired .NET Core build config e.g. release or debug. Default = Release
 Optional: '/electron-arch' to specify the resulting electron processor architecture (e.g. ia86 for x86 builds). Be aware to use the '/target custom' param as well!
 Optional: '/electron-params' specify any other valid parameter, which will be routed to the electron-packager.
@@ -60,14 +61,14 @@ Full example for a 32bit debug build with electron prune: build /target custom w
             {
                 Console.WriteLine("Build Electron Application...");
 
-                SimpleCommandLineParser parser = new SimpleCommandLineParser();
+                var parser = new SimpleCommandLineParser();
                 parser.Parse(_args);
 
                 //This version will be shared between the dotnet publish and electron-builder commands
                 string version = null;
 
-                if (parser.Arguments.ContainsKey(_paramVersion))
-                    version = parser.Arguments[_paramVersion][0];
+                if (parser.Arguments.TryGetValue(_paramVersion, out var versionArg))
+                    version = versionArg[0];
 
                 if (!parser.Arguments.ContainsKey(_paramTarget))
                 {
@@ -76,19 +77,19 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                     return false;
                 }
 
-                var    desiredPlatform     = parser.Arguments[_paramTarget][0];
-                string specifiedFromCustom = string.Empty;
+                var desiredPlatform     = parser.Arguments[_paramTarget][0];
+                var specifiedFromCustom = string.Empty;
 
                 if (desiredPlatform == "custom" && parser.Arguments[_paramTarget].Length > 1)
                 {
                     specifiedFromCustom = parser.Arguments[_paramTarget][1];
                 }
 
-                string configuration = "Release";
+                var configuration = "Release";
 
-                if (parser.Arguments.ContainsKey(_paramDotNetConfig))
+                if (parser.Arguments.TryGetValue(_paramDotNetConfig, out var dotnetConfigArg))
                 {
-                    configuration = parser.Arguments[_paramDotNetConfig][0];
+                    configuration = dotnetConfigArg[0];
                 }
 
                 var platformInfo = GetTargetPlatformInformation.Do(desiredPlatform, specifiedFromCustom);
@@ -116,14 +117,13 @@ Full example for a 32bit debug build with electron prune: build /target custom w
 
                 Console.WriteLine("Executing dotnet publish in this directory: " + tempPath);
 
-                string tempBinPath = Path.Combine(tempPath, binFolderName);
+                var tempBinPath = Path.Combine(tempPath, binFolderName);
 
                 Console.WriteLine($"Build ASP.NET Core App for {platformInfo.NetCorePublishRid} under {configuration}-Configuration...");
 
                 var dotNetPublishFlags = GetDotNetPublishFlags(parser, "false", "false");
 
-                var command =
-                    $"dotnet publish -r {platformInfo.NetCorePublishRid} -c \"{configuration}\" --output \"{tempBinPath}\" {string.Join(' ', dotNetPublishFlags.Select(kvp => $"{kvp.Key}={kvp.Value}"))} --self-contained";
+                var command = $"dotnet publish -r {platformInfo.NetCorePublishRid} -c \"{configuration}\" --output \"{tempBinPath}\" {string.Join(' ', dotNetPublishFlags.Select(kvp => $"{kvp.Key}={kvp.Value}"))} --self-contained";
 
                 // output the command 
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -141,11 +141,11 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                 DeployEmbeddedElectronFiles.Do(tempPath);
                 var nodeModulesDirPath = Path.Combine(tempPath, "node_modules");
 
-                if (parser.Arguments.ContainsKey(_paramPackageJson))
+                if (parser.Arguments.TryGetValue(_paramPackageJson, out var packageJsonArg))
                 {
                     Console.WriteLine("Copying custom package.json.");
 
-                    File.Copy(parser.Arguments[_paramPackageJson][0], Path.Combine(tempPath, "package.json"), true);
+                    File.Copy(packageJsonArg[0], Path.Combine(tempPath, "package.json"), true);
                 }
 
                 var checkForNodeModulesDirPath = Path.Combine(tempPath, "node_modules");
@@ -158,7 +158,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
 
                 Console.WriteLine("ElectronHostHook handling started...");
 
-                string electronhosthookDir = Path.Combine(Directory.GetCurrentDirectory(), "ElectronHostHook");
+                var electronhosthookDir = Path.Combine(Directory.GetCurrentDirectory(), "ElectronHostHook");
 
                 if (Directory.Exists(electronhosthookDir))
                 {
@@ -175,36 +175,36 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                 Console.WriteLine("Build Electron Desktop Application...");
 
                 // Specifying an absolute path supercedes a relative path
-                string buildPath = Path.Combine(Directory.GetCurrentDirectory(), binFolderName, "desktop");
+                var buildPath = Path.Combine(Directory.GetCurrentDirectory(), binFolderName, "desktop");
 
-                if (parser.Arguments.ContainsKey(_paramAbsoluteOutput))
+                if (parser.Arguments.TryGetValue(_paramAbsoluteOutput, out var absoluteOutputArg))
                 {
-                    buildPath = parser.Arguments[_paramAbsoluteOutput][0];
+                    buildPath = absoluteOutputArg[0];
                 }
-                else if (parser.Arguments.ContainsKey(_paramOutputDirectory))
+                else if (parser.Arguments.TryGetValue(_paramOutputDirectory, out var outputDirectoryArg))
                 {
-                    buildPath = Path.Combine(Directory.GetCurrentDirectory(), parser.Arguments[_paramOutputDirectory][0]);
+                    buildPath = Path.Combine(Directory.GetCurrentDirectory(), outputDirectoryArg[0]);
                 }
 
                 Console.WriteLine("Executing electron magic in this directory: " + buildPath);
 
-                string electronArch = "x64";
+                var electronArch = "x64";
 
                 if (platformInfo.NetCorePublishRid.StartsWith("osx") && platformInfo.NetCorePublishRid.EndsWith("arm64")) //Apple Silicon Mac
                 {
                     electronArch = "arm64";
                 }
 
-                if (parser.Arguments.ContainsKey(_paramElectronArch))
+                if (parser.Arguments.TryGetValue(_paramElectronArch, out var electronArchArg))
                 {
-                    electronArch = parser.Arguments[_paramElectronArch][0];
+                    electronArch = electronArchArg[0];
                 }
 
                 var electronVersion = "";
 
-                if (parser.Arguments.ContainsKey(_paramElectronVersion))
+                if (parser.Arguments.TryGetValue(_paramElectronVersion, out var electronVersionArg))
                 {
-                    electronVersion = parser.Arguments[_paramElectronVersion][0];
+                    electronVersion = electronVersionArg[0];
                 }
                 else
                 {
@@ -233,19 +233,19 @@ Full example for a 32bit debug build with electron prune: build /target custom w
 
                 string electronParams = "";
 
-                if (parser.Arguments.ContainsKey(_paramElectronParams))
+                if (parser.Arguments.TryGetValue(_paramElectronParams, out var electronParamsArg))
                 {
-                    electronParams = parser.Arguments[_paramElectronParams][0];
+                    electronParams = electronParamsArg[0];
                 }
 
-                // ToDo: Make the same thing easer with native c# - we can save a tmp file in production code :)
+                // ToDo: Make the same thing easier with native c# - we can save a tmp file in production code :)
                 Console.WriteLine("Create electron-builder configuration file...");
 
-                string manifestFileName = "electron.manifest.json";
+                var manifestFileName = "electron.manifest.json";
 
-                if (parser.Arguments.ContainsKey(_manifest))
+                if (parser.Arguments.TryGetValue(_manifest, out var manifestArg))
                 {
-                    manifestFileName = parser.Arguments[_manifest].First();
+                    manifestFileName = manifestArg.First();
                 }
 
                 ProcessHelper.CmdExecute(

@@ -56,7 +56,7 @@ if (fs.existsSync(path.join(__dirname.replace('app.asar', ''), 'bin'))) {
 } else if (fs.existsSync(path.join(__dirname.replace('app.asar', ''), 'bin-' + arch))) {
     currentBinPath = path.join(__dirname.replace('app.asar', ''), 'bin-' + arch);
 } else {
-    throw new Error("bin path not found");
+    throw new Error("bin path not found in " + __dirname);
 }
 
 let manifestJsonFilePath = path.join(currentBinPath, manifestJsonFileName);
