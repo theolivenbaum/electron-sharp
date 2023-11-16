@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>dotnet-electron-sharp</AssemblyName>
     <ToolCommandName>electron-sharp</ToolCommandName>
     <PackageType>DotnetCliTool</PackageType>
