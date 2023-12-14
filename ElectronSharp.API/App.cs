@@ -11,7 +11,6 @@ using System.Runtime.Versioning;
 
 //TODO: Implement app.showEmojiPanel and app.isEmojiPanelSupported:  https://www.electronjs.org/docs/api/app#appshowemojipanel-macos-windows
 //TODO: Implement app.moveToApplicationsFolder: https://www.electronjs.org/docs/api/app#appmovetoapplicationsfolderoptions-macos
-//TODO: Implement apprunningUnderRosettaTranslation: https://www.electronjs.org/docs/api/app#apprunningunderrosettatranslation-macos-readonly
 
 namespace ElectronSharp.API
 {
