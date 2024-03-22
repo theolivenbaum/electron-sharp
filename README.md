@@ -8,7 +8,7 @@ ElectronSharp is a __wrapper__ around a "normal" Electron application with an em
 
 The CLI extensions hosts the toolset to build and start ElectronSharp-based applications.
 
-ElectronSharp is a hard fork from the original [Electron.NET](https://github.com/ElectronSharp/Electron.NET) project, mantained by [me](https://github.com/theolivenbaum) and used to build the [Curiosity](https://curiosity.ai) app.
+ElectronSharp is a hard fork from the original  [Electron.NET](https://github.com/ElectronNET/Electron.NET) project, mantained by [me](https://github.com/theolivenbaum) and used to build the [Curiosity](https://curiosity.ai) app.
 
 
 ## 📦 NuGet:
