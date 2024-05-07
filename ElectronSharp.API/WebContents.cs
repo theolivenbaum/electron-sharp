@@ -28,31 +28,31 @@ namespace ElectronSharp.API
         /// <summary>
         /// Emitted when the renderer process crashes or is killed.
         /// </summary>
-        public event Action<bool> OnCrashed
+        public event Action<bool> OnRenderProcessGone
         {
             add
             {
-                if (_crashed == null)
+                if (_renderProcessGone == null)
                 {
-                    BridgeConnector.On<bool>("webContents-crashed" + Id, (killed) =>
+                    BridgeConnector.On<bool>("webContents-render-process-gone" + Id, (killed) =>
                     {
-                        _crashed(killed);
+                        _renderProcessGone(killed);
                     });
 
-                    BridgeConnector.Emit("register-webContents-crashed", Id);
+                    BridgeConnector.Emit("register-webContents-render-process-gone", Id);
                 }
-                _crashed += value;
+                _renderProcessGone += value;
             }
             remove
             {
-                _crashed -= value;
+                _renderProcessGone -= value;
 
-                if (_crashed == null)
-                    BridgeConnector.Off("webContents-crashed" + Id);
+                if (_renderProcessGone == null)
+                    BridgeConnector.Off("webContents-render-process-gone" + Id);
             }
         }
 
-        private event Action<bool> _crashed;
+        private event Action<bool> _renderProcessGone;
 
         /// <summary>
         /// Emitted when the navigation is done, i.e. the spinner of the tab has

@@ -7,12 +7,12 @@ let electronSocket;
 
 export = (socket: Socket) => {
     electronSocket = socket;
-    socket.on('register-webContents-crashed', (id) => {
+    socket.on('register-webContents-render-process-gone', (id) => {
         const browserWindow = getWindowById(id);
 
-        browserWindow.webContents.removeAllListeners('crashed');
-        browserWindow.webContents.on('crashed', (event, killed) => {
-            electronSocket.emit('webContents-crashed' + id, killed);
+        browserWindow.webContents.removeAllListeners('render-process-gone');
+        browserWindow.webContents.on('render-process-gone', (event, killed) => {
+            electronSocket.emit('webContents-render-process-gone' + id, killed);
         });
     });
 

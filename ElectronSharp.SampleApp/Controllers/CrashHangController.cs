@@ -16,7 +16,7 @@ namespace ElectronSharp.SampleApp.Controllers
 
                     var browserWindow = await Electron.WindowManager.CreateWindowAsync(viewPath);
 
-                    browserWindow.WebContents.OnCrashed += async (killed) =>
+                    browserWindow.WebContents.OnRenderProcessGone += async (killed) =>
                     {
                         var options = new MessageBoxOptions("This process has crashed.")
                         {

@@ -45,7 +45,8 @@ module.exports = (socket) => {
         try {
             const formats = electron_1.clipboard.availableFormats(type);
             electronSocket.emit('clipboard-availableFormats-Completed', formats);
-        } catch (e) {
+        }
+        catch (e) {
             electronSocket.emit('clipboard-availableFormats-Completed', []);
         }
     });
@@ -58,14 +59,15 @@ module.exports = (socket) => {
     socket.on('clipboard-readImage', (type) => {
         try {
             const image = electron_1.clipboard.readImage(type);
-
             const imgBase64 = image.toPNG().toString('base64');
             if (imgBase64.length > 0) {
-                electronSocket.emit('clipboard-readImage-Completed', {1: imgBase64});
-            } else {
+                electronSocket.emit('clipboard-readImage-Completed', { 1: imgBase64 });
+            }
+            else {
                 electronSocket.emit('clipboard-readImage-Completed', {});
             }
-        } catch (e) {
+        }
+        catch (e) {
             electronSocket.emit('clipboard-readImage-Completed', {});
         }
     });
@@ -74,7 +76,6 @@ module.exports = (socket) => {
         const image = deserializeImage(dataContent);
         electron_1.clipboard.writeImage(image, type);
     });
-
     function deserializeImage(data) {
         const image = electron_1.nativeImage.createEmpty();
         // tslint:disable-next-line: forin
@@ -82,7 +83,7 @@ module.exports = (socket) => {
             const scaleFactor = key;
             const bytes = data[key];
             const buffer = Buffer.from(bytes, 'base64');
-            image.addRepresentation({scaleFactor: +scaleFactor, buffer: buffer});
+            image.addRepresentation({ scaleFactor: +scaleFactor, buffer: buffer });
         }
         return image;
     }

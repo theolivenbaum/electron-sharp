@@ -55,8 +55,13 @@ export = (socket: Socket) => {
     });
 
     socket.on('clipboard-availableFormats', (type) => {
-        const formats = clipboard.availableFormats(type);
-        electronSocket.emit('clipboard-availableFormats-Completed', formats);
+
+        try {
+            const formats = clipboard.availableFormats(type);
+            electronSocket.emit('clipboard-availableFormats-Completed', formats);
+        } catch (e) {
+            electronSocket.emit('clipboard-availableFormats-Completed', []);
+        }
     });
 
     socket.on('clipboard-write', (data, type) => {
@@ -67,8 +72,18 @@ export = (socket: Socket) => {
     });
 
     socket.on('clipboard-readImage', (type) => {
-        const image = clipboard.readImage(type);
-        electronSocket.emit('clipboard-readImage-Completed', {1: image.toPNG().toString('base64')});
+        try {
+            const image = clipboard.readImage(type);
+
+            const imgBase64 = image.toPNG().toString('base64');
+            if (imgBase64.length > 0) {
+                electronSocket.emit('clipboard-readImage-Completed', {1: imgBase64});
+            } else {
+                electronSocket.emit('clipboard-readImage-Completed', {});
+            }
+        } catch (e) {
+            electronSocket.emit('clipboard-readImage-Completed', {});
+        }
     });
 
     socket.on('clipboard-writeImage', (data, type) => {
