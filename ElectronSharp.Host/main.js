@@ -83,7 +83,7 @@ app.on('will-finish-launching', () => {
     })
 });
 
-function prepareForUpdate() {
+function prepareForUpdate(exitAfter) {
     try {
         console.log('closing all windows before update');
     } catch {
@@ -106,10 +106,16 @@ function prepareForUpdate() {
             }
         });
     }
+
+    if(exitAfter) { //Force exit process immediatelly after 5 seconds to avoid a bug on windows auto-update never exiting
+        setTimeout((_) => {
+            app.exit(0);
+        }, 5000);
+    }
 }
 
 app.on('before-quit-for-update', () => {
-    prepareForUpdate();
+    prepareForUpdate(true);
 });
 
 const manifestJsonFile = require(manifestJsonFilePath);
@@ -418,7 +424,7 @@ function startSocketApiBridge(port) {
             });
 
             socket.on('prepare-for-update', () => {
-                prepareForUpdate();
+                prepareForUpdate(false);
             });
 
             socket.on('register-app-open-file-event', (id) => {
