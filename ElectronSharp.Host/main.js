@@ -111,6 +111,9 @@ function prepareForUpdate(exitAfter) {
         setTimeout((_) => {
             app.exit(0);
         }, 5000);
+        setTimeout((_) => {
+            process.exit(0);
+        }, 7500);
     }
 }
 
@@ -554,9 +557,9 @@ function startAspCoreBackend(electronPort) {
                     console.log(`Will quit Electron, as exit code != 0 (got ${code})`);
                 }
                 app.exit(code);
-            } else if (os.platform() === 'darwin') {
-                //There is a bug on the updater on macOS never quiting and starting the update process
-                //We give Squirrel.Mac enough time to access the update file, and then just force-exit here
+            } else {
+                //There is a bug on the updater never quiting and starting the update process
+                //We give Squirrel.Mac / NSIS enough time to access the update file, and then just force-exit here
                 setTimeout(() => app.exit(0), 30_000);
             }
         });
