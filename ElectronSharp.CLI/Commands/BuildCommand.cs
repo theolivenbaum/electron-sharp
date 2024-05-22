@@ -256,7 +256,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                 Console.WriteLine($"Package Electron App for Platform {platformInfo.ElectronPackerPlatform}...");
 
 
-                ProcessHelper.CmdExecute($"npx electron-builder --config=./{binFolderName}/electron-builder.json --{platformInfo.ElectronPackerPlatform} --{electronArch} -c.electronVersion={electronVersion} {electronParams}", tempPath);
+                ProcessHelper.CmdExecute($"npx electron-builder@25.0.0-alpha.8 --config=./{binFolderName}/electron-builder.json --{platformInfo.ElectronPackerPlatform} --{electronArch} -c.electronVersion={electronVersion} {electronParams}", tempPath);
 
                 Console.WriteLine("... done");
 
