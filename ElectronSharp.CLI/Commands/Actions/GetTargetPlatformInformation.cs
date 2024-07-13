@@ -39,6 +39,10 @@ namespace ElectronSharp.CLI.Commands.Actions
                     netCorePublishRid      = "linux-arm";
                     electronPackerPlatform = "linux";
                     break;
+                case "linux-arm64":
+                    netCorePublishRid = "linux-arm64";
+                    electronPackerPlatform = "linux";
+                    break;
                 case "custom":
                     var splittedSpecified = specifiedPlatfromFromCustom.Split(';');
                     netCorePublishRid      = splittedSpecified[0];
@@ -75,8 +79,25 @@ namespace ElectronSharp.CLI.Commands.Actions
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
-                        netCorePublishRid      = "linux-x64";
-                        electronPackerPlatform = "linux";
+                        if (RuntimeInformation.OSArchitecture.Equals(Architecture.Arm64))
+                        {
+                            //ARM64 device - e.g. Raspberry Pi
+                            netCorePublishRid = "linux-arm64";
+                            electronPackerPlatform = "linux";
+                        }
+                        else if (RuntimeInformation.OSArchitecture.Equals(Architecture.Arm))
+                        {
+                            //ARM device - e.g. Raspberry Pi 2 or 2
+                            netCorePublishRid = "linux-arm";
+                            electronPackerPlatform = "linux";
+                        }
+                        else
+                        {
+                            //Intel Mac:
+                            netCorePublishRid = "linux-x64";
+                            electronPackerPlatform = "linux";
+                        }
+
                     }
 
                     break;
