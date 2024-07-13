@@ -138,6 +138,17 @@ The end result should be an electron app under your __/bin/desktop__ folder.
 ### Note
 > macOS builds can't be created on Windows machines because they require symlinks that aren't supported on Windows (per [this Electron issue](https://github.com/electron-userland/electron-packager/issues/71)). macOS builds can be produced on either Linux or macOS machines.
 
+## Develop
+
+### Install dotnet tool locally
+
+- Build the CLI tool using `dotnet build`, this should create a nuget package in the artifact directory
+- Execute in the main electronnet solution folder
+
+```
+dotnet tool update --add-source ./artifacts/ -g electronsharp.cli -v d	
+```
+
 ## 👨‍💻 Original ([Electron.NET](https://github.com/ElectronSharp/Electron.NET)) Authors 
 
 * **Gregor Biswanger** - (Microsoft MVP, Intel Black Belt and Intel Software Innovator) is a freelance lecturer, consultant, trainer, author and speaker. He is a consultant for large and medium-sized companies, organizations and agencies for software architecture, web- and cross-platform development. You can find Gregor often on the road attending or speaking at international conferences. - [Cross-Platform-Blog](http://www.cross-platform-blog.com) - Twitter [@BFreakout](https://www.twitter.com/BFreakout)  
