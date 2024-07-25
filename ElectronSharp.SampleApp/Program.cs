@@ -17,7 +17,7 @@ namespace ElectronSharp.SampleApp
             IWebHostBuilder builder;
 
             Console.WriteLine("args: " + string.Join(" ", args));
-
+            Electron.ReadAuth();
 
 #if DEBUG
             Console.WriteLine("Running as DEBUG");
@@ -53,7 +53,7 @@ namespace ElectronSharp.SampleApp
 //            Debugger.Launch();
             Console.WriteLine("Running as RELEASE3");
 
-            Electron.ReadAuth();
+
             Console.WriteLine("Running as RELEASE4");
 
             builder.UseElectron(args);
