@@ -60,7 +60,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 }
 ```
 
-##Setup Using Minimal-API
+## Setup Using Minimal-API
 ```csharp
 Electron.ReadAuth();
 
