@@ -40,6 +40,7 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(webBuilder =>
         {
+            Electron.ReadAuth();
             webBuilder.UseElectron(args);
             webBuilder.UseStartup<Startup>();
         });
@@ -58,6 +59,22 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
 }
 ```
+
+##Setup Using Minimal-API
+```csharp
+Electron.ReadAuth();
+
+var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseElectron(args);
+...
+var browserWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+{
+    Width = 1152,
+    Height = 940,
+});
+await app.RunAsync();
+```
+
 
 ## 🚀 Start the Application
 
