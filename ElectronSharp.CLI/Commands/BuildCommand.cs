@@ -54,6 +54,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
         private const string _paramPublishSingleFile = "PublishSingleFile";
         private const string _paramVersion           = "Version";
         private const string _paramBinFolderName     = "binFolderName";
+        private const string _paramPostDotnetBuildCommand = "post-dotnet-build-command";
 
         public Task<bool> ExecuteAsync()
         {
@@ -137,6 +138,20 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                     Console.WriteLine("Error occurred during dotnet publish: " + resultCode);
                     return false;
                 }
+
+                if (parser.Arguments.ContainsKey(_paramPostDotnetBuildCommand) && parser.Arguments[_paramPostDotnetBuildCommand].Length > 0)
+                {
+                    var postDotnetBuildCommand = parser.Arguments[_paramPostDotnetBuildCommand].First();
+
+                    resultCode = ProcessHelper.CmdExecute(postDotnetBuildCommand, Directory.GetCurrentDirectory());
+
+                    if (resultCode != 0)
+                    {
+                        Console.WriteLine("Error occurred running post-dotnet-build command: " + resultCode);
+                        return false;
+                    }
+                }
+
 
                 DeployEmbeddedElectronFiles.Do(tempPath);
                 var nodeModulesDirPath = Path.Combine(tempPath, "node_modules");
