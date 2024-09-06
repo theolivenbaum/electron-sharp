@@ -205,7 +205,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
 
                 var electronArch = "x64";
 
-                if (platformInfo.NetCorePublishRid.StartsWith("osx") && platformInfo.NetCorePublishRid.EndsWith("arm64")) //Apple Silicon Mac
+                if (platformInfo.NetCorePublishRid.EndsWith("arm64")) //Apple Silicon Mac
                 {
                     electronArch = "arm64";
                 }
