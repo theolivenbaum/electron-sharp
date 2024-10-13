@@ -201,7 +201,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                     buildPath = Path.Combine(Directory.GetCurrentDirectory(), outputDirectoryArg[0]);
                 }
 
-                Console.WriteLine("Executing electron magic in this directory: " + buildPath);
+                Console.WriteLine($"Executing electron magic in this directory: {buildPath} - current architecture is ");
 
                 var electronArch = "x64";
 
