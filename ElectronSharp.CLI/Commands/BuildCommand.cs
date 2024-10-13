@@ -210,9 +210,9 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                     electronArch = "arm64";
                 }
 
-                if (platformInfo.NetCorePublishRid.EndsWith("arm")) //Rpi and other ARM devices
+                if (platformInfo.NetCorePublishRid.EndsWith("arm")) //non arm64 devices
                 {
-                    electronArch = "arm";
+                    electronArch = "armv7l";
                 }
 
                 if (parser.Arguments.TryGetValue(_paramElectronArch, out var electronArchArg))
@@ -276,7 +276,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                 Console.WriteLine($"Package Electron App for Platform {platformInfo.ElectronPackerPlatform}...");
 
 
-                ProcessHelper.CmdExecute($"npx electron-builder@25.0.0-alpha.8 --config=./{binFolderName}/electron-builder.json --{platformInfo.ElectronPackerPlatform} --{electronArch} -c.electronVersion={electronVersion} {electronParams}", tempPath);
+                ProcessHelper.CmdExecute($"npx electron-builder@25.1.8 --config=./{binFolderName}/electron-builder.json --{platformInfo.ElectronPackerPlatform} --{electronArch} -c.electronVersion={electronVersion} {electronParams}", tempPath);
 
                 Console.WriteLine("... done");
 
