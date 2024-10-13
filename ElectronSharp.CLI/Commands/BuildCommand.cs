@@ -201,13 +201,18 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                     buildPath = Path.Combine(Directory.GetCurrentDirectory(), outputDirectoryArg[0]);
                 }
 
-                Console.WriteLine($"Executing electron magic in this directory: {buildPath} - current architecture is ");
+                Console.WriteLine($"Executing electron magic in this directory: {buildPath}");
 
                 var electronArch = "x64";
 
                 if (platformInfo.NetCorePublishRid.EndsWith("arm64")) //Apple Silicon Mac
                 {
                     electronArch = "arm64";
+                }
+
+                if (platformInfo.NetCorePublishRid.EndsWith("arm")) //Rpi and other ARM devices
+                {
+                    electronArch = "arm";
                 }
 
                 if (parser.Arguments.TryGetValue(_paramElectronArch, out var electronArchArg))
