@@ -58,20 +58,20 @@ namespace ElectronSharp.CLI.Commands.Actions
                     }
 
                     string currentOsPlatform = null!;
-                    switch (RuntimeInformation.OSDescription)
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
-                        case var os when os.Contains("Windows"):
-                            currentOsPlatform = "win";
-                            electronPackerPlatform = "win";
-                            break;
-                        case var os when os.Contains("Darwin"):
-                            currentOsPlatform = "osx";
-                            electronPackerPlatform = "mac";
-                            break;
-                        case var os when os.Contains("Linux"):
-                            currentOsPlatform = "linux";
-                            electronPackerPlatform = "linux";
-                            break;
+                        currentOsPlatform = "linux";
+                        electronPackerPlatform = "linux";
+                    }
+                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                    {
+                        currentOsPlatform = "osx";
+                        electronPackerPlatform = "mac";
+                    }
+                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        currentOsPlatform = "win";
+                        electronPackerPlatform = "win";
                     }
                     if (string.IsNullOrEmpty(currentOsPlatform))
                     {
