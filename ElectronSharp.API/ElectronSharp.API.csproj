@@ -46,7 +46,7 @@ This package contains the API to access the "native" electron API.</Description>
     <PackageReference Include="Nito.AsyncEx" Version="5.1.2" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
   </ItemGroup>
 
 	<ItemGroup>
