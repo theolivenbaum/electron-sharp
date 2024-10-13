@@ -10,7 +10,7 @@ namespace ElectronSharp.CLI.Commands
 {
     public class BuildCommand : ICommand
     {
-        private const string _defaultElectronVersion = "31.1.0";
+        private const string _defaultElectronVersion = "32.1.2";
 
         public const string COMMAND_NAME        = "build";
         public const string COMMAND_DESCRIPTION = "Build your Electron Application.";
@@ -54,6 +54,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
         private const string _paramPublishSingleFile = "PublishSingleFile";
         private const string _paramVersion           = "Version";
         private const string _paramBinFolderName     = "binFolderName";
+        private const string _paramPostDotnetBuildCommand = "post-dotnet-build-command";
 
         public Task<bool> ExecuteAsync()
         {
@@ -138,6 +139,20 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                     return false;
                 }
 
+                if (parser.Arguments.ContainsKey(_paramPostDotnetBuildCommand) && parser.Arguments[_paramPostDotnetBuildCommand].Length > 0)
+                {
+                    var postDotnetBuildCommand = parser.Arguments[_paramPostDotnetBuildCommand].First();
+
+                    resultCode = ProcessHelper.CmdExecute(postDotnetBuildCommand, Directory.GetCurrentDirectory());
+
+                    if (resultCode != 0)
+                    {
+                        Console.WriteLine("Error occurred running post-dotnet-build command: " + resultCode);
+                        return false;
+                    }
+                }
+
+
                 DeployEmbeddedElectronFiles.Do(tempPath);
                 var nodeModulesDirPath = Path.Combine(tempPath, "node_modules");
 
@@ -190,7 +205,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
 
                 var electronArch = "x64";
 
-                if (platformInfo.NetCorePublishRid.StartsWith("osx") && platformInfo.NetCorePublishRid.EndsWith("arm64")) //Apple Silicon Mac
+                if (platformInfo.NetCorePublishRid.EndsWith("arm64")) //Apple Silicon Mac
                 {
                     electronArch = "arm64";
                 }
