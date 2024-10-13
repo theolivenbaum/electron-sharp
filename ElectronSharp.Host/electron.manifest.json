@@ -23,6 +23,13 @@
         "filter": [ "**/*" ]
       }
     ],
+    "linux": {
+      "target": [
+        "tar.gz"
+      ],
+      "icon": false,
+      "executableName": "${productName}"
+    },
     "files": [
       {
         "from": "./ElectronHostHook/node_modules",
