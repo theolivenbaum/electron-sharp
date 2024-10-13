@@ -81,7 +81,7 @@ namespace ElectronSharp.CLI.Commands.Actions
                     string archName = null!;
                     if (osArchitecture == Architecture.Arm64)
                     {
-                        archName = "arm";
+                        archName = "arm64";
                     }
                     else if (osArchitecture == Architecture.X64)
                     {
@@ -89,7 +89,7 @@ namespace ElectronSharp.CLI.Commands.Actions
                     }
                     else if (osArchitecture == Architecture.Arm)
                     {
-                        archName = "arm64";
+                        archName = "arm";
                     }
                     else if (osArchitecture == Architecture.X86)
                     {
@@ -102,7 +102,7 @@ namespace ElectronSharp.CLI.Commands.Actions
                     netCorePublishRid = $"{currentOsPlatform}-{archName}";
                     break;
             }
-
+            Console.WriteLine($"Target electron platform: {electronPackerPlatform} ({netCorePublishRid})");
             return new GetTargetPlatformInformationResult()
             {
                 ElectronPackerPlatform = electronPackerPlatform,
