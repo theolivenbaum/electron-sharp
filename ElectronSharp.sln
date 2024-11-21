@@ -14,13 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2914CCF7-27C2-42AE-849A-2F0C1BC7CDFA}"
 	ProjectSection(SolutionItems) = preProject
 		.devops\build-nuget.yaml = .devops\build-nuget.yaml
-		buildAll.cmd = buildAll.cmd
-		buildAll.sh = buildAll.sh
-		buildReleaseNuGetPackages.cmd = buildReleaseNuGetPackages.cmd
-		Changelog.md = Changelog.md
 		README.md = README.md
-		start.cmd = start.cmd
-		start.sh = start.sh
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Releaser", "Releaser\Releaser.csproj", "{8209F641-B8AA-413A-8523-25ACF1BAD55D}"

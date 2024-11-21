@@ -17,10 +17,10 @@ steps:
 - task: NuGetToolInstaller@1
 
 - task: UseDotNet@2
-  displayName: 'Use .NET 8.0'
+  displayName: 'Use .NET 9.0'
   inputs:
     packageType: sdk
-    version: 8.x
+    version: 9.x
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
 - task: DotNetCoreCLI@2

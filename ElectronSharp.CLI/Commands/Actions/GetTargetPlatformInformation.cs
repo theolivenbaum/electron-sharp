@@ -57,48 +57,55 @@ namespace ElectronSharp.CLI.Commands.Actions
                         break;
                     }
 
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    string currentOsPlatform = null;
+
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
-                        netCorePublishRid      = $"win-x{(Environment.Is64BitOperatingSystem ? "64" : "86")}";
-                        electronPackerPlatform = "win";
+                        currentOsPlatform = "linux";
+                        electronPackerPlatform = "linux";
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     {
-                        if (RuntimeInformation.OSArchitecture.Equals(Architecture.Arm64))
-                        {
-                            //Apple Silicon Mac:
-                            netCorePublishRid      = "osx-arm64";
-                            electronPackerPlatform = "mac";
-                        }
-                        else
-                        {
-                            //Intel Mac:
-                            netCorePublishRid      = "osx-x64";
-                            electronPackerPlatform = "mac";
-                        }
+                        currentOsPlatform = "osx";
+                        electronPackerPlatform = "mac";
                     }
-                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     {
-                        if (RuntimeInformation.OSArchitecture.Equals(Architecture.Arm64))
-                        {
-                            //ARM64 device - e.g. Raspberry Pi
-                            netCorePublishRid = "linux-arm64";
-                            electronPackerPlatform = "linux";
-                        }
-                        else if (RuntimeInformation.OSArchitecture.Equals(Architecture.Arm))
-                        {
-                            //ARM device - e.g. Raspberry Pi 2 or 2
-                            netCorePublishRid = "linux-arm";
-                            electronPackerPlatform = "linux";
-                        }
-                        else
-                        {
-                            //Intel Mac:
-                            netCorePublishRid = "linux-x64";
-                            electronPackerPlatform = "linux";
-                        }
-
+                        currentOsPlatform = "win";
+                        electronPackerPlatform = "win";
                     }
+
+                    if (string.IsNullOrEmpty(currentOsPlatform))
+                    {
+                        throw new Exception($"Unsupported OS platform: {RuntimeInformation.OSDescription}");
+                    }
+
+                    var osArchitecture = RuntimeInformation.OSArchitecture;
+                    
+                    string archName = null;
+
+                    if (osArchitecture == Architecture.Arm64)
+                    {
+                        archName = "arm64";
+                    }
+                    else if (osArchitecture == Architecture.X64)
+                    {
+                        archName = "x64";
+                    }
+                    else if (osArchitecture == Architecture.Arm)
+                    {
+                        archName = "arm";
+                    }
+                    else if (osArchitecture == Architecture.X86)
+                    {
+                        archName = "x86";
+                    }
+                    else
+                    {
+                        throw new Exception($"Unsupported system architecture: {RuntimeInformation.OSArchitecture}");
+                    }
+
+                    netCorePublishRid = $"{currentOsPlatform}-{archName}";
 
                     break;
             }

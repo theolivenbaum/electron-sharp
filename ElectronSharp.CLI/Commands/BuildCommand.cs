@@ -201,14 +201,20 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                     buildPath = Path.Combine(Directory.GetCurrentDirectory(), outputDirectoryArg[0]);
                 }
 
-                Console.WriteLine("Executing electron magic in this directory: " + buildPath);
-
                 var electronArch = "x64";
 
-                if (platformInfo.NetCorePublishRid.StartsWith("osx") && platformInfo.NetCorePublishRid.EndsWith("arm64")) //Apple Silicon Mac
+                if (platformInfo.NetCorePublishRid.Contains("arm64"))
                 {
                     electronArch = "arm64";
                 }
+                else if (platformInfo.NetCorePublishRid.Contains("arm")) 
+                {
+                    electronArch = "armv71";
+                }
+
+                Console.WriteLine($"Executing electron magic in this directory: '{buildPath}'");
+                Console.WriteLine($"Detected .NET RID: {platformInfo.NetCorePublishRid}");
+                Console.WriteLine($"Target Electron Architecture: {electronArch}");
 
                 if (parser.Arguments.TryGetValue(_paramElectronArch, out var electronArchArg))
                 {
@@ -271,7 +277,7 @@ Full example for a 32bit debug build with electron prune: build /target custom w
                 Console.WriteLine($"Package Electron App for Platform {platformInfo.ElectronPackerPlatform}...");
 
 
-                ProcessHelper.CmdExecute($"npx electron-builder@25.0.0-alpha.8 --config=./{binFolderName}/electron-builder.json --{platformInfo.ElectronPackerPlatform} --{electronArch} -c.electronVersion={electronVersion} {electronParams}", tempPath);
+                ProcessHelper.CmdExecute($"npx electron-builder@25.1.8 --config=./{binFolderName}/electron-builder.json --{platformInfo.ElectronPackerPlatform} --{electronArch} -c.electronVersion={electronVersion} {electronParams}", tempPath);
 
                 Console.WriteLine("... done");
 

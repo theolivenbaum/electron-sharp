@@ -2,7 +2,7 @@
 
 # ElectronSharp
 
-Build cross platform desktop apps with .NET 7 and ASP.NET Core (Razor Pages, MVC), Blazor or [h5](https://h5.rocks). 
+Build cross platform desktop apps with .NET 9 and ASP.NET Core (Razor Pages, MVC), Blazor or [h5](https://github.com/curiosity-ai/h5). 
 
 ElectronSharp is a __wrapper__ around a "normal" Electron application with an embedded ASP.NET Core application. It uses a socket-based IPC bridge we can invoke Electron APIs from .NET.
 
@@ -18,7 +18,7 @@ ElectronSharp is a hard fork from the original  [Electron.NET](https://github.co
 
 ## 🛠 Requirements to run:
 
-The current ElectronSharp CLI builds Windows/macOS/Linux binaries. The API uses .NET 7, so our minimum base OS is the same as [.NET 7](https://github.com/dotnet/core/blob/main/release-notes/7.0/supported-os.md).
+The current ElectronSharp CLI builds Windows/macOS/Linux binaries. The API uses .NET 9, so our minimum base OS is the same as [.NET 9](https://github.com/dotnet/core/blob/main/release-notes/9.0/supported-os.md).
 
 Also you should have installed:
 
@@ -81,21 +81,19 @@ electron-sharp start
 ```
 ### Hint
 
-> If invoking any of those commands gives you strange errors (like .NET 5 not installed, but your project is .NET 6), it means you've typed electronize instead of electron-sharp.
+> If invoking any of those commands gives you strange errors (like .NET 5 not installed), it means you've typed electronize instead of electron-sharp.
 
 ### Note
-> Only the first electronize start is slow. The next will go on faster.
+> Only the first run is usually slow due to dependency downloads. The next will go on faster.
 
 ## 🔭 Develop ElectronSharp apps using a file watcher
 
-The file watcher is included with version 8.31.1 of ElectronSharp. For example, a file change can trigger compilation, test execution, or deployment. The ElectronSharp window will automatically refresh and new code changes will be visible more quickly. The following ElectronSharp CLI command is required:
+You can use a file watcher mode to monitor your project folder for changes, and automatically restart the project:
 
 ```
 electron-sharp start /watch
 ```
 
-### Note
-> Only the first electronize start is slow. The next will go on faster.
 
 ## 🐞 Debug
 
