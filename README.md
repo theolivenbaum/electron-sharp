@@ -128,7 +128,7 @@ A complete documentation will follow. Until then take a look in the source code 
 Here you need the ElectronSharp CLI as well. Type the following command in your ASP.NET Core folder:
 
 ```
-electronize build /target win
+electron-sharp build /target win
 ```
 
 There are additional platforms available:
