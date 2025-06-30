@@ -161,7 +161,17 @@ if (manifestJsonFile.singleInstance || manifestJsonFile.aspCoreBackendPort != 'r
 //Some flags need to be set before app is ready
 if (manifestJsonFile.hasOwnProperty('cliFlags') && manifestJsonFile.cliFlags.length > 0) {
     manifestJsonFile.cliFlags.forEach(flag => {
-        app.commandLine.appendSwitch(flag);
+       if (typeof flag !== 'string') return;
+
+        // Split on the first '=' if present
+        const [switchName, ...rest] = flag.split('=');
+        const switchValue = rest.length > 0 ? rest.join('=') : undefined;
+    
+        if (switchValue !== undefined) {
+            app.commandLine.appendSwitch(switchName, switchValue);
+        } else {
+            app.commandLine.appendSwitch(switchName);
+        }
     });
 }
 
