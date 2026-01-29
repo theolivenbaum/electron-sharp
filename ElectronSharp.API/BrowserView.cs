@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -10,6 +10,7 @@ namespace ElectronSharp.API
     /// A BrowserView can be used to embed additional web content into a BrowserWindow. 
     /// It is like a child window, except that it is positioned relative to its owning window. 
     /// It is meant to be an alternative to the webview tag.
+    /// <see href="https://www.electronjs.org/docs/api/browser-view"/>
     /// </summary>
     public class BrowserView
     {
@@ -30,11 +31,13 @@ namespace ElectronSharp.API
         /// Resizes and moves the view to the supplied bounds relative to the window.
         /// 
         /// (experimental)
+        /// <see href="https://www.electronjs.org/docs/api/browser-view#viewgetbounds-experimental"/>
         /// </summary>
         public Task<Rectangle> GetBoundsAsync() => BridgeConnector.OnResult<Rectangle>("browserView-getBounds", "browserView-getBounds-reply" + Id, Id);
 
         /// <summary>
         /// Set the bounds of the current view inside the window
+        /// <see href="https://www.electronjs.org/docs/api/browser-view#viewsetboundsbounds-experimental"/>
         /// </summary>
         /// <param name="value"></param>
         public void SetBounds(Rectangle value)
@@ -56,6 +59,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// (experimental)
+        /// <see href="https://www.electronjs.org/docs/api/browser-view#viewsetautoresizeoptions-experimental"/>
         /// </summary>
         /// <param name="options"></param>
         public void SetAutoResize(AutoResizeOptions options)
@@ -67,6 +71,7 @@ namespace ElectronSharp.API
         /// Color in #aarrggbb or #argb form. The alpha channel is optional.
         /// 
         /// (experimental)
+        /// <see href="https://www.electronjs.org/docs/api/browser-view#viewsetbackgroundcolorcolor-experimental"/>
         /// </summary>
         /// <param name="color">Color in #aarrggbb or #argb form. The alpha channel is optional.</param>
         public void SetBackgroundColor(string color)

@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -9,6 +9,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Perform copy and paste operations on the system clipboard.
+    /// <see href="https://www.electronjs.org/docs/api/clipboard"/>
     /// </summary>
     public sealed class Clipboard
     {
@@ -38,6 +39,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Read the content in the clipboard as plain text.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardreadtexttype"/>
         /// </summary>
         /// <param name="type"></param>
         /// <returns>The content in the clipboard as plain text.</returns>
@@ -45,6 +47,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Writes the text into the clipboard as plain text.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardwritetexttext-type"/>
         /// </summary>
         /// <param name="text"></param>
         /// <param name="type"></param>
@@ -55,6 +58,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// The content in the clipboard as markup.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardreadhtmltype"/>
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
@@ -62,6 +66,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Writes markup to the clipboard.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardwritehtmlmarkup-type"/>
         /// </summary>
         /// <param name="markup"></param>
         /// <param name="type"></param>
@@ -72,6 +77,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// The content in the clipboard as RTF.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardreadrtftype"/>
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
@@ -80,6 +86,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Writes the text into the clipboard in RTF.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardwritertftext-type"/>
         /// </summary>
         /// <param name="text"></param>
         /// <param name="type"></param>
@@ -92,6 +99,7 @@ namespace ElectronSharp.API
         /// Returns an Object containing title and url keys representing 
         /// the bookmark in the clipboard. The title and url values will 
         /// be empty strings when the bookmark is unavailable.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardreadbookmark-macos-windows"/>
         /// </summary>
         /// <returns></returns>
         [SupportedOSPlatform("windows")]
@@ -104,6 +112,7 @@ namespace ElectronSharp.API
         /// Note: Most apps on Windows don’t support pasting bookmarks
         /// into them so you can use clipboard.write to write both a 
         /// bookmark and fallback text to the clipboard.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardwritebookmarktitle-url-type-macos-windows"/>
         /// </summary>
         /// <param name="title"></param>
         /// <param name="url"></param>
@@ -119,6 +128,7 @@ namespace ElectronSharp.API
         /// macOS: The text on the find pasteboard. This method uses synchronous IPC
         /// when called from the renderer process. The cached value is reread from the
         /// find pasteboard whenever the application is activated.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardreadfindtext-macos"/>
         /// </summary>
         /// <returns></returns>
         [SupportedOSPlatform("macos")]
@@ -127,6 +137,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// macOS: Writes the text into the find pasteboard as plain text. This method uses 
         /// synchronous IPC when called from the renderer process.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardwritefindtexttext-macos"/>
         /// </summary>
         /// <param name="text"></param>
         [SupportedOSPlatform("macos")]
@@ -137,6 +148,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Clears the clipboard content.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardclear-type"/>
         /// </summary>
         /// <param name="type"></param>
         public void Clear(string type = "")
@@ -146,6 +158,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// An array of supported formats for the clipboard type.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardavailableformats-type"/>
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
@@ -153,6 +166,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Writes data to the clipboard.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardwritedata-type"/>
         /// </summary>
         /// <param name="data"></param>
         /// <param name="type"></param>
@@ -163,6 +177,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Reads an image from the clipboard.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardreadimagetype"/>
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
@@ -170,6 +185,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Writes an image to the clipboard.
+        /// <see href="https://www.electronjs.org/docs/api/clipboard#clipboardwriteimageimage-type"/>
         /// </summary>
         /// <param name="image"></param>
         /// <param name="type"></param>

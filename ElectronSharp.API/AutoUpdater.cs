@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -10,6 +10,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Enable apps to automatically update themselves. Based on electron-updater.
+    /// <see href="https://www.electronjs.org/docs/api/auto-updater"/>
     /// </summary>
     public sealed class AutoUpdater
     {
@@ -123,11 +124,13 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// The request headers.
+        /// <see href="https://www.electronjs.org/docs/api/auto-updater#autoupdatersetrequestheadersheaders"/>
         /// </summary>
         public Task<Dictionary<string, string>> GetRequestHeadersAsync() => BridgeConnector.OnResult<Dictionary<string, string>>("autoUpdater-requestHeaders-get", "autoUpdater-requestHeaders-get-reply");
 
         /// <summary>
         /// The request headers.
+        /// <see href="https://www.electronjs.org/docs/api/auto-updater#autoupdatersetrequestheadersheaders"/>
         /// </summary>
         public Dictionary<string, string> RequestHeaders
         {
@@ -139,6 +142,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when there is an error while updating.
+        /// <see href="https://www.electronjs.org/docs/api/auto-updater#event-error"/>
         /// </summary>
         public event Action<string> OnError
         {
@@ -168,6 +172,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when checking if an update has started.
+        /// <see href="https://www.electronjs.org/docs/api/auto-updater#event-checking-for-update"/>
         /// </summary>
         public event Action OnCheckingForUpdate
         {
@@ -198,6 +203,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Emitted when there is an available update. 
         /// The update is downloaded automatically if AutoDownload is true.
+        /// <see href="https://www.electronjs.org/docs/api/auto-updater#event-update-available"/>
         /// </summary>
         public event Action<UpdateInfo> OnUpdateAvailable
         {
@@ -227,6 +233,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when there is no available update.
+        /// <see href="https://www.electronjs.org/docs/api/auto-updater#event-update-not-available"/>
         /// </summary>
         public event Action<UpdateInfo> OnUpdateNotAvailable
         {
@@ -285,6 +292,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted on download complete.
+        /// <see href="https://www.electronjs.org/docs/api/auto-updater#event-update-downloaded"/>
         /// </summary>
         public event Action<UpdateInfo> OnUpdateDownloaded
         {
@@ -338,6 +346,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Asks the server whether there is an update.
+        /// <see href="https://www.electronjs.org/docs/api/auto-updater#autoupdatercheckforupdates"/>
         /// </summary>
         /// <returns></returns>
         public Task<UpdateCheckResult> CheckForUpdatesAsync()
@@ -379,6 +388,7 @@ namespace ElectronSharp.API
         /// Asks the server whether there is an update.
         /// 
         /// This will immediately download an update, then install when the app quits.
+        /// <see href="https://www.electronjs.org/docs/api/auto-updater#autoupdatercheckforupdates"/>
         /// </summary>
         /// <returns></returns>
         public Task<UpdateCheckResult> CheckForUpdatesAndNotifyAsync()
@@ -426,6 +436,7 @@ namespace ElectronSharp.API
         ///  
         ///  Note: QuitAndInstall() will close all application windows first and only emit `before-quit` event on `app` after that.
         ///  This is different from the normal quit event sequence.
+        ///  <see href="https://www.electronjs.org/docs/api/auto-updater#autoupdaterquitandinstall"/>
         /// </summary>
         /// <param name="isSilent">*windows-only* Runs the installer in silent mode. Defaults to `false`.</param>
         /// <param name="isForceRunAfter">Run the app after finish even on silent install. Not applicable for macOS. Ignored if `isSilent` is set to `false`.</param>

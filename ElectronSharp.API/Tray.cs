@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using ElectronSharp.API.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -12,6 +12,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Add icons and context menus to the system's notification area.
+    /// <see href="https://www.electronjs.org/docs/api/tray"/>
     /// </summary>
     [SupportedOSPlatform("macos")]
     [SupportedOSPlatform("windows")]
@@ -19,6 +20,7 @@ namespace ElectronSharp.API
     {
         /// <summary>
         /// Emitted when the tray icon is clicked.
+        /// <see href="https://www.electronjs.org/docs/api/tray#event-click"/>
         /// </summary>
         public event Action<TrayClickEventArgs, Rectangle> OnClick
         {
@@ -48,6 +50,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// macOS, Windows: Emitted when the tray icon is right clicked.
+        /// <see href="https://www.electronjs.org/docs/api/tray#event-right-click-macos-windows"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -79,6 +82,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// macOS, Windows: Emitted when the tray icon is double clicked.
+        /// <see href="https://www.electronjs.org/docs/api/tray#event-double-click-macos-windows"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -110,6 +114,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Windows: Emitted when the tray balloon shows.
+        /// <see href="https://www.electronjs.org/docs/api/tray#event-balloon-show-windows"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         public event Action OnBalloonShow
@@ -140,6 +145,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Windows: Emitted when the tray balloon is clicked.
+        /// <see href="https://www.electronjs.org/docs/api/tray#event-balloon-click-windows"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         public event Action OnBalloonClick
@@ -171,6 +177,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Windows: Emitted when the tray balloon is closed 
         /// because of timeout or user manually closes it.
+        /// <see href="https://www.electronjs.org/docs/api/tray#event-balloon-closed-windows"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         public event Action OnBalloonClosed
@@ -236,6 +243,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Shows the Traybar.
+        /// <see href="https://www.electronjs.org/docs/api/tray#new-trayimage-guid"/>
         /// </summary>
         /// <param name="image">The image.</param>
         /// <param name="menuItem">The menu item.</param>
@@ -246,6 +254,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Shows the Traybar.
+        /// <see href="https://www.electronjs.org/docs/api/tray#new-trayimage-guid"/>
         /// </summary>
         /// <param name="image">The image.</param>
         /// <param name="menuItems">The menu items.</param>
@@ -267,6 +276,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Shows the Traybar (empty).
+        /// <see href="https://www.electronjs.org/docs/api/tray#new-trayimage-guid"/>
         /// </summary>
         /// <param name="image">The image.</param>
         public void Show(string image)
@@ -276,6 +286,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Destroys the tray icon immediately.
+        /// <see href="https://www.electronjs.org/docs/api/tray#traydestroy"/>
         /// </summary>
         public void Destroy()
         {
@@ -285,6 +296,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets the image associated with this tray icon.
+        /// <see href="https://www.electronjs.org/docs/api/tray#traysetimageimage"/>
         /// </summary>
         /// <param name="image"></param>
         public void SetImage(string image)
@@ -294,6 +306,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets the image associated with this tray icon when pressed on macOS.
+        /// <see href="https://www.electronjs.org/docs/api/tray#traysetpressedimageimage-macos"/>
         /// </summary>
         /// <param name="image"></param>
         [SupportedOSPlatform("macos")]
@@ -304,6 +317,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets the hover text for this tray icon.
+        /// <see href="https://www.electronjs.org/docs/api/tray#traysettooltip"/>
         /// </summary>
         /// <param name="toolTip"></param>
         public void SetToolTip(string toolTip)
@@ -313,6 +327,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// macOS: Sets the title displayed aside of the tray icon in the status bar.
+        /// <see href="https://www.electronjs.org/docs/api/tray#traysettitletitle-macos"/>
         /// </summary>
         /// <param name="title"></param>
         [SupportedOSPlatform("macos")]
@@ -323,6 +338,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Windows: Displays a tray balloon.
+        /// <see href="https://www.electronjs.org/docs/api/tray#traydisplayballoonoptions-windows"/>
         /// </summary>
         /// <param name="options"></param>
         [SupportedOSPlatform("windows")]
@@ -333,6 +349,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the tray icon is destroyed.
+        /// <see href="https://www.electronjs.org/docs/api/tray#trayisdestroyed"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool> IsDestroyedAsync() => BridgeConnector.OnResult<bool>("tray-isDestroyed", "tray-isDestroyedCompleted");

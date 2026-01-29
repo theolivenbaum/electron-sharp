@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -9,6 +9,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Manage browser sessions, cookies, cache, proxy settings, etc.
+    /// <see href="https://www.electronjs.org/docs/api/session"/>
     /// </summary>
     public class Session
     {
@@ -22,6 +23,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Query and modify a session's cookies.
+        /// <see href="https://www.electronjs.org/docs/api/cookies"/>
         /// </summary>
         public Cookies Cookies { get; }
 
@@ -39,6 +41,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Dynamically sets whether to always send credentials for HTTP NTLM or Negotiate authentication.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesallowntlmcredentialsfordomainsdomains"/>
         /// </summary>
         /// <param name="domains">A comma-separated list of servers for which integrated authentication is enabled.</param>
         public void AllowNTLMCredentialsForDomains(string domains)
@@ -48,6 +51,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Clears the session’s HTTP authentication cache.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesclearauthcacheoptions"/>
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
@@ -69,6 +73,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Clears the session’s HTTP authentication cache.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesclearauthcacheoptions"/>
         /// </summary>
         public Task ClearAuthCacheAsync()
         {
@@ -88,6 +93,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Clears the session’s HTTP cache.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesclearcache"/>
         /// </summary>
         /// <returns></returns>
         public Task ClearCacheAsync()
@@ -108,6 +114,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Clears the host resolver cache.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesclearhostresolvercache"/>
         /// </summary>
         /// <returns></returns>
         public Task ClearHostResolverCacheAsync()
@@ -128,6 +135,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Clears the data of web storages.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesclearstoragedataoptions"/>
         /// </summary>
         /// <returns></returns>
         public Task ClearStorageDataAsync()
@@ -148,6 +156,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Clears the data of web storages.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesclearstoragedataoptions"/>
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
@@ -173,6 +182,7 @@ namespace ElectronSharp.API
         /// event. The DownloadItem will not have any WebContents associated with it and the
         /// initial state will be interrupted. The download will start only when the resume
         /// API is called on the DownloadItem.
+        /// <see href="https://www.electronjs.org/docs/api/session#sescreateinterrupteddownloadoptions"/>
         /// </summary>
         /// <param name="options"></param>
         public void CreateInterruptedDownload(CreateInterruptedDownloadOptions options)
@@ -183,6 +193,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Disables any network emulation already active for the session. Resets to the
         /// original network configuration.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesdisablenetworkemulation"/>
         /// </summary>
         public void DisableNetworkEmulation()
         {
@@ -191,6 +202,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emulates network with the given configuration for the session.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesenablenetworkemulationoptions"/>
         /// </summary>
         /// <param name="options"></param>
         public void EnableNetworkEmulation(EnableNetworkEmulationOptions options)
@@ -200,6 +212,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Writes any unwritten DOMStorage data to disk.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesflushstoragedata"/>
         /// </summary>
         public void FlushStorageData()
         {
@@ -208,6 +221,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// 
+        /// <see href="https://www.electronjs.org/docs/api/session#sesgetblobdataidentifier"/>
         /// </summary>
         /// <param name="identifier"></param>
         /// <returns></returns>
@@ -229,6 +243,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Get session's current cache size.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesgetcachesize"/>
         /// </summary>
         /// <returns>Callback is invoked with the session's current cache size.</returns>
         public Task<int> GetCacheSizeAsync()
@@ -249,6 +264,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Deprecated. Use GetPreloadScriptsAsync instead.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesgetpreloads"/>
         /// </summary>
         /// <returns></returns>
         [Obsolete("Use GetPreloadScriptsAsync instead")]
@@ -270,6 +286,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Returns an array of registered preload scripts.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesgetpreloadscripts"/>
         /// </summary>
         public Task<PreloadScript[]> GetPreloadScriptsAsync()
         {
@@ -289,6 +306,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// 
+        /// <see href="https://www.electronjs.org/docs/api/session#sesgetuseragent"/>
         /// </summary>
         /// <returns></returns>
         public Task<string> GetUserAgent()
@@ -310,6 +328,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Resolves the proxy information for url. The callback will be called with
         /// callback(proxy) when the request is performed.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesresolveproxyurl"/>
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
@@ -332,6 +351,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Sets download saving directory. By default, the download directory will be the
         /// Downloads under the respective app folder.
+        /// <see href="https://www.electronjs.org/docs/api/session#sessetdownloadpathpath"/>
         /// </summary>
         /// <param name="path"></param>
         public void SetDownloadPath(string path)
@@ -343,6 +363,7 @@ namespace ElectronSharp.API
         /// Deprecated. Use RegisterPreloadScript instead.
         /// Adds scripts that will be executed on ALL web contents that are associated with
         /// this session just before normal preload scripts run.
+        /// <see href="https://www.electronjs.org/docs/api/session#sessetpreloadspreloads"/>
         /// </summary>
         /// <param name="preloads"></param>
         [Obsolete("Use RegisterPreloadScript instead")]
@@ -353,6 +374,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Registers a preload script.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesregisterpreloadscriptoptions"/>
         /// </summary>
         public void RegisterPreloadScript(RegisterPreloadScriptOptions options)
         {
@@ -361,6 +383,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Unregisters a preload script.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesunregisterpreloadscriptid"/>
         /// </summary>
         public void UnregisterPreloadScript(string id)
         {
@@ -370,6 +393,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Sets the proxy settings. When pacScript and proxyRules are provided together,
         /// the proxyRules option is ignored and pacScript configuration is applied.
+        /// <see href="https://www.electronjs.org/docs/api/session#sessetproxyconfig"/>
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
@@ -393,6 +417,7 @@ namespace ElectronSharp.API
         /// Overrides the userAgent for this session. This doesn't affect existing WebContents, and
         /// each WebContents can use webContents.setUserAgent to override the session-wide
         /// user agent.
+        /// <see href="https://www.electronjs.org/docs/api/session#sessetuseragentuseragent-acceptlanguages"/>
         /// </summary>
         /// <param name="userAgent"></param>
         public void SetUserAgent(string userAgent)
@@ -406,6 +431,7 @@ namespace ElectronSharp.API
         /// example "en-US,fr,de,ko,zh-CN,ja". This doesn't affect existing WebContents, and
         /// each WebContents can use webContents.setUserAgent to override the session-wide
         /// user agent.
+        /// <see href="https://www.electronjs.org/docs/api/session#sessetuseragentuseragent-acceptlanguages"/>
         /// </summary>
         /// <param name="userAgent"></param>
         /// <param name="acceptLanguages">The
@@ -420,6 +446,7 @@ namespace ElectronSharp.API
         /// Deprecated. Use Extensions.GetAllAsync instead.
         /// The keys are the extension names and each value is an object containing name and version properties.
         /// Note: This API cannot be called before the ready event of the app module is emitted.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesgetallextensions"/>
         /// </summary>
         /// <returns></returns>
         [Obsolete("Use Extensions.GetAllAsync instead")]
@@ -442,6 +469,7 @@ namespace ElectronSharp.API
         /// Deprecated. Use Extensions.Remove instead.
         /// Remove Chrome extension with the specified name.
         /// Note: This API cannot be called before the ready event of the app module is emitted.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesremoveextensionname"/>
         /// </summary>
         /// <param name="name">Name of the Chrome extension to remove</param>
         [Obsolete("Use Extensions.Remove instead")]
@@ -472,6 +500,7 @@ namespace ElectronSharp.API
         /// is emitted.
         ///
         ///** Note:** Loading extensions into in-memory(non-persistent) sessions is not supported and will throw an error.
+        /// <see href="https://www.electronjs.org/docs/api/session#sesloadextensionpath-options"/>
         /// </summary>
         /// <param name="path">Path to the Chrome extension</param>
         /// <param name="allowFileAccess">Whether to allow the extension to read local files over `file://` protocol and

@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -12,6 +12,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Display native system dialogs for opening and saving files, alerting, etc.
+    /// <see href="https://www.electronjs.org/docs/api/dialog"/>
     /// </summary>
     public sealed class Dialog
     {
@@ -43,6 +44,7 @@ namespace ElectronSharp.API
         /// Note: On Windows and Linux an open dialog can not be both a file selector 
         /// and a directory selector, so if you set properties to ['openFile', 'openDirectory'] 
         /// on these platforms, a directory selector will be shown.
+        /// <see href="https://www.electronjs.org/docs/api/dialog#dialogshowopendialogbrowserwindow-options"/>
         /// </summary>
         /// <param name="browserWindow">The browserWindow argument allows the dialog to attach itself to a parent window, making it modal.</param>
         /// <param name="options"></param>
@@ -72,6 +74,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Dialog for save files.
+        /// <see href="https://www.electronjs.org/docs/api/dialog#dialogshowsavedialogbrowserwindow-options"/>
         /// </summary>
         /// <param name="browserWindow">The browserWindow argument allows the dialog to attach itself to a parent window, making it modal.</param>
         /// <param name="options"></param>
@@ -99,6 +102,7 @@ namespace ElectronSharp.API
         /// the dialog to attach itself to a parent window, making it modal. If a callback
         /// is passed, the dialog will not block the process.The API call will be
         /// asynchronous and the result will be passed via callback(response).
+        /// <see href="https://www.electronjs.org/docs/api/dialog#dialogshowmessageboxbrowserwindow-options"/>
         /// </summary>
         /// <param name="message"></param>
         /// <returns>The API call will be asynchronous and the result will be passed via MessageBoxResult.</returns>
@@ -113,6 +117,7 @@ namespace ElectronSharp.API
         /// the dialog to attach itself to a parent window, making it modal. If a callback
         /// is passed, the dialog will not block the process.The API call will be
         /// asynchronous and the result will be passed via callback(response).
+        /// <see href="https://www.electronjs.org/docs/api/dialog#dialogshowmessageboxbrowserwindow-options"/>
         /// </summary>
         /// <param name="messageBoxOptions"></param>
         /// <returns>The API call will be asynchronous and the result will be passed via MessageBoxResult.</returns>
@@ -125,6 +130,7 @@ namespace ElectronSharp.API
         /// Shows a message box, it will block the process until the message box is closed.
         /// It returns the index of the clicked button. If a callback
         /// is passed, the dialog will not block the process.
+        /// <see href="https://www.electronjs.org/docs/api/dialog#dialogshowmessageboxbrowserwindow-options"/>
         /// </summary>
         /// <param name="browserWindow">The browserWindow argument allows the dialog to attach itself to a parent window, making it modal.</param>
         /// <param name="message"></param>
@@ -138,6 +144,7 @@ namespace ElectronSharp.API
         /// Shows a message box, it will block the process until the message box is closed.
         /// It returns the index of the clicked button. If a callback
         /// is passed, the dialog will not block the process.
+        /// <see href="https://www.electronjs.org/docs/api/dialog#dialogshowmessageboxbrowserwindow-options"/>
         /// </summary>
         /// <param name="browserWindow">The browserWindow argument allows the dialog to attach itself to a parent window, making it modal.</param>
         /// <param name="messageBoxOptions"></param>
@@ -178,6 +185,7 @@ namespace ElectronSharp.API
         /// it is usually used to report errors in early stage of startup.If called 
         /// before the app readyevent on Linux, the message will be emitted to stderr, 
         /// and no GUI dialog will appear.
+        /// <see href="https://www.electronjs.org/docs/api/dialog#dialogshowerrorboxtitle-content"/>
         /// </summary>
         /// <param name="title">The title to display in the error box.</param>
         /// <param name="content">The text content to display in the error box.</param>
@@ -190,6 +198,7 @@ namespace ElectronSharp.API
         /// On macOS, this displays a modal dialog that shows a message and certificate information,
         /// and gives the user the option of trusting/importing the certificate. If you provide a 
         /// browserWindow argument the dialog will be attached to the parent window, making it modal.
+        /// <see href="https://www.electronjs.org/docs/api/dialog#dialogshowcertificatetrustdialogbrowserwindow-options-macos-windows"/>
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
@@ -204,6 +213,7 @@ namespace ElectronSharp.API
         /// On macOS, this displays a modal dialog that shows a message and certificate information,
         /// and gives the user the option of trusting/importing the certificate. If you provide a 
         /// browserWindow argument the dialog will be attached to the parent window, making it modal.
+        /// <see href="https://www.electronjs.org/docs/api/dialog#dialogshowcertificatetrustdialogbrowserwindow-options-macos-windows"/>
         /// </summary>
         /// <param name="browserWindow"></param>
         /// <param name="options"></param>

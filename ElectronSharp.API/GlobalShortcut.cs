@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,6 +6,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Detect keyboard events when the application does not have keyboard focus.
+    /// <see href="https://www.electronjs.org/docs/api/global-shortcut"/>
     /// </summary>
     public sealed class GlobalShortcut
     {
@@ -42,6 +43,7 @@ namespace ElectronSharp.API
         /// When the accelerator is already taken by other applications, this call will 
         /// silently fail.This behavior is intended by operating systems, since they don’t
         /// want applications to fight for global shortcuts.
+        /// <see href="https://www.electronjs.org/docs/api/global-shortcut#globalshortcutregisteraccelerator-callback"/>
         /// </summary>
         public void Register(string accelerator, Action function)
         {
@@ -67,6 +69,7 @@ namespace ElectronSharp.API
         /// When the accelerator is already taken by other applications, 
         /// this call will still return false. This behavior is intended by operating systems,
         /// since they don’t want applications to fight for global shortcuts.
+        /// <see href="https://www.electronjs.org/docs/api/global-shortcut#globalshortcutisregisteredaccelerator"/>
         /// </summary>
         /// <returns>Whether this application has registered accelerator.</returns>
         public Task<bool> IsRegisteredAsync(string accelerator) => BridgeConnector.OnResult<bool>("globalShortcut-isRegistered", "globalShortcut-isRegisteredCompleted", accelerator);
@@ -74,6 +77,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Unregisters the global shortcut of accelerator.
+        /// <see href="https://www.electronjs.org/docs/api/global-shortcut#globalshortcutunregisteraccelerator"/>
         /// </summary>
         public void Unregister(string accelerator)
         {
@@ -83,6 +87,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Unregisters all of the global shortcuts.
+        /// <see href="https://www.electronjs.org/docs/api/global-shortcut#globalshortcutunregisterall"/>
         /// </summary>
         public void UnregisterAll()
         {

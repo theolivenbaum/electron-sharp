@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using ElectronSharp.API.Entities;
 using Newtonsoft.Json;
@@ -9,6 +9,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Query and modify a session's cookies.
+    /// <see href="https://www.electronjs.org/docs/api/cookies"/>
     /// </summary>
     public class Cookies
     {
@@ -27,6 +28,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when a cookie is changed because it was added, edited, removed, or expired.
+        /// <see href="https://www.electronjs.org/docs/api/cookies#event-changed"/>
         /// </summary>
         public event Action<Cookie, CookieChangedCause, bool> OnChanged
         {
@@ -56,6 +58,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sends a request to get all cookies matching filter, and resolves a callack with the response.
+        /// <see href="https://www.electronjs.org/docs/api/cookies#cookiesgetfilter"/>
         /// </summary>
         /// <param name="filter">
         /// </param>
@@ -77,7 +80,8 @@ namespace ElectronSharp.API
         }
 
         /// <summary>
-        /// 
+        /// Sets a cookie with details.
+        /// <see href="https://www.electronjs.org/docs/api/cookies#cookiessetdetails"/>
         /// </summary>
         /// <param name="details"></param>
         /// <returns></returns>
@@ -99,6 +103,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Removes the cookies matching url and name
+        /// <see href="https://www.electronjs.org/docs/api/cookies#cookiesremoveurl-name"/>
         /// </summary>
         /// <param name="url">The URL associated with the cookie.</param>
         /// <param name="name">The name of cookie to remove.</param>
@@ -121,6 +126,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Writes any unwritten cookies data to disk.
+        /// <see href="https://www.electronjs.org/docs/api/cookies#cookiesflushstore"/>
         /// </summary>
         /// <returns>A task which resolves when the cookie store has been flushed</returns>
         public Task FlushStoreAsync()

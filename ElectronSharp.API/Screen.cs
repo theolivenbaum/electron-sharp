@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -9,11 +9,13 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Retrieve information about screen size, displays, cursor position, etc.
+    /// <see href="https://www.electronjs.org/docs/api/screen"/>
     /// </summary>
     public sealed class Screen
     {
         /// <summary>
         /// Emitted when an new Display has been added.
+        /// <see href="https://www.electronjs.org/docs/api/screen#event-display-added"/>
         /// </summary>
         public event Action<Display> OnDisplayAdded
         {
@@ -43,6 +45,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when oldDisplay has been removed.
+        /// <see href="https://www.electronjs.org/docs/api/screen#event-display-removed"/>
         /// </summary>
         public event Action<Display> OnDisplayRemoved
         {
@@ -74,6 +77,7 @@ namespace ElectronSharp.API
         /// Emitted when one or more metrics change in a display. 
         /// The changedMetrics is an array of strings that describe the changes. 
         /// Possible changes are bounds, workArea, scaleFactor and rotation.
+        /// <see href="https://www.electronjs.org/docs/api/screen#event-display-metrics-changed"/>
         /// </summary>
         public event Action<Display, string[]> OnDisplayMetricsChanged
         {
@@ -127,18 +131,21 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// The current absolute position of the mouse pointer.
+        /// <see href="https://www.electronjs.org/docs/api/screen#screengetcursorscreenpoint"/>
         /// </summary>
         /// <returns></returns>
         public Task<Point> GetCursorScreenPointAsync() => BridgeConnector.OnResult<Point>("screen-getCursorScreenPoint", "screen-getCursorScreenPointCompleted");
 
         /// <summary>
         /// macOS: The height of the menu bar in pixels.
+        /// <see href="https://www.electronjs.org/docs/api/screen#screengetmenubarheight-macos"/>
         /// </summary>
         /// <returns>The height of the menu bar in pixels.</returns>
         public Task<int> GetMenuBarHeightAsync() => BridgeConnector.OnResult<int>("screen-getMenuBarHeight", "screen-getMenuBarHeightCompleted");
 
         /// <summary>
         /// The primary display.
+        /// <see href="https://www.electronjs.org/docs/api/screen#screengetprimarydisplay"/>
         /// </summary>
         /// <returns></returns>
         public Task<Display> GetPrimaryDisplayAsync() => BridgeConnector.OnResult<Display>("screen-getPrimaryDisplay", "screen-getPrimaryDisplayCompleted");
@@ -146,18 +153,21 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// An array of displays that are currently available.
+        /// <see href="https://www.electronjs.org/docs/api/screen#screengetalldisplays"/>
         /// </summary>
         /// <returns>An array of displays that are currently available.</returns>
         public Task<Display[]> GetAllDisplaysAsync() => BridgeConnector.OnResult<Display[]>("screen-getAllDisplays", "screen-getAllDisplaysCompleted");
 
         /// <summary>
         /// The display nearest the specified point.
+        /// <see href="https://www.electronjs.org/docs/api/screen#screengetdisplaynearestpointpoint"/>
         /// </summary>
         /// <returns>The display nearest the specified point.</returns>
         public Task<Display> GetDisplayNearestPointAsync(Point point) => BridgeConnector.OnResult<Display>("screen-getDisplayNearestPoint", "screen-getDisplayNearestPointCompleted", point);
 
         /// <summary>
         /// The display that most closely intersects the provided bounds.
+        /// <see href="https://www.electronjs.org/docs/api/screen#screengetdisplaymatchingrect"/>
         /// </summary>
         /// <param name="rectangle"></param>
         /// <returns>The display that most closely intersects the provided bounds.</returns>

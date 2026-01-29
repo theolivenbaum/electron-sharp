@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -16,6 +16,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Control your application's event lifecycle.
+    /// <see href="https://www.electronjs.org/docs/api/app"/>
     /// </summary>
     public sealed class App
     {
@@ -46,6 +47,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Emitted when the user clicks on the dock on Mac
         /// <para/>
+        /// <see href="https://www.electronjs.org/docs/api/app#event-activate-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public event Action Activate
@@ -80,6 +82,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Emitted on the first instance when the user opens a second instance of the app, and the app is single instance
         /// <para/>
+        /// <see href="https://www.electronjs.org/docs/api/app#event-second-instance"/>
         /// </summary>
         public event Action<string[]> ActivateFromSecondInstance
         {
@@ -116,6 +119,7 @@ namespace ElectronSharp.API
         /// Cmd + Q, or the developer called <see cref="Quit"/>, Electron will first try to close all the windows
         /// and then emit the <see cref="WillQuit"/> event, and in this case the <see cref="WindowAllClosed"/> event
         /// would not be emitted.
+        /// <see href="https://www.electronjs.org/docs/api/app#event-window-all-closed"/>
         /// </summary>
         public event Action WindowAllClosed
         {
@@ -153,6 +157,7 @@ namespace ElectronSharp.API
         /// is emitted after emitting close event on all windows and closing them.
         /// <para/>
         /// Note: On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
+        /// <see href="https://www.electronjs.org/docs/api/app#event-before-quit"/>
         /// </summary>
         public event Func<QuitEventArgs, Task> BeforeQuit
         {
@@ -225,6 +230,7 @@ namespace ElectronSharp.API
         /// and <see cref="WindowAllClosed"/> events.
         /// <para/>
         /// Note: On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
+        /// <see href="https://www.electronjs.org/docs/api/app#event-will-quit"/>
         /// </summary>
         public event Func<QuitEventArgs, Task> WillQuit
         {
@@ -273,6 +279,7 @@ namespace ElectronSharp.API
         /// Emitted when the application is quitting.
         /// <para/>
         /// Note: On Windows, this event will not be emitted if the app is closed due to a shutdown/restart of the system or a user logout.
+        /// <see href="https://www.electronjs.org/docs/api/app#event-quit"/>
         /// </summary>
         public event Func<Task> Quitting
         {
@@ -306,6 +313,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when a <see cref="BrowserWindow"/> blurred.
+        /// <see href="https://www.electronjs.org/docs/api/app#event-browser-window-blur"/>
         /// </summary>
         public event Action BrowserWindowBlur
         {
@@ -335,6 +343,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when a <see cref="BrowserWindow"/> gets focused.
+        /// <see href="https://www.electronjs.org/docs/api/app#event-browser-window-focus"/>
         /// </summary>
         public event Action BrowserWindowFocus
         {
@@ -364,6 +373,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when a new <see cref="BrowserWindow"/> is created.
+        /// <see href="https://www.electronjs.org/docs/api/app#event-browser-window-created"/>
         /// </summary>
         public event Action BrowserWindowCreated
         {
@@ -393,6 +403,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when a new <see cref="WebContents"/> is created.
+        /// <see href="https://www.electronjs.org/docs/api/app#event-web-contents-created"/>
         /// </summary>
         public event Action WebContentsCreated
         {
@@ -423,6 +434,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Emitted when Chrome’s accessibility support changes. This event fires when assistive technologies, such as
         /// screen readers, are enabled or disabled. See https://www.chromium.org/developers/design-documents/accessibility for more details.
+        /// <see href="https://www.electronjs.org/docs/api/app#event-accessibility-support-changed-macos-windows"/>
         /// </summary>
         /// <returns><see langword="true"/> when Chrome's accessibility support is enabled, <see langword="false"/> otherwise.</returns>
         [SupportedOSPlatform("macos")]
@@ -455,6 +467,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the application has finished basic startup.
+        /// <see href="https://www.electronjs.org/docs/api/app#event-ready"/>
         /// </summary>
         public event Action Ready
         {
@@ -477,6 +490,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Application host fully started.
+        /// <see href="https://www.electronjs.org/docs/api/app#appisready"/>
         /// </summary>
         public bool IsReady
         {
@@ -500,6 +514,7 @@ namespace ElectronSharp.API
         /// open-file is also emitted when a file is dropped onto the dock and the application is not yet running.
         /// <para/>
         /// On Windows, you have to parse the arguments using App.CommandLine to get the filepath.
+        /// <see href="https://www.electronjs.org/docs/api/app#event-open-file-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public event Action<string> OpenFile
@@ -531,6 +546,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when a user wants to open a URL with the application. See https://www.electronjs.org/docs/latest/tutorial/launch-app-from-url-in-another-app for more information.
+        /// <see href="https://www.electronjs.org/docs/api/app#event-open-url-macos"/>
         /// </summary>
         public event Action<string> OpenUrl
         {
@@ -565,6 +581,7 @@ namespace ElectronSharp.API
         /// Usually the name field of package.json is a short lowercase name, according to the npm modules spec. You
         /// should usually also specify a productName field, which is your application's full capitalized name, and
         /// which will be preferred over name by Electron.
+        /// <see href="https://www.electronjs.org/docs/api/app#appname"/>
         /// </summary>
         public string Name
         {
@@ -581,6 +598,7 @@ namespace ElectronSharp.API
         /// Usually the name field of package.json is a short lowercase name, according to the npm modules spec. You
         /// should usually also specify a productName field, which is your application's full capitalized name, and
         /// which will be preferred over name by Electron.
+        /// <see href="https://www.electronjs.org/docs/api/app#appname"/>
         /// </summary>
         public Task<string> GetNameAsync() => BridgeConnector.OnResult<string>("appGetName", "appGetNameCompleted");
 
@@ -629,6 +647,7 @@ namespace ElectronSharp.API
         /// closed, the <see cref="WillQuit"/> event will be emitted and by default the application will terminate. This method
         /// guarantees that all beforeunload and unload event handlers are correctly executed. It is possible
         /// that a window cancels the quitting by returning <see langword="false"/> in the beforeunload event handler.
+        /// <see href="https://www.electronjs.org/docs/api/app#appquit"/>
         /// </summary>
         public void Quit()
         {
@@ -638,6 +657,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// All windows will be closed immediately without asking user and the <see cref="BeforeQuit"/> and <see cref="WillQuit"/>
         /// events will not be emitted.
+        /// <see href="https://www.electronjs.org/docs/api/app#appexitexitcode"/>
         /// </summary>
         /// <param name="exitCode">Exits immediately with exitCode. exitCode defaults to 0.</param>
         public void Exit(int exitCode = 0)
@@ -654,6 +674,7 @@ namespace ElectronSharp.API
         /// <para/>
         /// When <see cref="Relaunch()"/> is called for multiple times, multiple instances will be started after current instance
         /// exited.
+        /// <see href="https://www.electronjs.org/docs/api/app#apprelaunchoptions"/>
         /// </summary>
         public void Relaunch()
         {
@@ -671,6 +692,7 @@ namespace ElectronSharp.API
         /// <para/>
         /// When <see cref="Relaunch()"/> is called for multiple times, multiple instances will be started after current instance
         /// exited.
+        /// <see href="https://www.electronjs.org/docs/api/app#apprelaunchoptions"/>
         /// </summary>
         /// <param name="relaunchOptions">Options for the relaunch.</param>
         public void Relaunch(RelaunchOptions relaunchOptions)
@@ -681,6 +703,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// On Linux, focuses on the first visible window. On macOS, makes the application the active app. On Windows, focuses
         /// on the application's first window.
+        /// <see href="https://www.electronjs.org/docs/api/app#appfocusoptions"/>
         /// </summary>
         public void Focus()
         {
@@ -692,6 +715,7 @@ namespace ElectronSharp.API
         /// on the application's first window.
         /// <para/>
         /// You should seek to use the <see cref="FocusOptions.Steal"/> option as sparingly as possible.
+        /// <see href="https://www.electronjs.org/docs/api/app#appfocusoptions"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public void Focus(FocusOptions focusOptions)
@@ -701,6 +725,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Hides all application windows without minimizing them.
+        /// <see href="https://www.electronjs.org/docs/api/app#apphide-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public void Hide()
@@ -710,6 +735,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Shows application windows after they were hidden. Does not automatically focus them.
+        /// <see href="https://www.electronjs.org/docs/api/app#appshow-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public void Show()
@@ -719,6 +745,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Check if the app is hidden on macOS.
+        /// <see href="https://www.electronjs.org/docs/api/app#appishidden-macos"/>
         /// </summary>
         /// <returns>The current application locale.</returns>
         public Task<bool> IsHidden(CancellationToken cancellationToken = default) => BridgeConnector.OnResult<bool>("appIsHidden", "appIsHiddenCompleted", cancellationToken);
@@ -726,6 +753,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// The current application directory.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetapppath"/>
         /// </summary>
         public Task<string> GetAppPathAsync(CancellationToken cancellationToken = default) => BridgeConnector.OnResult<string>("appGetAppPath", "appGetAppPathCompleted", cancellationToken);
 
@@ -735,6 +763,7 @@ namespace ElectronSharp.API
         /// <para/>
         /// Calling <see cref="SetAppLogsPath"/> without a path parameter will result in this directory being set to
         /// ~/Library/Logs/YourAppName on macOS, and inside the userData directory on Linux and Windows.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetapplogspathpath"/>
         /// </summary>
         /// <param name="path">A custom path for your logs. Must be absolute.</param>
         public void SetAppLogsPath(string path)
@@ -746,6 +775,7 @@ namespace ElectronSharp.API
         /// The path to a special directory. If <see cref="GetPathAsync"/> is called without called
         /// <see cref="SetAppLogsPath"/> being called first, a default directory will be created equivalent
         /// to calling <see cref="SetAppLogsPath"/> without a path parameter.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetpathname"/>
         /// </summary>
         /// <param name="pathName">Special directory.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -762,6 +792,7 @@ namespace ElectronSharp.API
         /// By default, web pages' cookies and caches will be stored under the <see cref="PathName.UserData"/> directory. If you
         /// want to change this location, you have to override the <see cref="PathName.UserData"/> path before the <see cref="Ready"/>
         /// event of the <see cref="App"/> module is emitted.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetpathname-path"/>
         /// <param name="name">Special directory.</param>
         /// <param name="path">New path to a special directory.</param>
         /// </summary>
@@ -773,6 +804,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// The version of the loaded application. If no version is found in the application’s package.json file, 
         /// the version of the current bundle or executable is returned.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetversion"/>
         /// </summary>
         /// <returns>The version of the loaded application.</returns>
         public Task<string> GetVersionAsync(CancellationToken cancellationToken = default) => BridgeConnector.OnResult<string>("appGetVersion", "appGetVersionCompleted", cancellationToken);
@@ -783,6 +815,7 @@ namespace ElectronSharp.API
         /// Note: When distributing your packaged app, you have to also ship the locales folder.
         /// <para/>
         /// Note: On Windows, you have to call it after the <see cref="Ready"/> events gets emitted.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetlocale"/>
         /// </summary>
         /// <returns>The current application locale.</returns>
         public Task<string> GetLocaleAsync(CancellationToken cancellationToken = default) => BridgeConnector.OnResult<string>("appGetLocale", "appGetLocaleCompleted", cancellationToken);
@@ -790,6 +823,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Adds path to the recent documents list. This list is managed by the OS. On Windows you can visit the
         /// list from the task bar, and on macOS you can visit it from dock menu.
+        /// <see href="https://www.electronjs.org/docs/api/app#appaddrecentdocumentpath-macos-windows"/>
         /// </summary>
         /// <param name="path">Path to add.</param>
         [SupportedOSPlatform("macos")]
@@ -801,6 +835,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Clears the recent documents list.
+        /// <see href="https://www.electronjs.org/docs/api/app#appclearrecentdocuments-macos-windows"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("windows")]
@@ -828,6 +863,7 @@ namespace ElectronSharp.API
         /// application as a default protocol handler you <see href="https://docs.microsoft.com/en-us/uwp/schemas/appxpackage/uapmanifestschema/element-uap-protocol">must declare the protocol in your manifest</see>.
         /// <para/>
         /// The API uses the Windows Registry and LSSetDefaultHandlerForURLScheme internally.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetasdefaultprotocolclientprotocol-path-args"/>
         /// </summary>
         /// <param name="protocol">
         /// The name of your protocol, without ://. For example, if you want your app to handle electron:// links,
@@ -860,6 +896,7 @@ namespace ElectronSharp.API
         /// application as a default protocol handler you <see href="https://docs.microsoft.com/en-us/uwp/schemas/appxpackage/uapmanifestschema/element-uap-protocol">must declare the protocol in your manifest</see>.
         /// <para/>
         /// The API uses the Windows Registry and LSSetDefaultHandlerForURLScheme internally.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetasdefaultprotocolclientprotocol-path-args"/>
         /// </summary>
         /// <param name="protocol">
         /// The name of your protocol, without ://. For example, if you want your app to handle electron:// links,
@@ -893,6 +930,7 @@ namespace ElectronSharp.API
         /// application as a default protocol handler you <see href="https://docs.microsoft.com/en-us/uwp/schemas/appxpackage/uapmanifestschema/element-uap-protocol">must declare the protocol in your manifest</see>.
         /// <para/>
         /// The API uses the Windows Registry and LSSetDefaultHandlerForURLScheme internally.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetasdefaultprotocolclientprotocol-path-args"/>
         /// </summary>
         /// <param name="protocol">
         /// The name of your protocol, without ://. For example, if you want your app to handle electron:// links,
@@ -908,6 +946,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// This method checks if the current executable as the default handler for a protocol (aka URI scheme).
         /// If so, it will remove the app as the default handler.
+        /// <see href="https://www.electronjs.org/docs/api/app#appremoveasdefaultprotocolclientprotocol-path-args-macos-windows"/>
         /// </summary>
         /// <param name="protocol">The name of your protocol, without ://.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -922,6 +961,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// This method checks if the current executable as the default handler for a protocol (aka URI scheme).
         /// If so, it will remove the app as the default handler.
+        /// <see href="https://www.electronjs.org/docs/api/app#appremoveasdefaultprotocolclientprotocol-path-args-macos-windows"/>
         /// </summary>
         /// <param name="protocol">The name of your protocol, without ://.</param>
         /// <param name="path">Defaults to process.execPath.</param>
@@ -937,6 +977,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// This method checks if the current executable as the default handler for a protocol (aka URI scheme).
         /// If so, it will remove the app as the default handler.
+        /// <see href="https://www.electronjs.org/docs/api/app#appremoveasdefaultprotocolclientprotocol-path-args-macos-windows"/>
         /// </summary>
         /// <param name="protocol">The name of your protocol, without ://.</param>
         /// <param name="path">Defaults to process.execPath.</param>
@@ -957,6 +998,7 @@ namespace ElectronSharp.API
         /// for details.
         /// <para/>
         /// The API uses the Windows Registry and LSCopyDefaultHandlerForURLScheme internally.
+        /// <see href="https://www.electronjs.org/docs/api/app#appisdefaultprotocolclientprotocol-path-args"/>
         /// </summary>
         /// <param name="protocol">The name of your protocol, without ://.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -977,6 +1019,7 @@ namespace ElectronSharp.API
         /// for details.
         /// <para/>
         /// The API uses the Windows Registry and LSCopyDefaultHandlerForURLScheme internally.
+        /// <see href="https://www.electronjs.org/docs/api/app#appisdefaultprotocolclientprotocol-path-args"/>
         /// </summary>
         /// <param name="protocol">The name of your protocol, without ://.</param>
         /// <param name="path">Defaults to process.execPath.</param>
@@ -998,6 +1041,7 @@ namespace ElectronSharp.API
         /// for details.
         /// <para/>
         /// The API uses the Windows Registry and LSCopyDefaultHandlerForURLScheme internally.
+        /// <see href="https://www.electronjs.org/docs/api/app#appisdefaultprotocolclientprotocol-path-args"/>
         /// </summary>
         /// <param name="protocol">The name of your protocol, without ://.</param>
         /// <param name="path">Defaults to process.execPath.</param>
@@ -1013,6 +1057,7 @@ namespace ElectronSharp.API
         /// Adds tasks to the <see cref="UserTask"/> category of the JumpList on Windows.
         /// <para/>
         /// Note: If you'd like to customize the Jump List even more use <see cref="SetJumpList"/> instead.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetusertaskstasks-windows"/>
         /// </summary>
         /// <param name="userTasks">Array of <see cref="UserTask"/> objects.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -1022,6 +1067,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Jump List settings for the application.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetjumplistsettings-windows"/>
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Jump List settings.</returns>
@@ -1042,6 +1088,7 @@ namespace ElectronSharp.API
         /// back into a custom category until after the next successful call to <see cref="SetJumpList"/>. Any attempt
         /// to re-add a removed item to a custom category earlier than that will result in the entire custom category being
         /// omitted from the Jump List. The list of removed items can be obtained using <see cref="GetJumpListSettingsAsync"/>.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetjumplistcategories-windows"/>
         /// </summary>
         /// <param name="categories">Array of <see cref="JumpListCategory"/> objects.</param>
         [SupportedOSPlatform("windows")]
@@ -1063,6 +1110,7 @@ namespace ElectronSharp.API
         /// in Finder, and the open-file and open-url events will be emitted for that.However when users start your app in
         /// command line, the system's single instance mechanism will be bypassed, and you have to use this method to ensure
         /// single instance.
+        /// <see href="https://www.electronjs.org/docs/api/app#apprequestsingleinstancelockadditionaldata"/>
         /// </summary>
         /// <param name="newInstanceOpened">Lambda with an array of the second instance’s command line arguments.
         /// The second parameter is the working directory path.</param>
@@ -1101,6 +1149,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Releases all locks that were created by makeSingleInstance. This will allow
         /// multiple instances of the application to once again run side by side.
+        /// <see href="https://www.electronjs.org/docs/api/app#appreleasesingleinstancelock"/>
         /// </summary>
         public void ReleaseSingleInstanceLock()
         {
@@ -1111,6 +1160,7 @@ namespace ElectronSharp.API
         /// This method returns whether or not this instance of your app is currently holding the single instance lock.
         /// You can request the lock with <see cref="RequestSingleInstanceLockAsync"/> and release with
         /// <see cref="ReleaseSingleInstanceLock"/>.
+        /// <see href="https://www.electronjs.org/docs/api/app#apphassingleinstancelock"/>
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         public Task<bool> HasSingleInstanceLockAsync(CancellationToken cancellationToken = default) => BridgeConnector.OnResult<bool>("appHasSingleInstanceLock", "appHasSingleInstanceLockCompleted", cancellationToken);
@@ -1119,6 +1169,7 @@ namespace ElectronSharp.API
         /// Creates an NSUserActivity and sets it as the current activity. The activity is
         /// eligible for <see href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/Handoff/HandoffFundamentals/HandoffFundamentals.html">Handoff</see>
         /// to another device afterward.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetuseractivitytype-userinfo-webpageurl-macos"/>
         /// </summary>
         /// <param name="type">Uniquely identifies the activity. Maps to <see href="https://developer.apple.com/library/ios/documentation/Foundation/Reference/NSUserActivity_Class/index.html#//apple_ref/occ/instp/NSUserActivity/activityType">NSUserActivity.activityType</see>.</param>
         /// <param name="userInfo">App-specific state to store for use by another device.</param>
@@ -1132,6 +1183,7 @@ namespace ElectronSharp.API
         /// Creates an NSUserActivity and sets it as the current activity. The activity is
         /// eligible for <see href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/Handoff/HandoffFundamentals/HandoffFundamentals.html">Handoff</see>
         /// to another device afterward.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetuseractivitytype-userinfo-webpageurl-macos"/>
         /// </summary>
         /// <param name="type">
         /// Uniquely identifies the activity. Maps to <see href="https://developer.apple.com/library/ios/documentation/Foundation/Reference/NSUserActivity_Class/index.html#//apple_ref/occ/instp/NSUserActivity/activityType">NSUserActivity.activityType</see>.
@@ -1148,6 +1200,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// The type of the currently running activity.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetcurrentactivitytype-macos"/>
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         [SupportedOSPlatform("macos")]
@@ -1156,6 +1209,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Invalidates the current <see href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/Handoff/HandoffFundamentals/HandoffFundamentals.html">Handoff</see> user activity.
+        /// <see href="https://www.electronjs.org/docs/api/app#appinvalidatecurrentactivity-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public void InvalidateCurrentActivity()
@@ -1165,6 +1219,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Marks the current <see href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/Handoff/HandoffFundamentals/HandoffFundamentals.html">Handoff</see> user activity as inactive without invalidating it.
+        /// <see href="https://www.electronjs.org/docs/api/app#appresigncurrentactivity-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public void ResignCurrentActivity()
@@ -1174,6 +1229,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Changes the <see href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd378459(v=vs.85).aspx">Application User Model ID</see> to id.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetappusermodelidid-windows"/>
         /// </summary>
         /// <param name="id">Model Id.</param>
         [SupportedOSPlatform("windows")]
@@ -1187,6 +1243,7 @@ namespace ElectronSharp.API
         /// Imports the certificate in pkcs12 format into the platform certificate store.
         /// callback is called with the result of import operation, a value of 0 indicates
         /// success while any other value indicates failure according to chromium net_error_list.
+        /// <see href="https://www.electronjs.org/docs/api/app#appimportcertificateoptions-callback-linux"/>
         /// </summary>
         /// <param name="options"></param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -1196,6 +1253,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Memory and cpu usage statistics of all the processes associated with the app.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetappmetrics"/>
         /// </summary>
         /// <returns>
         /// Array of ProcessMetric objects that correspond to memory and cpu usage
@@ -1208,6 +1266,7 @@ namespace ElectronSharp.API
         /// The Graphics Feature Status from chrome://gpu/.
         /// <para/>
         /// Note: This information is only usable after the gpu-info-update event is emitted.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetgpufeaturestatus"/>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// </summary>
         public Task<GPUFeatureStatus> GetGpuFeatureStatusAsync(CancellationToken cancellationToken = default) => BridgeConnector.OnResult<GPUFeatureStatus>("appGetGpuFeatureStatus", "appGetGpuFeatureStatusCompleted", cancellationToken);
@@ -1216,6 +1275,7 @@ namespace ElectronSharp.API
         /// The Graphics Feature Status from chrome://gpu/.
         /// <para/>
         /// Note: This information is only usable after the gpu-info-update event is emitted.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetgpuinfoinfotype"/>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// </summary>
         public Task<GPUInfo> GetGpuInfoAsync(GpuInfoType infoType = GpuInfoType.basic, CancellationToken cancellationToken = default) => BridgeConnector.OnResult<GPUInfo>("appGetGpuInfo", "appGetGpuInfoCompleted", cancellationToken, infoType.ToString());
@@ -1226,6 +1286,7 @@ namespace ElectronSharp.API
         /// <para/>
         /// Note: Unity launcher requires the existence of a .desktop file to work, for more
         /// information please read <see href="https://www.electronjs.org/docs/tutorial/desktop-environment-integration#unity-launcher">Desktop Environment Integration</see>.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetbadgecountcount-linux-macos"/>
         /// </summary>
         /// <param name="count">Counter badge.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -1236,6 +1297,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// The current value displayed in the counter badge.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetbadgecount-linux-macos"/>
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         [SupportedOSPlatform("linux")]
@@ -1244,11 +1306,13 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// A <see cref="CommandLine"/> object that allows you to read and manipulate the command line arguments that Chromium uses.
+        /// <see href="https://www.electronjs.org/docs/api/app#appcommandline"/>
         /// </summary>
         public CommandLine CommandLine { get; internal set; }
 
         /// <summary>
         /// Whether the current desktop environment is Unity launcher.
+        /// <see href="https://www.electronjs.org/docs/api/app#appisunityrunning-linux"/>
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         [SupportedOSPlatform("linux")]
@@ -1257,6 +1321,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// If you provided path and args options to <see cref="SetLoginItemSettings"/> then you need to pass the same
         /// arguments here for <see cref="LoginItemSettings.OpenAtLogin"/> to be set correctly.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetloginitemsettingsoptions-macos-windows"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -1268,6 +1333,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// If you provided path and args options to <see cref="SetLoginItemSettings"/> then you need to pass the same
         /// arguments here for <see cref="LoginItemSettings.OpenAtLogin"/> to be set correctly.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetloginitemsettingsoptions-macos-windows"/>
         /// </summary>
         /// <param name="options"></param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -1282,6 +1348,7 @@ namespace ElectronSharp.API
         /// Set the app's login item settings.
         /// To work with Electron's autoUpdater on Windows, which uses <see href="https://github.com/Squirrel/Squirrel.Windows">Squirrel</see>,
         /// you'll want to set the launch path to Update.exe, and pass arguments that specify your application name.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetloginitemsettingssettings-macos-windows"/>
         /// </summary>
         /// <param name="loginSettings"></param>
         [SupportedOSPlatform("windows")]
@@ -1295,6 +1362,7 @@ namespace ElectronSharp.API
         /// <see langword="true"/> if Chrome's accessibility support is enabled, <see langword="false"/> otherwise. This API will
         /// return <see langword="true"/> if the use of assistive technologies, such as screen readers, has been detected.
         /// See <see href="chromium.org/developers/design-documents/accessibility">Chromium's accessibility docs</see> for more details.
+        /// <see href="https://www.electronjs.org/docs/api/app#appisaccessibilitysupportenabled-macos-windows"/>
         /// </summary>
         /// <returns><see langword="true"/> if Chrome’s accessibility support is enabled, <see langword="false"/> otherwise.</returns>
         [SupportedOSPlatform("windows")]
@@ -1310,6 +1378,7 @@ namespace ElectronSharp.API
         /// This API must be called after the <see cref="Ready"/> event is emitted.
         /// <para/>
         /// Note: Rendering accessibility tree can significantly affect the performance of your app. It should not be enabled by default.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetaccessibilitysupportenabledenabled-macos-windows"/>
         /// </summary>
         /// <param name="enabled">Enable or disable <see href="https://developers.google.com/web/fundamentals/accessibility/semantics-builtin/the-accessibility-tree">accessibility tree</see> rendering.</param>
         [SupportedOSPlatform("windows")]
@@ -1322,6 +1391,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Show the app's about panel options. These options can be overridden with
         /// <see cref="SetAboutPanelOptions"/>.
+        /// <see href="https://www.electronjs.org/docs/api/app#appshowaboutpanel"/>
         /// </summary>
         public void ShowAboutPanel()
         {
@@ -1337,6 +1407,7 @@ namespace ElectronSharp.API
         /// "Credits.rtf", and "Credits.rtfd", in that order, in the bundle returned by the NSBundle class method main. The first file
         /// found is used, and if none is found, the info area is left blank. See Apple
         /// <see href="https://developer.apple.com/documentation/appkit/nsaboutpaneloptioncredits?language=objc">documentation</see> for more information.
+        /// <see href="https://www.electronjs.org/docs/api/app#appsetaboutpaneloptionsoptions"/>
         /// </summary>
         /// <param name="options">About panel options.</param>
         public void SetAboutPanelOptions(AboutPanelOptions options)
@@ -1346,6 +1417,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Fetches a path's associated icon.
+        /// <see href="https://www.electronjs.org/docs/api/app#appgetfileiconpath-options"/>
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
@@ -1358,6 +1430,7 @@ namespace ElectronSharp.API
         /// session level. It is useful for ensuring that your entire app has the same user agent. Set to a
         /// custom value as early as possible in your app's initialization to ensure that your overridden value
         /// is used.
+        /// <see href="https://www.electronjs.org/docs/api/app#appuseragentfallback"/>
         /// </summary>
         public string UserAgentFallback
         {
@@ -1374,6 +1447,7 @@ namespace ElectronSharp.API
         /// session level. It is useful for ensuring that your entire app has the same user agent. Set to a
         /// custom value as early as possible in your app's initialization to ensure that your overridden value
         /// is used.
+        /// <see href="https://www.electronjs.org/docs/api/app#appuseragentfallback"/>
         /// </summary>
         public Task<string> GetUserAgentFallbackAsync() => BridgeConnector.OnResult<string>("appGetUserAgentFallback", "appGetUserAgentFallbackCompleted");
 

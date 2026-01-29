@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -9,11 +9,13 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Render and control web pages.
+    /// <see href="https://www.electronjs.org/docs/api/web-contents"/>
     /// </summary>
     public class WebContents
     {
         /// <summary>
         /// Gets the identifier.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#contentsid"/>
         /// </summary>
         /// <value>
         /// The identifier.
@@ -22,11 +24,13 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Manage browser sessions, cookies, cache, proxy settings, etc.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#contentssession"/>
         /// </summary>
         public Session Session { get; internal set; }
 
         /// <summary>
         /// Emitted when the renderer process crashes or is killed.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#event-render-process-gone"/>
         /// </summary>
         public event Action<bool> OnRenderProcessGone
         {
@@ -57,6 +61,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Emitted when the navigation is done, i.e. the spinner of the tab has
         /// stopped spinning, and the onload event was dispatched.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#event-did-finish-load"/>
         /// </summary>
         public event Action OnDidFinishLoad
         {
@@ -92,6 +97,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Opens the devtools.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#contentsopendevtoolsoptions"/>
         /// </summary>
         public void OpenDevTools()
         {
@@ -100,6 +106,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Opens the devtools.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#contentsopendevtoolsoptions"/>
         /// </summary>
         /// <param name="openDevToolsOptions"></param>
         public void OpenDevTools(OpenDevToolsOptions openDevToolsOptions)
@@ -109,6 +116,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Prints window's web page.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#contentsprintoptions"/>
         /// </summary>
         /// <param name="options"></param>
         /// <returns>success</returns>
@@ -121,6 +129,7 @@ namespace ElectronSharp.API
         /// settings.The landscape will be ignored if @page CSS at-rule is used in the web page. 
         /// By default, an empty options will be regarded as: Use page-break-before: always; 
         /// CSS style to force to print to a new page.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#contentsprinttopdfoptions"/>
         /// </summary>
         /// <param name="path"></param>
         /// <param name="options"></param>
@@ -132,6 +141,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Is used to get the Url of the loaded page.
         /// It's usefull if a web-server redirects you and you need to know where it redirects. For instance, It's useful in case of Implicit Authorization.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#contentsgeturl"/>
         /// </summary>
         /// <returns>URL of the loaded page</returns>
         public Task<string> GetUrl()
@@ -158,6 +168,7 @@ namespace ElectronSharp.API
         /// Loads the `url` in the window. The `url` must contain the protocol prefix, e.g.
         /// the `http://` or `file://`. If the load should bypass http cache then use the
         /// `pragma` header to achieve it.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#contentsloadurlurl-options"/>
         /// </summary>
         /// <param name="url"></param>
         public Task LoadURLAsync(string url)
@@ -175,6 +186,7 @@ namespace ElectronSharp.API
         /// Loads the `url` in the window. The `url` must contain the protocol prefix, e.g.
         /// the `http://` or `file://`. If the load should bypass http cache then use the
         /// `pragma` header to achieve it.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#contentsloadurlurl-options"/>
         /// </summary>
         /// <param name="url"></param>
         /// <param name="options"></param>
@@ -205,6 +217,7 @@ namespace ElectronSharp.API
         /// Inserts CSS into the web page.
         /// See: https://www.electronjs.org/docs/api/web-contents#contentsinsertcsscss-options
         /// Works for both BrowserWindows and BrowserViews.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#contentsinsertcsscss-options"/>
         /// </summary>
         /// <param name="isBrowserWindow">Whether the webContents belong to a BrowserWindow or not (the other option is a BrowserView)</param>
         /// <param name="path">Absolute path to the CSS file location</param>

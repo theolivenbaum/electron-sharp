@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -10,6 +10,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Communicate asynchronously from the main process to renderer processes.
+    /// <see href="https://www.electronjs.org/docs/api/ipc-main"/>
     /// </summary>
     public sealed class IpcMain
     {
@@ -43,6 +44,7 @@ namespace ElectronSharp.API
         /// <summary>
         ///  Listens to channel, when a new message arrives listener would be called with 
         ///  listener(event, args...).
+        ///  <see href="https://www.electronjs.org/docs/api/ipc-main#ipcmainonchannel-listener"/>
         /// </summary>
         /// <param name="channel">Channelname.</param>
         /// <param name="listener">Callback Method.</param>
@@ -69,6 +71,7 @@ namespace ElectronSharp.API
         /// <summary>
         ///  Listens to channel, when a new message arrives listener would be called with 
         ///  listener(event, args...). This listner will keep the window event sender id
+        ///  <see href="https://www.electronjs.org/docs/api/ipc-main#ipcmainonchannel-listener"/>
         /// </summary>
         /// <param name="channel">Channelname.</param>
         /// <param name="listener">Callback Method.</param>
@@ -110,6 +113,7 @@ namespace ElectronSharp.API
         /// 
         /// Note: Sending a synchronous message will block the whole renderer process,
         /// unless you know what you are doing you should never use it.
+        /// <see href="https://www.electronjs.org/docs/api/ipc-main#ipcmainonchannel-listener"/>
         /// </summary>
         /// <param name="channel"></param>
         /// <param name="listener"></param>
@@ -139,6 +143,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Adds a one time listener method for the event. This listener is invoked only
         ///  the next time a message is sent to channel, after which it is removed.
+        ///  <see href="https://www.electronjs.org/docs/api/ipc-main#ipcmainoncechannel-listener"/>
         /// </summary>
         /// <param name="channel">Channelname.</param>
         /// <param name="listener">Callback Method.</param>
@@ -163,6 +168,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Removes listeners of the specified channel.
+        /// <see href="https://www.electronjs.org/docs/api/ipc-main#ipcmainremovealllistenerschannel"/>
         /// </summary>
         /// <param name="channel">Channelname.</param>
         public void RemoveAllListeners(string channel)
@@ -175,6 +181,7 @@ namespace ElectronSharp.API
         /// arbitrary arguments. Arguments will be serialized in JSON internally and hence
         /// no functions or prototype chain will be included. The renderer process handles it by
         /// listening for channel with ipcRenderer module.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#contentssendchannel-args"/>
         /// </summary>
         /// <param name="browserWindow">BrowserWindow with channel.</param>
         /// <param name="channel">Channelname.</param>
@@ -211,6 +218,7 @@ namespace ElectronSharp.API
         /// arbitrary arguments. Arguments will be serialized in JSON internally and hence
         /// no functions or prototype chain will be included. The renderer process handles it by
         /// listening for channel with ipcRenderer module.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents#contentssendchannel-args"/>
         /// </summary>
         /// <param name="browserView">BrowserView with channel.</param>
         /// <param name="channel">Channelname.</param>

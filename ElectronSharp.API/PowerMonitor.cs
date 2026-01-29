@@ -1,16 +1,18 @@
-﻿using System;
+using System;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
 namespace ElectronSharp.API
 {
     /// <summary>
-    /// Monitor power state changes..
+    /// Monitor power state changes.
+    /// <see href="https://www.electronjs.org/docs/api/power-monitor"/>
     /// </summary>
     public sealed class PowerMonitor
     {
         /// <summary>
         /// Emitted when the system is about to lock the screen. 
+        /// <see href="https://www.electronjs.org/docs/api/power-monitor#event-lock-screen-windows-macos"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -42,6 +44,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the system is about to unlock the screen. 
+        /// <see href="https://www.electronjs.org/docs/api/power-monitor#event-unlock-screen-windows-macos"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -73,6 +76,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the system is suspending.
+        /// <see href="https://www.electronjs.org/docs/api/power-monitor#event-suspend"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -104,6 +108,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when system is resuming.
+        /// <see href="https://www.electronjs.org/docs/api/power-monitor#event-resume"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -135,6 +140,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the system changes to AC power.
+        /// <see href="https://www.electronjs.org/docs/api/power-monitor#event-on-ac-windows-macos"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -166,6 +172,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when system changes to battery power.
+        /// <see href="https://www.electronjs.org/docs/api/power-monitor#event-on-battery-windows-macos"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -201,6 +208,7 @@ namespace ElectronSharp.API
         /// invokes `e.preventDefault()`, Electron will attempt to delay system shutdown in
         /// order for the app to exit cleanly.If `e.preventDefault()` is called, the app
         /// should exit as soon as possible by calling something like `app.quit()`.
+        /// <see href="https://www.electronjs.org/docs/api/power-monitor#event-shutdown-linux-macos"/>
         /// </summary>
         [SupportedOSPlatform("linux")]
         [SupportedOSPlatform("macos")]
