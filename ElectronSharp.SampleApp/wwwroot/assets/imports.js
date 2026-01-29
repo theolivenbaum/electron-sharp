@@ -1,4 +1,4 @@
-const links = ["windows", "crashhang", "menus", "shortcuts", "shell", "notifications", "dialogs", "tray", "ipc", "hosthook", "appsysinformation", "clipboard", "pdf", "desktopcapturer", "update"];
+const links = ["windows", "crashhang", "menus", "shortcuts", "shell", "notifications", "dialogs", "tray", "ipc", "hosthook", "appsysinformation", "clipboard", "pdf", "desktopcapturer", "update", "cookies", "nativetheme", "browserview"];
 
 fetch('about').then((aboutPage) => {
   aboutPage.text().then(pageContent => {

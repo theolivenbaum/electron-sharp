@@ -2,7 +2,7 @@
 
 # ElectronSharp
 
-Build cross platform desktop apps with .NET 9 and ASP.NET Core (Razor Pages, MVC), Blazor or [h5](https://github.com/curiosity-ai/h5). 
+Build cross platform desktop apps with .NET 10 and ASP.NET Core (Razor Pages, MVC), Blazor or [h5](https://github.com/curiosity-ai/h5).
 
 ElectronSharp is a __wrapper__ around a "normal" Electron application with an embedded ASP.NET Core application. It uses a socket-based IPC bridge we can invoke Electron APIs from .NET.
 
@@ -18,7 +18,7 @@ ElectronSharp is a hard fork from the original  [Electron.NET](https://github.co
 
 ## 🛠 Requirements to run:
 
-The current ElectronSharp CLI builds Windows/macOS/Linux binaries. The API uses .NET 9, so our minimum base OS is the same as [.NET 9](https://github.com/dotnet/core/blob/main/release-notes/9.0/supported-os.md).
+The current ElectronSharp CLI builds Windows/macOS/Linux binaries. The API uses .NET 10, so our minimum base OS is the same as [.NET 10](https://github.com/dotnet/core/blob/main/release-notes/10.0/supported-os.md).
 
 Also you should have installed:
 
@@ -121,6 +121,15 @@ Start your ElectronSharp application with the ElectronSharp CLI command. In Visu
 
 A complete documentation will follow. Until then take a look in the source code of the sample application:  
 [ElectronSharp Sample App](https://github.com/theolivenbaum/electron-sharp/tree/main/ElectronSharp.SampleApp)  
+
+The sample app covers many features including:
+*   Window Management
+*   Native Theme (Dark Mode)
+*   Cookies
+*   BrowserView
+*   System Information
+*   Menus & Tray
+*   Notifications
 
   
 ## ⛏ Build

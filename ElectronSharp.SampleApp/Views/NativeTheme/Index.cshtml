@@ -1,0 +1,82 @@
+<template class="task-template">
+    <section id="nativetheme-section" class="section js-section u-category-native-ui">
+        <header class="section-header">
+            <div class="section-wrapper">
+                <h1>
+                    <svg class="section-icon">
+                        <use xlink:href="assets/img/icons.svg#icon-native-ui"></use>
+                    </svg>
+                    Native Theme
+                </h1>
+                <h3>Control the native theme of the application.</h3>
+                <p>You find the sample source code in <code>Controllers\NativeThemeController.cs</code>.</p>
+            </div>
+        </header>
+
+        <div class="demo">
+            <div class="demo-wrapper">
+                <button id="nativetheme-demo-toggle" class="js-container-target demo-toggle-button">
+                    Theme Source and Dark Mode
+                    <div class="demo-meta u-avoid-clicks">Supports: Win, macOS, Linux <span class="demo-meta-divider">|</span> Process: Main</div>
+                </button>
+                <div class="demo-box">
+                    <div class="demo-controls">
+                        <button class="demo-button" id="get-theme">Get Theme Source</button>
+                        <span class="demo-response" id="get-theme-response"></span>
+                    </div>
+                    <div class="demo-controls">
+                        <button class="demo-button" id="toggle-theme">Toggle Dark/Light</button>
+                        <span class="demo-response" id="toggle-theme-response"></span>
+                    </div>
+                     <div class="demo-controls">
+                        <button class="demo-button" id="reset-theme">Reset to System</button>
+                        <span class="demo-response" id="reset-theme-response"></span>
+                    </div>
+                     <div class="demo-controls">
+                        <button class="demo-button" id="check-dark">Is Dark Mode?</button>
+                        <span class="demo-response" id="check-dark-response"></span>
+                    </div>
+
+                    <p>The <code>Electron.NativeTheme</code> API allows you to read and respond to changes in Chromium's native color theme.</p>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            (function(){
+                const { ipcRenderer } = require("electron");
+
+                document.getElementById("get-theme").addEventListener("click", () => {
+                    ipcRenderer.send("get-theme-source");
+                });
+
+                ipcRenderer.on("got-theme-source", (event, message) => {
+                    document.getElementById('get-theme-response').innerHTML = message;
+                });
+
+                document.getElementById("toggle-theme").addEventListener("click", () => {
+                    ipcRenderer.send("toggle-theme-source");
+                });
+
+                document.getElementById("reset-theme").addEventListener("click", () => {
+                    ipcRenderer.send("reset-theme-source");
+                });
+
+                ipcRenderer.on("theme-source-updated", (event, message) => {
+                    document.getElementById('toggle-theme-response').innerHTML = "Set to " + message;
+                     document.getElementById('reset-theme-response').innerHTML = "Set to " + message;
+                });
+
+                document.getElementById("check-dark").addEventListener("click", () => {
+                    ipcRenderer.send("is-dark-mode");
+                });
+
+                 ipcRenderer.on("got-is-dark-mode", (event, message) => {
+                    document.getElementById('check-dark-response').innerHTML = message;
+                });
+
+            }());
+        </script>
+
+    </section>
+</template>
