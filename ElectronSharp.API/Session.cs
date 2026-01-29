@@ -25,10 +25,16 @@ namespace ElectronSharp.API
         /// </summary>
         public Cookies Cookies { get; }
 
+        /// <summary>
+        /// Manage Chrome extensions.
+        /// </summary>
+        public SessionExtensions Extensions { get; }
+
         internal Session(int id)
         {
             Id      = id;
             Cookies = new Cookies(id);
+            Extensions = new SessionExtensions(id);
         }
 
         /// <summary>
@@ -242,9 +248,10 @@ namespace ElectronSharp.API
         }
 
         /// <summary>
-        /// 
+        /// Deprecated. Use GetPreloadScriptsAsync instead.
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Use GetPreloadScriptsAsync instead")]
         public Task<string[]> GetPreloadsAsync()
         {
             var    taskCompletionSource = new TaskCompletionSource<string[]>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -257,6 +264,25 @@ namespace ElectronSharp.API
             });
 
             BridgeConnector.Emit("webContents-session-getPreloads", Id, guid);
+
+            return taskCompletionSource.Task;
+        }
+
+        /// <summary>
+        /// Returns an array of registered preload scripts.
+        /// </summary>
+        public Task<PreloadScript[]> GetPreloadScriptsAsync()
+        {
+            var taskCompletionSource = new TaskCompletionSource<PreloadScript[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+            string guid = Guid.NewGuid().ToString();
+
+            BridgeConnector.On<PreloadScript[]>("webContents-session-getPreloadScripts-completed" + guid, (scripts) =>
+            {
+                BridgeConnector.Off("webContents-session-getPreloadScripts-completed" + guid);
+                taskCompletionSource.SetResult(scripts);
+            });
+
+            BridgeConnector.Emit("webContents-session-getPreloadScripts", Id, guid);
 
             return taskCompletionSource.Task;
         }
@@ -314,13 +340,31 @@ namespace ElectronSharp.API
         }
 
         /// <summary>
+        /// Deprecated. Use RegisterPreloadScript instead.
         /// Adds scripts that will be executed on ALL web contents that are associated with
         /// this session just before normal preload scripts run.
         /// </summary>
         /// <param name="preloads"></param>
+        [Obsolete("Use RegisterPreloadScript instead")]
         public void SetPreloads(string[] preloads)
         {
             BridgeConnector.Emit("webContents-session-setPreloads", Id, preloads);
+        }
+
+        /// <summary>
+        /// Registers a preload script.
+        /// </summary>
+        public void RegisterPreloadScript(RegisterPreloadScriptOptions options)
+        {
+            BridgeConnector.Emit("webContents-session-registerPreloadScript", Id, options);
+        }
+
+        /// <summary>
+        /// Unregisters a preload script.
+        /// </summary>
+        public void UnregisterPreloadScript(string id)
+        {
+            BridgeConnector.Emit("webContents-session-unregisterPreloadScript", Id, id);
         }
 
         /// <summary>
@@ -373,17 +417,19 @@ namespace ElectronSharp.API
         }
 
         /// <summary>
+        /// Deprecated. Use Extensions.GetAllAsync instead.
         /// The keys are the extension names and each value is an object containing name and version properties.
         /// Note: This API cannot be called before the ready event of the app module is emitted.
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Use Extensions.GetAllAsync instead")]
         public Task<ChromeExtensionInfo[]> GetAllExtensionsAsync()
         {
             var taskCompletionSource = new TaskCompletionSource<ChromeExtensionInfo[]>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            BridgeConnector.On<ChromeExtensionInfo[]>("webContents-session-getAllExtensions-completed", (extensionslist) =>
+            BridgeConnector.On<ChromeExtensionInfo[]>("webContents-session-getAllExtensions-completed" + Id, (extensionslist) =>
             {
-                BridgeConnector.Off("webContents-session-getAllExtensions-completed");
+                BridgeConnector.Off("webContents-session-getAllExtensions-completed" + Id);
                 taskCompletionSource.SetResult(extensionslist);
             });
 
@@ -393,16 +439,19 @@ namespace ElectronSharp.API
         }
 
         /// <summary>
+        /// Deprecated. Use Extensions.Remove instead.
         /// Remove Chrome extension with the specified name.
         /// Note: This API cannot be called before the ready event of the app module is emitted.
         /// </summary>
         /// <param name="name">Name of the Chrome extension to remove</param>
+        [Obsolete("Use Extensions.Remove instead")]
         public void RemoveExtension(string name)
         {
             BridgeConnector.Emit("webContents-session-removeExtension", Id, name);
         }
 
         /// <summary>
+        /// Deprecated. Use Extensions.LoadAsync instead.
         /// resolves when the extension is loaded.
         ///
         /// This method will raise an exception if the extension could not be loaded.If
@@ -429,13 +478,14 @@ namespace ElectronSharp.API
         /// inject content scripts into `file://` pages. This is required e.g. for loading
         /// devtools extensions on `file://` URLs. Defaults to false.</param>
         /// <returns></returns>
+        [Obsolete("Use Extensions.LoadAsync instead")]
         public Task<Extension> LoadExtensionAsync(string path, bool allowFileAccess = false)
         {
             var taskCompletionSource = new TaskCompletionSource<Extension>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            BridgeConnector.On<Extension>("webContents-session-loadExtension-completed", (extension) =>
+            BridgeConnector.On<Extension>("webContents-session-loadExtension-completed" + Id, (extension) =>
             {
-                BridgeConnector.Off("webContents-session-loadExtension-completed");
+                BridgeConnector.Off("webContents-session-loadExtension-completed" + Id);
 
                 taskCompletionSource.SetResult(extension);
             });

@@ -251,26 +251,36 @@ export = (socket: Socket) => {
 
     socket.on('webContents-session-getAllExtensions', (id) => {
         const browserWindow = getWindowById(id);
-        const extensionsList = browserWindow.webContents.session.getAllExtensions();
-        const chromeExtensionInfo = [];
-
-        Object.keys(extensionsList).forEach(key => {
-            chromeExtensionInfo.push(extensionsList[key]);
-        });
-
-        electronSocket.emit('webContents-session-getAllExtensions-completed' + id, chromeExtensionInfo);
+        const extensionsList = browserWindow.webContents.session.extensions.getAllExtensions();
+        electronSocket.emit('webContents-session-getAllExtensions-completed' + id, extensionsList);
     });
 
     socket.on('webContents-session-removeExtension', (id, name) => {
         const browserWindow = getWindowById(id);
-        browserWindow.webContents.session.removeExtension(name);
+        browserWindow.webContents.session.extensions.removeExtension(name);
     });
 
     socket.on('webContents-session-loadExtension', async (id, path, allowFileAccess = false) => {
         const browserWindow = getWindowById(id);
-        const extension = await browserWindow.webContents.session.loadExtension(path, {allowFileAccess: allowFileAccess});
+        const extension = await browserWindow.webContents.session.extensions.loadExtension(path, {allowFileAccess: allowFileAccess});
 
         electronSocket.emit('webContents-session-loadExtension-completed' + id, extension);
+    });
+
+    socket.on('webContents-session-registerPreloadScript', (id, options) => {
+        const browserWindow = getWindowById(id);
+        browserWindow.webContents.session.registerPreloadScript(options);
+    });
+
+    socket.on('webContents-session-unregisterPreloadScript', (id, scriptId) => {
+        const browserWindow = getWindowById(id);
+        browserWindow.webContents.session.unregisterPreloadScript(scriptId);
+    });
+
+    socket.on('webContents-session-getPreloadScripts', (id, guid) => {
+        const browserWindow = getWindowById(id);
+        const scripts = browserWindow.webContents.session.getPreloadScripts();
+        electronSocket.emit('webContents-session-getPreloadScripts-completed' + guid, scripts);
     });
 
     function getWindowById(id: number): Electron.BrowserWindow | Electron.BrowserView {

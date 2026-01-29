@@ -53,8 +53,16 @@ if (reYaml.IsMatch(yaml) && reCs.IsMatch(cs) && rePackage.IsMatch(package))
     Directory.SetCurrentDirectory(packagePath);
 
     var psi = new ProcessStartInfo();
-    psi.FileName  = "cmd";
-    psi.Arguments = "/c \"npm update -D\"";
+    if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+    {
+        psi.FileName  = "cmd";
+        psi.Arguments = "/c \"npm update -D\"";
+    }
+    else
+    {
+        psi.FileName  = "npm";
+        psi.Arguments = "update -D";
+    }
 
     var npmProcess = Process.Start(psi);
 
