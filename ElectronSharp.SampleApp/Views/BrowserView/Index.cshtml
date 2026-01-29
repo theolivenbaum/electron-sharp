@@ -1,0 +1,61 @@
+<template class="task-template">
+    <section id="browserview-section" class="section js-section u-category-windows">
+        <header class="section-header">
+            <div class="section-wrapper">
+                <h1>
+                    <svg class="section-icon">
+                        <use xlink:href="assets/img/icons.svg#icon-windows"></use>
+                    </svg>
+                    BrowserView
+                </h1>
+                <h3>Embed additional web content into a BrowserWindow.</h3>
+                <p>You find the sample source code in <code>Controllers\BrowserViewController.cs</code>.</p>
+            </div>
+        </header>
+
+        <div class="demo">
+            <div class="demo-wrapper">
+                <button id="browserview-demo-toggle" class="js-container-target demo-toggle-button">
+                    Create BrowserView
+                    <div class="demo-meta u-avoid-clicks">Supports: Win, macOS, Linux <span class="demo-meta-divider">|</span> Process: Main</div>
+                </button>
+                <div class="demo-box">
+                    <div class="demo-controls">
+                        <button class="demo-button" id="create-browser-view">Create BrowserView in New Window</button>
+                        <span class="demo-response" id="create-browser-view-response"></span>
+                    </div>
+
+                    <p>A <code>BrowserView</code> can be used to embed additional web content into a <code>BrowserWindow</code>. It is like a child window, except that it is positioned relative to its owning window.</p>
+
+                    <h5>Main Process (C#)</h5>
+                    <pre><code class="csharp">Electron.IpcMain.On("create-browser-view", async (args) =>
+{
+    // Create a new window for demo
+    var win = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions { ... });
+
+    var browserView = await Electron.WindowManager.CreateBrowserViewAsync();
+    win.SetBrowserView(browserView);
+    browserView.SetBounds(new Rectangle { X = 0, Y = 0, Width = 800, Height = 300 });
+    browserView.WebContents.LoadURL("https://electronjs.org");
+});</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            (function(){
+                const { ipcRenderer } = require("electron");
+
+                document.getElementById("create-browser-view").addEventListener("click", () => {
+                    ipcRenderer.send("create-browser-view");
+                });
+
+                ipcRenderer.on("browser-view-created", (event, message) => {
+                    document.getElementById('create-browser-view-response').innerHTML = "BrowserView created!";
+                });
+
+            }());
+        </script>
+
+    </section>
+</template>

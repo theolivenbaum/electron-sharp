@@ -1,0 +1,79 @@
+<template class="task-template">
+    <section id="cookies-section" class="section js-section u-category-system">
+        <header class="section-header">
+            <div class="section-wrapper">
+                <h1>
+                    <svg class="section-icon">
+                        <use xlink:href="assets/img/icons.svg#icon-system"></use>
+                    </svg>
+                    Cookies
+                </h1>
+                <h3>Manage cookies in your Electron application.</h3>
+                <p>You find the sample source code in <code>Controllers\CookiesController.cs</code>.</p>
+            </div>
+        </header>
+
+        <div class="demo">
+            <div class="demo-wrapper">
+                <button id="cookies-demo-toggle" class="js-container-target demo-toggle-button">
+                    Set and Get Cookies
+                    <div class="demo-meta u-avoid-clicks">Supports: Win, macOS, Linux <span class="demo-meta-divider">|</span> Process: Main</div>
+                </button>
+                <div class="demo-box">
+                    <div class="demo-controls">
+                        <button class="demo-button" id="set-cookie">Set Cookie</button>
+                        <span class="demo-response" id="set-cookie-response"></span>
+                    </div>
+                    <div class="demo-controls">
+                        <button class="demo-button" id="get-cookie">Get Cookie</button>
+                        <span class="demo-response" id="get-cookie-response"></span>
+                    </div>
+
+                    <p>The <code>Electron.Session.DefaultSession.Cookies</code> API allows you to query and modify cookies.</p>
+
+                    <h5>Main Process (C#)</h5>
+                    <pre><code class="csharp">Electron.IpcMain.On("set-cookie", async (args) =>
+{
+     var cookieDetails = new CookieDetails("http://localhost", "electron-sharp-test", "Hello World")
+    {
+        ExpirationDate = DateTimeOffset.Now.AddDays(1).ToUnixTimeSeconds()
+    };
+
+    await Electron.Session.DefaultSession.Cookies.SetAsync(cookieDetails);
+});
+
+Electron.IpcMain.On("get-cookie", async (args) =>
+{
+    var cookies = await Electron.Session.DefaultSession.Cookies.GetAsync(new CookieFilter { Name = "electron-sharp-test" });
+    var cookieValue = cookies.FirstOrDefault()?.Value ?? "Cookie not found";
+    // Send back to renderer
+});</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            (function(){
+                const { ipcRenderer } = require("electron");
+
+                document.getElementById("set-cookie").addEventListener("click", () => {
+                    ipcRenderer.send("set-cookie");
+                });
+
+                ipcRenderer.on("cookie-set", (event, message) => {
+                    document.getElementById('set-cookie-response').innerHTML = message;
+                });
+
+                document.getElementById("get-cookie").addEventListener("click", () => {
+                    ipcRenderer.send("get-cookie");
+                });
+
+                ipcRenderer.on("cookie-get", (event, message) => {
+                    document.getElementById('get-cookie-response').innerHTML = message;
+                });
+
+            }());
+        </script>
+
+    </section>
+</template>
