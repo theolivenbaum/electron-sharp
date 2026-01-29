@@ -15,10 +15,5 @@
         /// indexdb, localstorage, shadercache, websql, serviceworkers, cachestorage.
         /// </summary>
         public string[] Storages { get; set; }
-
-        /// <summary>
-        /// The types of quotas to clear, can contain: temporary, persistent, syncable.
-        /// </summary>
-        public string[] Quotas { get; set; }
     }
 }
