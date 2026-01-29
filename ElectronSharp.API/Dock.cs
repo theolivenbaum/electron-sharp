@@ -12,6 +12,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Control your app in the macOS dock.
+    /// <see href="https://www.electronjs.org/docs/api/dock"/>
     /// </summary>
     [SupportedOSPlatform("macos")]
     public sealed class Dock
@@ -48,6 +49,7 @@ namespace ElectronSharp.API
         /// for one second. However, the request remains active until either the application becomes active or the request is canceled.
         /// <para/>
         /// Note: This method can only be used while the app is not focused; when the app is focused it will return -1.
+        /// <see href="https://www.electronjs.org/docs/api/dock#dockbouncetype-macos"/>
         /// </summary>
         /// <param name="type">Can be critical or informational. The default is informational.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -61,6 +63,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Cancel the bounce of id.
+        /// <see href="https://www.electronjs.org/docs/api/dock#dockcancelbounceid-macos"/>
         /// </summary>
         /// <param name="id">Id of the request.</param>
         public void CancelBounce(int id)
@@ -70,6 +73,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Bounces the Downloads stack if the filePath is inside the Downloads folder.
+        /// <see href="https://www.electronjs.org/docs/api/dock#dockdownloadfinishedfilepath-macos"/>
         /// </summary>
         /// <param name="filePath"></param>
         public void DownloadFinished(string filePath)
@@ -79,6 +83,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets the string to be displayed in the dock’s badging area.
+        /// <see href="https://www.electronjs.org/docs/api/dock#docksetbadgetext-macos"/>
         /// </summary>
         /// <param name="text"></param>
         public void SetBadge(string text)
@@ -88,6 +93,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Gets the string to be displayed in the dock’s badging area.
+        /// <see href="https://www.electronjs.org/docs/api/dock#dockgetbadge-macos"/>
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The badge string of the dock.</returns>
@@ -99,6 +105,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Hides the dock icon.
+        /// <see href="https://www.electronjs.org/docs/api/dock#dockhide-macos"/>
         /// </summary>
         public void Hide()
         {
@@ -107,6 +114,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Shows the dock icon.
+        /// <see href="https://www.electronjs.org/docs/api/dock#dockshow-macos"/>
         /// </summary>
         public void Show()
         {
@@ -116,6 +124,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Whether the dock icon is visible. The app.dock.show() call is asynchronous
         /// so this method might not return true immediately after that call.
+        /// <see href="https://www.electronjs.org/docs/api/dock#dockisvisible-macos"/>
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Whether the dock icon is visible.</returns>
@@ -136,6 +145,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets the application's dock menu.
+        /// <see href="https://www.electronjs.org/docs/api/dock#docksetmenumenu-macos"/>
         /// </summary>
         public void SetMenu(MenuItem[] menuItems)
         {
@@ -155,11 +165,13 @@ namespace ElectronSharp.API
         /// <summary>
         /// TODO: Menu (macOS) still to be implemented
         /// Gets the application's dock menu.
+        /// <see href="https://www.electronjs.org/docs/api/dock#dockgetmenu-macos"/>
         /// </summary>
         public Task<Menu> GetMenu(CancellationToken cancellationToken = default) => BridgeConnector.OnResult<Menu>("dock-getMenu", "dock-getMenu-completed", cancellationToken);
 
         /// <summary>
         /// Sets the image associated with this dock icon.
+        /// <see href="https://www.electronjs.org/docs/api/dock#dockseticonimage-macos"/>
         /// </summary>
         /// <param name="image"></param>
         public void SetIcon(string image)

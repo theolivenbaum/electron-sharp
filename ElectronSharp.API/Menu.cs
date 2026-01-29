@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -11,6 +11,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Create native application menus and context menus.
+    /// <see href="https://www.electronjs.org/docs/api/menu"/>
     /// </summary>
     public sealed class Menu
     {
@@ -49,6 +50,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets the application menu.
+        /// <see href="https://www.electronjs.org/docs/api/menu#menusetapplicationmenumenu"/>
         /// </summary>
         /// <param name="menuItems">The menu items.</param>
         public void SetApplicationMenu(MenuItem[] menuItems)
@@ -109,6 +111,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Contexts the menu popup.
+        /// <see href="https://www.electronjs.org/docs/api/menu#menupopupoptions"/>
         /// </summary>
         /// <param name="browserWindow">The browser window.</param>
         public void ContextMenuPopup(BrowserWindow browserWindow)

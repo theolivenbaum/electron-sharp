@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using ElectronSharp.API.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,11 +14,13 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Create and control browser windows.
+    /// <see href="https://www.electronjs.org/docs/api/browser-window"/>
     /// </summary>
     public class BrowserWindow
     {
         /// <summary>
         /// Gets the identifier.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winid"/>
         /// </summary>
         /// <value>
         /// The identifier.
@@ -28,6 +30,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Emitted when the web page has been rendered (while not being shown) and 
         /// window can be displayed without a visual flash.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-ready-to-show"/>
         /// </summary>
         public event Action OnReadyToShow
         {
@@ -57,6 +60,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the document changed its title.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-page-title-updated"/>
         /// </summary>
         public event Action<string> OnPageTitleUpdated
         {
@@ -86,6 +90,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window is going to be closed.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-close"/>
         /// </summary>
         public event Action OnClose
         {
@@ -117,6 +122,7 @@ namespace ElectronSharp.API
         /// Emitted when the window is closed. 
         /// After you have received this event you should remove the 
         /// reference to the window and avoid using it any more.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-closed"/>
         /// </summary>
         public event Action OnClosed
         {
@@ -146,6 +152,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when window session is going to end due to force shutdown or machine restart or session log off.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-session-end-windows"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         public event Action OnSessionEnd
@@ -176,6 +183,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the web page becomes unresponsive.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-unresponsive"/>
         /// </summary>
         public event Action OnUnresponsive
         {
@@ -205,6 +213,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the unresponsive web page becomes responsive again.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-responsive"/>
         /// </summary>
         public event Action OnResponsive
         {
@@ -234,6 +243,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window loses focus.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-blur"/>
         /// </summary>
         public event Action OnBlur
         {
@@ -263,6 +273,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window gains focus.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-focus"/>
         /// </summary>
         public event Action OnFocus
         {
@@ -292,6 +303,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window is shown.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-show"/>
         /// </summary>
         public event Action OnShow
         {
@@ -321,6 +333,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window is hidden.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-hide"/>
         /// </summary>
         public event Action OnHide
         {
@@ -350,6 +363,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when window is maximized.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-maximize"/>
         /// </summary>
         public event Action OnMaximize
         {
@@ -379,6 +393,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window exits from a maximized state.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-unmaximize"/>
         /// </summary>
         public event Action OnUnmaximize
         {
@@ -408,6 +423,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window is minimized.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-minimize"/>
         /// </summary>
         public event Action OnMinimize
         {
@@ -437,6 +453,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window is restored from a minimized state.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-restore"/>
         /// </summary>
         public event Action OnRestore
         {
@@ -466,6 +483,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window is being resized.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-resize"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("windows")]
@@ -499,6 +517,7 @@ namespace ElectronSharp.API
         /// Emitted when the window is being moved to a new position.
         /// 
         /// Note: On macOS this event is just an alias of moved.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-move"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("windows")]
@@ -530,6 +549,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted once when the window is moved to a new position.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-moved-macos-windows"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("windows")]
@@ -561,6 +581,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window enters a full-screen state.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-enter-full-screen"/>
         /// </summary>
         public event Action OnEnterFullScreen
         {
@@ -590,6 +611,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window leaves a full-screen state.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-leave-full-screen"/>
         /// </summary>
         public event Action OnLeaveFullScreen
         {
@@ -619,6 +641,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window enters a full-screen state triggered by HTML API.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-enter-html-full-screen"/>
         /// </summary>
         public event Action OnEnterHtmlFullScreen
         {
@@ -648,6 +671,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window leaves a full-screen state triggered by HTML API.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-leave-html-full-screen"/>
         /// </summary>
         public event Action OnLeaveHtmlFullScreen
         {
@@ -683,6 +707,7 @@ namespace ElectronSharp.API
         /// Commands are lowercased, underscores are replaced with hyphens, 
         /// and the APPCOMMAND_ prefix is stripped off.e.g.APPCOMMAND_BROWSER_BACKWARD 
         /// is emitted as browser-backward.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-app-command-windows"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         [SupportedOSPlatform("windows")]
@@ -714,6 +739,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted on 3-finger swipe. Possible directions are up, right, down, left.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-swipe-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public event Action<string> OnSwipe
@@ -744,6 +770,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window opens a sheet.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-sheet-begin-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public event Action OnSheetBegin
@@ -774,6 +801,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the window has closed a sheet.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-sheet-end-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public event Action OnSheetEnd
@@ -804,6 +832,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Emitted when the native new tab button is clicked.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#event-new-window-for-tab-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public event Action OnNewWindowForTab
@@ -842,6 +871,7 @@ namespace ElectronSharp.API
         /// Force closing the window, the unload and beforeunload event won’t be 
         /// emitted for the web page, and close event will also not be emitted 
         /// for this window, but it guarantees the closed event will be emitted.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#windestroy"/>
         /// </summary>
         public void Destroy()
         {
@@ -851,6 +881,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Try to close the window. This has the same effect as a user manually 
         /// clicking the close button of the window. The web page may cancel the close though. 
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winclose"/>
         /// </summary>
         public void Close()
         {
@@ -859,6 +890,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Focuses on the window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winfocus"/>
         /// </summary>
         public void Focus()
         {
@@ -867,6 +899,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Removes focus from the window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winblur"/>
         /// </summary>
         public void Blur()
         {
@@ -875,6 +908,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window is focused.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winisfocused"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool?> IsFocusedAsync() => BridgeConnector.OnResult<bool?>("browserWindowIsFocused", "browserWindow-isFocused-completed" + Id, Id);
@@ -883,6 +917,7 @@ namespace ElectronSharp.API
         private bool _isDestroyed;
         /// <summary>
         /// Whether the window is destroyed.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winisdestroyed"/>
         /// </summary>
         /// <returns></returns>
         public async Task<bool> IsDestroyedAsync()
@@ -902,6 +937,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Shows and gives focus to the window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winshow"/>
         /// </summary>
         public void Show()
         {
@@ -910,6 +946,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Shows the window but doesn’t focus on it.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winshowinactive"/>
         /// </summary>
         public void ShowInactive()
         {
@@ -918,6 +955,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Hides the window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winhide"/>
         /// </summary>
         public void Hide()
         {
@@ -926,6 +964,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window is visible to the user.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winisvisible"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool?> IsVisibleAsync()
@@ -935,6 +974,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether current window is a modal window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winismodal"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool?> IsModalAsync()
@@ -944,6 +984,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Maximizes the window. This will also show (but not focus) the window if it isn’t being displayed already.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winmaximize"/>
         /// </summary>
         public void Maximize()
         {
@@ -952,6 +993,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Unmaximizes the window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winunmaximize"/>
         /// </summary>
         public void Unmaximize()
         {
@@ -960,6 +1002,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window is maximized.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winismaximized"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool?> IsMaximizedAsync()
@@ -969,6 +1012,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Minimizes the window. On some platforms the minimized window will be shown in the Dock.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winminimize"/>
         /// </summary>
         public void Minimize()
         {
@@ -977,6 +1021,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Restores the window from minimized state to its previous state.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winrestore"/>
         /// </summary>
         public void Restore()
         {
@@ -985,6 +1030,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window is minimized.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winisminimized"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool?> IsMinimizedAsync()
@@ -994,6 +1040,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets whether the window should be in fullscreen mode.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetfullscreenflag"/>
         /// </summary>
         public void SetFullScreen(bool flag)
         {
@@ -1002,6 +1049,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets whether the background color of the window
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetbackgroundcolorbackgroundcolor"/>
         /// </summary>
         public void SetBackgroundColor(string color)
         {
@@ -1010,6 +1058,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window is in fullscreen mode.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winisfullscreen"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool?> IsFullScreenAsync()
@@ -1028,6 +1077,7 @@ namespace ElectronSharp.API
         /// the player itself we would call this function with arguments of 16/9 and[40, 50]. The second argument
         /// doesn’t care where the extra width and height are within the content view–only that they exist. Just 
         /// sum any extra width and height areas you have within the overall content view.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetaspectratioaspectratio-extrasize-macos-linux-windows"/>
         /// </summary>
         /// <param name="aspectRatio">The aspect ratio to maintain for some portion of the content view.</param>
         public void SetAspectRatio(int aspectRatio)
@@ -1046,6 +1096,7 @@ namespace ElectronSharp.API
         /// the player itself we would call this function with arguments of 16/9 and[40, 50]. The second argument
         /// doesn’t care where the extra width and height are within the content view–only that they exist. Just 
         /// sum any extra width and height areas you have within the overall content view.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetaspectratioaspectratio-extrasize-macos-linux-windows"/>
         /// </summary>
         /// <param name="aspectRatio">The aspect ratio to maintain for some portion of the content view.</param>
         /// <param name="extraSize">The extra size not to be included while maintaining the aspect ratio.</param>
@@ -1060,6 +1111,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Uses Quick Look to preview a file at a given path.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winpreviewfilepath-displayname-macos"/>
         /// </summary>
         /// <param name="path">The absolute path to the file to preview with QuickLook. This is important as 
         /// Quick Look uses the file name and file extension on the path to determine the content type of the 
@@ -1072,6 +1124,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Uses Quick Look to preview a file at a given path.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winpreviewfilepath-displayname-macos"/>
         /// </summary>
         /// <param name="path">The absolute path to the file to preview with QuickLook. This is important as 
         /// Quick Look uses the file name and file extension on the path to determine the content type of the 
@@ -1086,6 +1139,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Closes the currently open Quick Look panel.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winclosefilepreview-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public void CloseFilePreview()
@@ -1095,6 +1149,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Resizes and moves the window to the supplied bounds
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetboundsbounds-animate"/>
         /// </summary>
         /// <param name="bounds"></param>
         public void SetBounds(Rectangle bounds)
@@ -1104,6 +1159,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Resizes and moves the window to the supplied bounds
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetboundsbounds-animate"/>
         /// </summary>
         /// <param name="bounds"></param>
         /// <param name="animate"></param>
@@ -1115,6 +1171,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Gets the bounds asynchronous.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingetbounds"/>
         /// </summary>
         /// <returns></returns>
         public Task<Rectangle> GetBoundsAsync()
@@ -1124,6 +1181,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Resizes and moves the window’s client area (e.g. the web page) to the supplied bounds.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetcontentboundsbounds-animate"/>
         /// </summary>
         /// <param name="bounds"></param>
         public void SetContentBounds(Rectangle bounds)
@@ -1133,6 +1191,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Resizes and moves the window’s client area (e.g. the web page) to the supplied bounds.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetcontentboundsbounds-animate"/>
         /// </summary>
         /// <param name="bounds"></param>
         /// <param name="animate"></param>
@@ -1144,6 +1203,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Gets the content bounds asynchronous.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingetcontentbounds"/>
         /// </summary>
         /// <returns></returns>
         public Task<Rectangle> GetContentBoundsAsync()
@@ -1153,6 +1213,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Resizes the window to width and height.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetsizewidth-height-animate"/>
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
@@ -1163,6 +1224,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Resizes the window to width and height.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetsizewidth-height-animate"/>
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
@@ -1175,6 +1237,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Contains the window’s width and height.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingetsize"/>
         /// </summary>
         /// <returns></returns>
         public Task<int[]> GetSizeAsync()
@@ -1184,6 +1247,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Resizes the window’s client area (e.g. the web page) to width and height.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetcontentsizewidth-height-animate"/>
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
@@ -1194,6 +1258,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Resizes the window’s client area (e.g. the web page) to width and height.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetcontentsizewidth-height-animate"/>
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
@@ -1206,6 +1271,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Contains the window’s client area’s width and height.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingetcontentsize"/>
         /// </summary>
         /// <returns></returns>
         public Task<int[]> GetContentSizeAsync()
@@ -1215,6 +1281,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets the minimum size of window to width and height.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetminimumsizewidth-height"/>
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
@@ -1225,6 +1292,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Contains the window’s minimum width and height.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingetminimumsize"/>
         /// </summary>
         /// <returns></returns>
         public Task<int[]> GetMinimumSizeAsync()
@@ -1234,6 +1302,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets the maximum size of window to width and height.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetmaximumsizewidth-height"/>
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
@@ -1244,6 +1313,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Contains the window’s maximum width and height.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingetmaximumsize"/>
         /// </summary>
         /// <returns></returns>
         public Task<int[]> GetMaximumSizeAsync()
@@ -1253,6 +1323,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets whether the window can be manually resized by user.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetresizableresizable"/>
         /// </summary>
         /// <param name="resizable"></param>
         public void SetResizable(bool resizable)
@@ -1262,6 +1333,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window can be manually resized by user.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winisresizable"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool?> IsResizableAsync()
@@ -1271,6 +1343,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets whether the window can be moved by user. On Linux does nothing.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetmovablemovable-macos-windows"/>
         /// </summary>
         /// <param name="movable"></param>
         [SupportedOSPlatform("windows")]
@@ -1282,6 +1355,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window can be moved by user.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winismovable-macos-windows"/>
         /// </summary>
         /// <returns>On Linux always returns true.</returns>
         [SupportedOSPlatform("windows")]
@@ -1293,6 +1367,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets whether the window can be manually minimized by user. On Linux does nothing.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetminimizableminimizable-macos-windows"/>
         /// </summary>
         /// <param name="minimizable"></param>
         [SupportedOSPlatform("windows")]
@@ -1304,6 +1379,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window can be manually minimized by user.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winisminimizable-macos-windows"/>
         /// </summary>
         /// <returns>On Linux always returns true.</returns>
         [SupportedOSPlatform("windows")]
@@ -1315,6 +1391,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets whether the window can be manually maximized by user. On Linux does nothing.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetmaximizablemaximizable-macos-windows"/>
         /// </summary>
         /// <param name="maximizable"></param>
         [SupportedOSPlatform("windows")]
@@ -1326,6 +1403,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window can be manually maximized by user.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winismaximizable-macos-windows"/>
         /// </summary>
         /// <returns>On Linux always returns true.</returns>
         [SupportedOSPlatform("windows")]
@@ -1337,6 +1415,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetfullscreenablefullscreenable"/>
         /// </summary>
         /// <param name="fullscreenable"></param>
         public void SetFullScreenable(bool fullscreenable)
@@ -1346,6 +1425,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the maximize/zoom window button toggles fullscreen mode or maximizes the window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winisfullscreenable"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool?> IsFullScreenableAsync()
@@ -1355,6 +1435,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets whether the window can be manually closed by user. On Linux does nothing.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetclosableclosable-macos-windows"/>
         /// </summary>
         /// <param name="closable"></param>
         [SupportedOSPlatform("windows")]
@@ -1366,6 +1447,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window can be manually closed by user.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winisclosable-macos-windows"/>
         /// </summary>
         /// <returns>On Linux always returns true.</returns>
         [SupportedOSPlatform("windows")]
@@ -1379,6 +1461,7 @@ namespace ElectronSharp.API
         /// Sets whether the window should show always on top of other windows. 
         /// After setting this, the window is still a normal window, not a toolbox 
         /// window which can not be focused on.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetalwaysontopflag-level-relativelevel"/>
         /// </summary>
         /// <param name="flag"></param>
         public void SetAlwaysOnTop(bool flag)
@@ -1390,6 +1473,7 @@ namespace ElectronSharp.API
         /// Sets whether the window should show always on top of other windows. 
         /// After setting this, the window is still a normal window, not a toolbox 
         /// window which can not be focused on.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetalwaysontopflag-level-relativelevel"/>
         /// </summary>
         /// <param name="flag"></param>
         /// <param name="level">Values include normal, floating, torn-off-menu, modal-panel, main-menu, 
@@ -1406,6 +1490,7 @@ namespace ElectronSharp.API
         /// Sets whether the window should show always on top of other windows. 
         /// After setting this, the window is still a normal window, not a toolbox 
         /// window which can not be focused on.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetalwaysontopflag-level-relativelevel"/>
         /// </summary>
         /// <param name="flag"></param>
         /// <param name="level">Values include normal, floating, torn-off-menu, modal-panel, main-menu, 
@@ -1421,6 +1506,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window is always on top of other windows.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winisalwaysontop"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool?> IsAlwaysOnTopAsync()
@@ -1430,6 +1516,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Moves window to the center of the screen.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wincenter"/>
         /// </summary>
         public void Center()
         {
@@ -1438,6 +1525,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Moves window to x and y.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetpositionx-y-animate"/>
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -1455,6 +1543,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Moves window to x and y.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetpositionx-y-animate"/>
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -1479,6 +1568,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Contains the window’s current position.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingetposition"/>
         /// </summary>
         /// <returns></returns>
         public Task<int[]> GetPositionAsync()
@@ -1488,6 +1578,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Changes the title of native window to title.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsettitletitle"/>
         /// </summary>
         /// <param name="title"></param>
         public void SetTitle(string title)
@@ -1499,6 +1590,7 @@ namespace ElectronSharp.API
         /// The title of the native window.
         /// 
         /// Note: The title of web page can be different from the title of the native window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingettitle"/>
         /// </summary>
         /// <returns></returns>
         public Task<string> GetTitleAsync()
@@ -1510,6 +1602,7 @@ namespace ElectronSharp.API
         /// Changes the attachment point for sheets on macOS. 
         /// By default, sheets are attached just below the window frame, 
         /// but you may want to display them beneath a HTML-rendered toolbar.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetsheetoffsetoffsety-offsetx-macos"/>
         /// </summary>
         /// <param name="offsetY"></param>
         [SupportedOSPlatform("macos")]
@@ -1522,6 +1615,7 @@ namespace ElectronSharp.API
         /// Changes the attachment point for sheets on macOS. 
         /// By default, sheets are attached just below the window frame, 
         /// but you may want to display them beneath a HTML-rendered toolbar.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetsheetoffsetoffsety-offsetx-macos"/>
         /// </summary>
         /// <param name="offsetY"></param>
         /// <param name="offsetX"></param>
@@ -1533,6 +1627,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Starts or stops flashing the window to attract user’s attention.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winflashframeflag"/>
         /// </summary>
         /// <param name="flag"></param>
         public void FlashFrame(bool flag)
@@ -1542,6 +1637,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Makes the window not show in the taskbar.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetskiptaskbarskip"/>
         /// </summary>
         /// <param name="skip"></param>
         public void SetSkipTaskbar(bool skip)
@@ -1551,6 +1647,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Enters or leaves the kiosk mode.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetkioskflag"/>
         /// </summary>
         /// <param name="flag"></param>
         public void SetKiosk(bool flag)
@@ -1560,6 +1657,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window is in kiosk mode.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winiskiosk"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool?> IsKioskAsync()
@@ -1569,6 +1667,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Returns the native type of the handle is HWND on Windows, NSView* on macOS, and Window (unsigned long) on Linux.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingetnativewindowhandle"/>
         /// </summary>
         /// <returns>string of the native handle obtained, HWND on Windows, NSView* on macOS, and Window (unsigned long) on Linux.</returns>
         public Task<string> GetNativeWindowHandle()
@@ -1579,6 +1678,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Sets the pathname of the file the window represents, 
         /// and the icon of the file will show in window’s title bar.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetrepresentedfilenamefilename-macos"/>
         /// </summary>
         /// <param name="filename"></param>
         [SupportedOSPlatform("macos")]
@@ -1589,6 +1689,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// The pathname of the file the window represents.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingetrepresentedfilename-macos"/>
         /// </summary>
         /// <returns></returns>
         [SupportedOSPlatform("macos")]
@@ -1600,6 +1701,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Specifies whether the window’s document has been edited, 
         /// and the icon in title bar will become gray when set to true.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetdocumenteditededited-macos"/>
         /// </summary>
         /// <param name="edited"></param>
         [SupportedOSPlatform("macos")]
@@ -1610,6 +1712,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window’s document has been edited.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winisdocumentedited-macos"/>
         /// </summary>
         /// <returns></returns>
         [SupportedOSPlatform("macos")]
@@ -1620,6 +1723,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Focuses the on web view.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winfocusonwebview"/>
         /// </summary>
         public void FocusOnWebView()
         {
@@ -1628,6 +1732,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Blurs the web view.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winblurwebview"/>
         /// </summary>
         public void BlurWebView()
         {
@@ -1637,6 +1742,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// The url can be a remote address (e.g. http://) or 
         /// a path to a local HTML file using the file:// protocol.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winloadurlurl-options"/>
         /// </summary>
         /// <param name="url"></param>
         public void LoadURL(string url)
@@ -1647,6 +1753,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// The url can be a remote address (e.g. http://) or 
         /// a path to a local HTML file using the file:// protocol.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winloadurlurl-options"/>
         /// </summary>
         /// <param name="url"></param>
         /// <param name="options"></param>
@@ -1657,6 +1764,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Same as webContents.reload.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winreload"/>
         /// </summary>
         public void Reload()
         {
@@ -1675,6 +1783,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Sets the menu as the window’s menu bar, 
         /// setting it to null will remove the menu bar.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetmenumenu-linux-windows"/>
         /// </summary>
         /// <param name="menuItems"></param>
         [SupportedOSPlatform("windows")]
@@ -1696,6 +1805,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Remove the window's menu bar.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winremovemenu-linux-windows"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("linux")]
@@ -1713,6 +1823,7 @@ namespace ElectronSharp.API
         /// are none, normal, indeterminate, error, and paused. If you call setProgressBar
         /// without a mode set (but with a value within the valid range), normal will be
         /// assumed.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetprogressbarprogress-options"/>
         /// </summary>
         /// <param name="progress"></param>
         public void SetProgressBar(double progress)
@@ -1729,6 +1840,7 @@ namespace ElectronSharp.API
         /// are none, normal, indeterminate, error, and paused. If you call setProgressBar
         /// without a mode set (but with a value within the valid range), normal will be
         /// assumed.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetprogressbarprogress-options"/>
         /// </summary>
         /// <param name="progress"></param>
         /// <param name="progressBarOptions"></param>
@@ -1740,6 +1852,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets whether the window should have a shadow. On Windows and Linux does nothing.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsethasshadowhasshadow"/>
         /// </summary>
         /// <param name="hasShadow"></param>
         [SupportedOSPlatform("macos")]
@@ -1752,6 +1865,7 @@ namespace ElectronSharp.API
         /// Whether the window has a shadow.
         /// 
         /// On Windows and Linux always returns true.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winhasshadow"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool?> HasShadowAsync()
@@ -1778,6 +1892,7 @@ namespace ElectronSharp.API
         /// to the limited room.Once you setup the thumbnail toolbar, the toolbar cannot
         /// be removed due to the platform’s limitation.But you can call the API with an
         /// empty array to clean the buttons.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetthumbarbuttonsbuttons-windows"/>
         /// </summary>
         /// <param name="thumbarButtons"></param>
         /// <returns>Whether the buttons were added successfully.</returns>
@@ -1813,6 +1928,7 @@ namespace ElectronSharp.API
         /// Sets the region of the window to show as the thumbnail image displayed when hovering over
         /// the window in the taskbar. You can reset the thumbnail to be the entire window by specifying
         /// an empty region: {x: 0, y: 0, width: 0, height: 0}.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetthumbnailclipregion-windows"/>
         /// </summary>
         /// <param name="rectangle"></param>
         [SupportedOSPlatform("windows")]
@@ -1823,6 +1939,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Sets the toolTip that is displayed when hovering over the window thumbnail in the taskbar.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetthumbnailtooltip-windows"/>
         /// </summary>
         /// <param name="tooltip"></param>
         [SupportedOSPlatform("windows")]
@@ -1836,6 +1953,7 @@ namespace ElectronSharp.API
         /// 
         /// Note: relaunchCommand and relaunchDisplayName must always be set together. 
         /// If one of those properties is not set, then neither will be used.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetappdetailsoptions-windows"/>
         /// </summary>
         /// <param name="options"></param>
         [SupportedOSPlatform("windows")]
@@ -1848,6 +1966,7 @@ namespace ElectronSharp.API
         ///On a Window with Window Controls Overlay already enabled, this method updates
         /// the style of the title bar overlay. It should not be called unless you enabled WCO
         /// when creating the window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsettitlebaroverlayoptions-windows-macos-linux"/>
         /// </summary>
         /// <param name="options"></param>
         [SupportedOSPlatform("windows")]
@@ -1859,6 +1978,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Same as webContents.showDefinitionForSelection().
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winshowdefinitionforselection-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public void ShowDefinitionForSelection()
@@ -1871,6 +1991,7 @@ namespace ElectronSharp.API
         /// Once set the menu bar will only show when users press the single Alt key.
         /// 
         /// If the menu bar is already visible, calling setAutoHideMenuBar(true) won’t hide it immediately.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetautohidemenubarhide"/>
         /// </summary>
         /// <param name="hide"></param>
         public void SetAutoHideMenuBar(bool hide)
@@ -1880,6 +2001,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether menu bar automatically hides itself.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winismenubarautohide"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool?> IsMenuBarAutoHideAsync()
@@ -1890,6 +2012,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Sets whether the menu bar should be visible. If the menu bar is auto-hide,
         /// users can still bring up the menu bar by pressing the single Alt key.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetmenubarvisibilityvisible-windows-linux"/>
         /// </summary>
         /// <param name="visible"></param>
         [SupportedOSPlatform("windows")]
@@ -1901,6 +2024,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the menu bar is visible.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winismenubarvisible"/>
         /// </summary>
         /// <returns></returns>
         [SupportedOSPlatform("windows")]
@@ -1914,6 +2038,7 @@ namespace ElectronSharp.API
         /// Sets whether the window should be visible on all workspaces.
         /// 
         /// Note: This API does nothing on Windows.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetvisibleonallworkspacesvisible-options"/>
         /// </summary>
         /// <param name="visible"></param>
         [SupportedOSPlatform("macos")]
@@ -1926,6 +2051,7 @@ namespace ElectronSharp.API
         /// Sets whether the window should be visible on all workspaces.
         /// 
         /// Note: This API does nothing on Windows.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetvisibleonallworkspacesvisible-options"/>
         /// </summary>
         /// <param name="visible"></param>
         /// <param name="options"></param>
@@ -1939,6 +2065,7 @@ namespace ElectronSharp.API
         /// Whether the window is visible on all workspaces.
         /// 
         /// Note: This API always returns false on Windows.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winisvisibleonallworkspaces"/>
         /// </summary>
         /// <returns></returns>
         [SupportedOSPlatform("macos")]
@@ -1952,6 +2079,7 @@ namespace ElectronSharp.API
         /// 
         /// All mouse events happened in this window will be passed to the window 
         /// below this window, but if this window has focus, it will still receive keyboard events.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetignoremouseeventsignore-options"/>
         /// </summary>
         /// <param name="ignore"></param>
         public void SetIgnoreMouseEvents(bool ignore)
@@ -1964,6 +2092,7 @@ namespace ElectronSharp.API
         /// 
         /// On macOS it sets the NSWindow’s sharingType to NSWindowSharingNone. 
         /// On Windows it calls SetWindowDisplayAffinity with WDA_MONITOR.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetcontentprotectionenable-macos-windows"/>
         /// </summary>
         /// <param name="enable"></param>
         [SupportedOSPlatform("windows")]
@@ -1975,6 +2104,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Changes whether the window can be focused.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetfocusablefocusable-macos-windows"/>
         /// </summary>
         /// <param name="focusable"></param>
         [SupportedOSPlatform("windows")]
@@ -1987,6 +2117,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Sets parent as current window’s parent window, 
         /// passing null will turn current window into a top-level window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetparentwindowparent"/>
         /// </summary>
         /// <param name="parent"></param>
         public void SetParentWindow(BrowserWindow parent)
@@ -1996,6 +2127,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// The parent window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingetparentwindow"/>
         /// </summary>
         /// <returns></returns>
         public async Task<BrowserWindow> GetParentWindowAsync()
@@ -2006,6 +2138,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// All child windows.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingetchildwindows"/>
         /// </summary>
         /// <returns></returns>
         public async Task<List<BrowserWindow>> GetChildWindowsAsync()
@@ -2016,6 +2149,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Controls whether to hide cursor when typing.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetautohidecursorautohide-macos"/>
         /// </summary>
         /// <param name="autoHide"></param>
         [SupportedOSPlatform("macos")]
@@ -2027,6 +2161,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Adds a vibrancy effect to the browser window. 
         /// Passing null or an empty string will remove the vibrancy effect on the window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetvibrancytype-macos"/>
         /// </summary>
         /// <param name="type">Can be appearance-based, light, dark, titlebar, selection, 
         /// menu, popover, sidebar, medium-light or ultra-dark. 
@@ -2039,6 +2174,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Set a custom position for the traffic light buttons in frameless window. Passing null will reset the position to default.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetwindowbuttonpositionposition-macos"/>
         /// </summary>
         /// <param name="position">position to set, null to reset</param>
         [SupportedOSPlatform("macos")]
@@ -2049,6 +2185,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Get a custom position for the traffic light buttons in frameless window. Returns null if no custom position is set
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wingetwindowbuttonposition-macos"/>
         /// </summary>
         [SupportedOSPlatform("macos")]
         public Task<WindowButtonPosition> GetWindowButtonPosition()
@@ -2060,6 +2197,7 @@ namespace ElectronSharp.API
         /// This method sets the browser window's system-drawn background material, including behind the non-client area.
         /// See the [Windows documentation](https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/ne-dwmapi-dwm_systembackdrop_type) for more details.
         /// This method is only supported on Windows 11 22H2 and up.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetbackgroundmaterialmaterial-windows"/>
         /// </summary>
         /// <param name="type">
         ///   * auto - Let the Desktop Window Manager (DWM) automatically decide the system-drawn backdrop material for this window. This is the default.
@@ -2078,6 +2216,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Adds a vibrancy effect to the browser window. 
         /// Passing null or an empty string will remove the vibrancy effect on the window.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetexcludedfromshownwindowsmenuexcluded-macos"/>
         /// </summary>
         /// <param name="type">Can be appearance-based, light, dark, titlebar, selection, 
         /// menu, popover, sidebar, medium-light or ultra-dark. 
@@ -2090,6 +2229,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Render and control web pages.
+        /// <see href="https://www.electronjs.org/docs/api/web-contents"/>
         /// </summary>
         public WebContents WebContents { get; internal set; }
 
@@ -2097,6 +2237,7 @@ namespace ElectronSharp.API
         /// A BrowserView can be used to embed additional web content into a BrowserWindow. 
         /// It is like a child window, except that it is positioned relative to its owning window. 
         /// It is meant to be an alternative to the webview tag.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#winsetbrowserviewview-experimental"/>
         /// </summary>
         /// <param name="browserView"></param>
         public void SetBrowserView(BrowserView browserView)
@@ -2106,6 +2247,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the window is destroyed.
+        /// <see href="https://www.electronjs.org/docs/api/browser-window#wincapturepagerect"/>
         /// </summary>
         /// <returns></returns>
         public Task<NativeImage> CapturePageAsync() => BridgeConnector.OnResult<NativeImage>("browserWindowCapturePage", "browserWindow-capturePage-completed" + Id, Id);

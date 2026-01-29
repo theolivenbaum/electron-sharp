@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using ElectronSharp.API.Entities;
@@ -8,6 +8,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Read and respond to changes in Chromium's native color theme.
+    /// <see href="https://www.electronjs.org/docs/api/native-theme"/>
     /// </summary>
     public sealed class NativeTheme
     {
@@ -89,6 +90,7 @@ namespace ElectronSharp.API
         /// </item>
         /// </list>
         /// Your application should then always use <see cref="ShouldUseDarkColorsAsync"/> to determine what CSS to apply.
+        /// <see href="https://www.electronjs.org/docs/api/native-theme#nativethemethemesource"/>
         /// </summary>
         /// <param name="themeSourceMode">The new ThemeSource.</param>
         public void SetThemeSource(ThemeSourceMode themeSourceMode)
@@ -101,6 +103,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// A <see cref="ThemeSourceMode"/> property that can be <see cref="ThemeSourceMode.System"/>, <see cref="ThemeSourceMode.Light"/> or <see cref="ThemeSourceMode.Dark"/>. It is used to override (<seealso cref="SetThemeSource"/>) and
         /// supercede the value that Chromium has chosen to use internally.
+        /// <see href="https://www.electronjs.org/docs/api/native-theme#nativethemethemesource"/>
         /// </summary>
         public async Task<ThemeSourceMode> GetThemeSourceAsync() => Enum.Parse<ThemeSourceMode>(await BridgeConnector.OnResult<string>("nativeTheme-themeSource-get", "nativeTheme-themeSource-getCompleted"), true);
 
@@ -108,12 +111,14 @@ namespace ElectronSharp.API
         /// A <see cref="bool"/> for if the OS / Chromium currently has a dark mode enabled or is
         /// being instructed to show a dark-style UI. If you want to modify this value you
         /// should use <see cref="SetThemeSource"/>.
+        /// <see href="https://www.electronjs.org/docs/api/native-theme#nativethemeshouldusedarkcolors-readonly"/>
         /// </summary>
         public Task<bool> ShouldUseDarkColorsAsync() => BridgeConnector.OnResult<bool>("nativeTheme-shouldUseDarkColors", "nativeTheme-shouldUseDarkColors-completed");
 
         /// <summary>
         /// A <see cref="bool"/> for if the OS / Chromium currently has high-contrast mode enabled or is
         /// being instructed to show a high-contrast UI.
+        /// <see href="https://www.electronjs.org/docs/api/native-theme#nativethemeshouldusehighcontrastcolors-macos-windows-readonly"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -122,6 +127,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// A <see cref="bool"/> for if the OS / Chromium currently has an inverted color scheme or is
         /// being instructed to use an inverted color scheme.
+        /// <see href="https://www.electronjs.org/docs/api/native-theme#nativethemeshoulduseinvertedcolorscheme-macos-windows-readonly"/>
         /// </summary>
         [SupportedOSPlatform("windows")]
         [SupportedOSPlatform("macos")]
@@ -130,6 +136,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Emitted when something in the underlying NativeTheme has changed. This normally means that either the value of <see cref="ShouldUseDarkColorsAsync"/>,
         /// <see cref="ShouldUseHighContrastColorsAsync"/> or <see cref="ShouldUseInvertedColorSchemeAsync"/> has changed. You will have to check them to determine which one has changed.
+        /// <see href="https://www.electronjs.org/docs/api/native-theme#event-updated"/>
         /// </summary>
         public event Action Updated
         {

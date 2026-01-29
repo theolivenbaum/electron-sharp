@@ -1,10 +1,11 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ElectronSharp.API
 {
     /// <summary>
     /// Manipulate the command line arguments for your app that Chromium reads.
+    /// <see href="https://www.electronjs.org/docs/api/app#appcommandline"/>
     /// </summary>
     public sealed class CommandLine
     {
@@ -35,6 +36,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Append a switch (with optional value) to Chromium's command line.
+        /// <see href="https://www.electronjs.org/docs/api/command-line#commandlineappendswitchswitch-value"/>
         /// </summary>
         /// <param name="the_switch">A command-line switch, without the leading --</param>
         /// <param name="value">(optional) - A value for the given switch</param>
@@ -50,6 +52,7 @@ namespace ElectronSharp.API
         /// Append an argument to Chromium's command line. The argument will be quoted correctly. Switches will precede arguments regardless of appending order.
         ///
         /// If you're appending an argument like <code>--switch=value</code>, consider using <code>appendSwitch('switch', 'value')</code> instead.
+        /// <see href="https://www.electronjs.org/docs/api/command-line#commandlineappendargumentvalue"/>
         /// </summary>
         /// <param name="value">The argument to append to the command line</param>
         /// <remarks>
@@ -62,6 +65,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether the command-line switch is present.
+        /// <see href="https://www.electronjs.org/docs/api/command-line#commandlinehasswitchswitch"/>
         /// </summary>
         /// <param name="switchName">A command-line switch</param>
         /// <param name="cancellationToken"></param>
@@ -70,6 +74,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// The command-line switch value.
+        /// <see href="https://www.electronjs.org/docs/api/command-line#commandlinegetswitchvalueswitch"/>
         /// </summary>
         /// <param name="switchName">A command-line switch</param>
         /// <param name="cancellationToken"></param>

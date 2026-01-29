@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -11,6 +11,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Create OS desktop notifications
+    /// <see href="https://www.electronjs.org/docs/api/notification"/>
     /// </summary>
     public sealed class Notification
     {
@@ -42,6 +43,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Create OS desktop notifications
+        /// <see href="https://www.electronjs.org/docs/api/notification#new-notificationoptions"/>
         /// </summary>
         /// <param name="notificationOptions"></param>
         public void Show(NotificationOptions notificationOptions)
@@ -128,6 +130,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Whether or not desktop notifications are supported on the current system.
+        /// <see href="https://www.electronjs.org/docs/api/notification#notificationissupported"/>
         /// </summary>
         /// <returns></returns>
         public Task<bool> IsSupportedAsync()

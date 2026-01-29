@@ -1,4 +1,4 @@
-﻿using ElectronSharp.API.Entities;
+using ElectronSharp.API.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -10,6 +10,7 @@ namespace ElectronSharp.API
 {
     /// <summary>
     /// Manage files and URLs using their default applications.
+    /// <see href="https://www.electronjs.org/docs/api/shell"/>
     /// </summary>
     public sealed class Shell
     {
@@ -39,6 +40,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Show the given file in a file manager. If possible, select the file.
+        /// <see href="https://www.electronjs.org/docs/api/shell#shellshowiteminfolderfullpath"/>
         /// </summary>
         /// <param name="fullPath">The full path to the directory / file.</param>
         public Task ShowItemInFolderAsync(string fullPath)
@@ -57,6 +59,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Open the given file in the desktop's default manner.
+        /// <see href="https://www.electronjs.org/docs/api/shell#shellopenpathpath"/>
         /// </summary>
         /// <param name="path">The path to the directory / file.</param>
         /// <returns>The error message corresponding to the failure if a failure occurred, otherwise <see cref="string.Empty"/>.</returns>
@@ -79,6 +82,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Open the given external protocol URL in the desktop’s default manner. 
         /// (For example, mailto: URLs in the user’s default mail agent).
+        /// <see href="https://www.electronjs.org/docs/api/shell#shellopenexternalurl-options"/>
         /// </summary>
         /// <param name="url">Max 2081 characters on windows.</param>
         /// <returns>The error message corresponding to the failure if a failure occurred, otherwise <see cref="string.Empty"/>.</returns>
@@ -90,6 +94,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Open the given external protocol URL in the desktop’s default manner. 
         /// (For example, mailto: URLs in the user’s default mail agent).
+        /// <see href="https://www.electronjs.org/docs/api/shell#shellopenexternalurl-options"/>
         /// </summary>
         /// <param name="url">Max 2081 characters on windows.</param>
         /// <param name="options">Controls the behavior of OpenExternal.</param>
@@ -119,6 +124,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Move the given file to trash and returns a <see cref="bool"/> status for the operation.
+        /// <see href="https://www.electronjs.org/docs/api/shell#shelltrashitempath"/>
         /// </summary>
         /// <param name="fullPath">The full path to the directory / file.</param>
         /// <returns> Whether the item was successfully moved to the trash.</returns>
@@ -129,6 +135,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Play the beep sound.
+        /// <see href="https://www.electronjs.org/docs/api/shell#shellbeep"/>
         /// </summary>
         public void Beep()
         {
@@ -137,6 +144,7 @@ namespace ElectronSharp.API
 
         /// <summary>
         /// Creates or updates a shortcut link at shortcutPath.
+        /// <see href="https://www.electronjs.org/docs/api/shell#shellwriteshortcutlinkshortcutpath-operation-options-windows"/>
         /// </summary>
         /// <param name="shortcutPath">The path to the shortcut.</param>
         /// <param name="operation">Default is <see cref="ShortcutLinkOperation.Create"/></param>
@@ -151,6 +159,7 @@ namespace ElectronSharp.API
         /// <summary>
         /// Resolves the shortcut link at shortcutPath.
         /// An exception will be thrown when any error happens.
+        /// <see href="https://www.electronjs.org/docs/api/shell#shellreadshortcutlinkshortcutpath-windows"/>
         /// </summary>
         /// <param name="shortcutPath">The path tot the shortcut.</param>
         /// <returns><see cref="ShortcutDetails"/> of the shortcut.</returns>
