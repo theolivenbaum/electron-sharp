@@ -35,6 +35,23 @@ namespace ElectronSharp.API.Entities
         ///   The cookie was overwritten with an already-expired expiration date.
         /// </summary>
         [JsonProperty("expired_overwrite")]
-        expiredOverwrite
+        expiredOverwrite,
+
+        /// <summary>
+        /// The cookie was inserted. Emitted when a new cookie is set (Electron 41+).
+        /// </summary>
+        inserted,
+
+        /// <summary>
+        /// An identical cookie was set, resulting in no change (Electron 41+).
+        /// </summary>
+        [JsonProperty("inserted-no-change-overwrite")]
+        insertedNoChangeOverwrite,
+
+        /// <summary>
+        /// Only cookie attributes were updated; the value is unchanged (Electron 41+).
+        /// </summary>
+        [JsonProperty("inserted-no-value-change-overwrite")]
+        insertedNoValueChangeOverwrite
     }
 }
