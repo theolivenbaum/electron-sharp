@@ -5,7 +5,6 @@
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>dotnet-electron-sharp</AssemblyName>
     <ToolCommandName>electron-sharp</ToolCommandName>
-    <PackageType>DotnetCliTool</PackageType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageOutputPath>..\artifacts</PackageOutputPath>
     <PackageId>ElectronSharp.CLI</PackageId>
